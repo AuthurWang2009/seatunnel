@@ -17,8 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.hdfs.sink;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-
 import org.apache.seatunnel.api.common.PrepareFailException;
 import org.apache.seatunnel.api.common.SeaTunnelAPIErrorCode;
 import org.apache.seatunnel.common.config.CheckConfigUtil;
@@ -28,6 +26,8 @@ import org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseSinkOptions
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 import org.apache.seatunnel.connectors.seatunnel.file.exception.FileConnectorException;
 import org.apache.seatunnel.connectors.seatunnel.file.sink.BaseFileSink;
+
+import com.typesafe.config.Config;
 
 import java.util.Objects;
 

@@ -28,8 +28,8 @@ import org.apache.seatunnel.api.table.type.SeaTunnelRowType;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.catalog.utils.TestConnection;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.config.JdbcSinkConfig;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.internal.connection.SimpleJdbcConnectionProvider;
-import org.apache.seatunnel.connectors.seatunnel.jdbc.internal.dialect.sqlserver.SqlServerDialect;
-import org.apache.seatunnel.connectors.seatunnel.jdbc.internal.dialect.sqlserver.SqlserverJdbcRowConverter;
+import org.apache.seatunnel.connectors.seatunnel.jdbc.internal.dialect.mysql.MysqlDialect;
+import org.apache.seatunnel.connectors.seatunnel.jdbc.internal.dialect.mysql.MysqlJdbcRowConverter;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -99,8 +99,8 @@ public class JdbcOutputFormatBuilderTest {
         config.put("database", "databasewith.dot");
         config.put("table", "dbo.tableName");
 
-        SqlServerDialect dialect = Mockito.mock(SqlServerDialect.class);
-        Mockito.when(dialect.getRowConverter()).thenReturn(new SqlserverJdbcRowConverter());
+        MysqlDialect dialect = Mockito.mock(MysqlDialect.class);
+        Mockito.when(dialect.getRowConverter()).thenReturn(new MysqlJdbcRowConverter());
         Mockito.when(
                         dialect.getInsertIntoStatement(
                                 Mockito.anyString(), Mockito.anyString(), Mockito.any()))

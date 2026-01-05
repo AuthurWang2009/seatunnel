@@ -17,11 +17,10 @@
 
 package org.apache.seatunnel.config.sql;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-
 import org.apache.seatunnel.api.configuration.ConfigAdapter;
 
 import com.google.auto.service.AutoService;
+import com.typesafe.config.Config;
 
 import java.nio.file.Path;
 import java.util.Map;

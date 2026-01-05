@@ -17,12 +17,11 @@
 
 package org.apache.seatunnel.transform.replace;
 
-import org.apache.seatunnel.shade.com.fasterxml.jackson.annotation.JsonAlias;
-
 import org.apache.seatunnel.api.configuration.Option;
 import org.apache.seatunnel.api.configuration.Options;
 import org.apache.seatunnel.api.configuration.ReadonlyConfig;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;

@@ -19,7 +19,6 @@
 package org.apache.seatunnel.connectors.seatunnel.jdbc.internal.dialect;
 
 import org.apache.seatunnel.connectors.seatunnel.jdbc.internal.dialect.mysql.MysqlDialect;
-import org.apache.seatunnel.connectors.seatunnel.jdbc.internal.dialect.psql.PostgresDialect;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -37,13 +36,5 @@ public class JdbcDialectLoaderTest {
         JdbcDialect jdbcDialect =
                 JdbcDialectLoader.load("jdbc:mysql://localhost:3306/test", null, "");
         Assertions.assertInstanceOf(MysqlDialect.class, jdbcDialect);
-    }
-
-    /** Test for {@link JdbcDialectLoader} for appointDialect */
-    @Test
-    public void shouldFindPostgresSQLDialectByDialect() throws Exception {
-        JdbcDialect jdbcDialect =
-                JdbcDialectLoader.load("error:errorurl://xxxxx:3306/test", "Postgres", "");
-        Assertions.assertInstanceOf(PostgresDialect.class, jdbcDialect);
     }
 }

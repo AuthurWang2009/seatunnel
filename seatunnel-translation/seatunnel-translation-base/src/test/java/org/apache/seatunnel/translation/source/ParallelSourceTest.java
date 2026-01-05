@@ -17,8 +17,6 @@
 
 package org.apache.seatunnel.translation.source;
 
-import org.apache.seatunnel.shade.com.google.common.collect.Maps;
-
 import org.apache.seatunnel.api.table.catalog.TablePath;
 import org.apache.seatunnel.connectors.doris.config.DorisSourceConfig;
 import org.apache.seatunnel.connectors.doris.rest.PartitionDefinition;
@@ -37,6 +35,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;

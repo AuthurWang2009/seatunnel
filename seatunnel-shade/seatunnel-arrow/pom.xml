@@ -68,24 +68,7 @@
                                     </excludes>
                                 </filter>
                             </filters>
-                            <relocations>
-                                <relocation>
-                                    <pattern>org.apache.arrow</pattern>
-                                    <shadedPattern>${seatunnel.shade.package}.org.apache.arrow</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>io.netty</pattern>
-                                    <shadedPattern>${seatunnel.shade.package}.io.netty</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>com.google.flatbuffers</pattern>
-                                    <shadedPattern>${seatunnel.shade.package}.com.google.flatbuffers</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>com.fasterxml.jackson</pattern>
-                                    <shadedPattern>${seatunnel.shade.package}.com.fasterxml.jackson</shadedPattern>
-                                </relocation>
-                            </relocations>
+
                         </configuration>
                     </execution>
                 </executions>

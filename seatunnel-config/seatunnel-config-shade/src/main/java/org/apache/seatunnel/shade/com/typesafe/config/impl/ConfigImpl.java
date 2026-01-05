@@ -2,17 +2,17 @@
  *   Copyright (C) 2011-2012 Typesafe Inc. <http://typesafe.com>
  */
 
-package org.apache.seatunnel.shade.com.typesafe.config.impl;
+package com.typesafe.config.impl;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigException;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigIncluder;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigMemorySize;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigObject;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigOrigin;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigParseOptions;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigParseable;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigValue;
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigException;
+import com.typesafe.config.ConfigIncluder;
+import com.typesafe.config.ConfigMemorySize;
+import com.typesafe.config.ConfigObject;
+import com.typesafe.config.ConfigOrigin;
+import com.typesafe.config.ConfigParseOptions;
+import com.typesafe.config.ConfigParseable;
+import com.typesafe.config.ConfigValue;
 
 import java.io.File;
 import java.lang.ref.WeakReference;

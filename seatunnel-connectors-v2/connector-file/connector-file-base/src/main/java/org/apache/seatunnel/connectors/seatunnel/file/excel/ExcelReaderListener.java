@@ -17,9 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.excel;
 
-import org.apache.seatunnel.shade.com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.type.SeaTunnelDataType;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
@@ -30,6 +27,8 @@ import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.excel.exception.ExcelDataConvertException;
 import com.alibaba.excel.metadata.Cell;
 import com.alibaba.excel.metadata.data.ReadCellData;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Closeable;

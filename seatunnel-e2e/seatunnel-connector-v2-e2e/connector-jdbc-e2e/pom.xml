@@ -30,10 +30,6 @@
         <module>connector-jdbc-e2e-common</module>
         <module>connector-jdbc-e2e-part-1</module>
         <module>connector-jdbc-e2e-part-2</module>
-        <module>connector-jdbc-e2e-part-3</module>
-        <module>connector-jdbc-e2e-part-4</module>
-        <module>connector-jdbc-e2e-part-5</module>
-        <module>connector-jdbc-e2e-part-6</module>
         <module>connector-jdbc-e2e-part-7</module>
         <module>connector-jdbc-e2e-ddl</module>
     </modules>
@@ -59,19 +55,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.seatunnel</groupId>
-            <artifactId>connector-assert</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.seatunnel</groupId>
-            <artifactId>connector-console</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
 </project>

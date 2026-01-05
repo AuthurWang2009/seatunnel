@@ -17,9 +17,8 @@
 
 package org.apache.seatunnel.common.config;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigValue;
-
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigValue;
 import lombok.NonNull;
 
 import java.util.HashMap;

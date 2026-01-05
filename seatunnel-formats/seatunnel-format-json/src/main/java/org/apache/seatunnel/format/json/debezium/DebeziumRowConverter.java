@@ -17,8 +17,6 @@
 
 package org.apache.seatunnel.format.json.debezium;
 
-import org.apache.seatunnel.shade.com.fasterxml.jackson.databind.JsonNode;
-
 import org.apache.seatunnel.api.table.type.ArrayType;
 import org.apache.seatunnel.api.table.type.DecimalType;
 import org.apache.seatunnel.api.table.type.MapType;
@@ -29,6 +27,8 @@ import org.apache.seatunnel.api.table.type.SqlType;
 import org.apache.seatunnel.common.exception.CommonErrorCodeDeprecated;
 import org.apache.seatunnel.common.utils.DateUtils;
 import org.apache.seatunnel.format.json.exception.SeaTunnelJsonFormatException;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 import java.io.Serializable;

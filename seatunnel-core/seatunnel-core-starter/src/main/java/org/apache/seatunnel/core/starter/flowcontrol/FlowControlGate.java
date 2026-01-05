@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.core.starter.flowcontrol;
 
-import org.apache.seatunnel.shade.com.google.common.util.concurrent.RateLimiter;
-
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
+
+import com.google.common.util.concurrent.RateLimiter;
 
 import java.util.Optional;
 

@@ -19,7 +19,6 @@ package org.apache.seatunnel.e2e.connector.file.obs;
 
 import org.apache.seatunnel.e2e.common.TestSuiteBase;
 import org.apache.seatunnel.e2e.common.container.TestContainer;
-import org.apache.seatunnel.e2e.common.container.flink.Flink13Container;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
@@ -34,9 +33,6 @@ public class ObsFileIT extends TestSuiteBase {
     @TestTemplate
     public void testLocalFileReadAndWrite(TestContainer container)
             throws IOException, InterruptedException {
-        if (container instanceof Flink13Container) {
-            return;
-        }
         // test write obs csv file
         Container.ExecResult csvWriteResult = container.executeJob("/csv/fake_to_obs_csv.conf");
         Assertions.assertEquals(0, csvWriteResult.getExitCode(), csvWriteResult.getStderr());

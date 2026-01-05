@@ -17,13 +17,13 @@
 
 package org.apache.seatunnel.transform.sql.zeta.functions;
 
-import org.apache.seatunnel.shade.com.google.common.hash.Hashing;
-
 import org.apache.seatunnel.common.exception.CommonErrorCodeDeprecated;
 import org.apache.seatunnel.transform.exception.TransformException;
 import org.apache.seatunnel.transform.sql.zeta.ZetaSQLFunction;
 
 import org.apache.groovy.parser.antlr4.util.StringUtils;
+
+import com.google.common.hash.Hashing;
 
 import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;

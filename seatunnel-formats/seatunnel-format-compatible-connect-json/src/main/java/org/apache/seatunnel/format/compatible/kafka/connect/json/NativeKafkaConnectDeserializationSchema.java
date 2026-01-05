@@ -48,7 +48,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.apache.seatunnel.shade.com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /** Compatible kafka connect deserialization schema */
 @RequiredArgsConstructor
@@ -124,8 +124,7 @@ public class NativeKafkaConnectDeserializationSchema
         }
 
         try {
-            org.apache.seatunnel.shade.com.fasterxml.jackson.databind.JsonNode jsonData =
-                    JsonUtils.toJsonNode(record);
+            com.fasterxml.jackson.databind.JsonNode jsonData = JsonUtils.toJsonNode(record);
             return (SeaTunnelRow) runtimeConverter.convert(jsonData, null);
         } catch (Throwable t) {
             throw CommonError.jsonOperationError(FORMAT, record.toString(), t);

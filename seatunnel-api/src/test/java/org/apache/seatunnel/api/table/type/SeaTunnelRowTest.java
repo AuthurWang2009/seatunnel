@@ -17,10 +17,10 @@
 
 package org.apache.seatunnel.api.table.type;
 
-import org.apache.seatunnel.shade.com.google.common.collect.Maps;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import com.google.common.collect.Maps;
 
 import java.math.BigDecimal;
 import java.util.Collections;

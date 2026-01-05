@@ -17,8 +17,6 @@
 
 package org.apache.seatunnel.transform.nlpmodel.embedding;
 
-import org.apache.seatunnel.shade.com.google.common.collect.Lists;
-
 import org.apache.seatunnel.api.configuration.util.OptionRule;
 import org.apache.seatunnel.api.table.connector.TableTransform;
 import org.apache.seatunnel.api.table.factory.Factory;
@@ -29,6 +27,7 @@ import org.apache.seatunnel.transform.nlpmodel.ModelProvider;
 import org.apache.seatunnel.transform.nlpmodel.llm.LLMTransformConfig;
 
 import com.google.auto.service.AutoService;
+import com.google.common.collect.Lists;
 
 @AutoService(Factory.class)
 public class EmbeddingTransformFactory implements TableTransformFactory {

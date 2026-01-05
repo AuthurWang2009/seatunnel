@@ -17,10 +17,6 @@
 
 package org.apache.seatunnel.core.starter.spark.command;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigUtil;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigValueFactory;
-
 import org.apache.seatunnel.common.Constants;
 import org.apache.seatunnel.core.starter.command.Command;
 import org.apache.seatunnel.core.starter.exception.CommandExecuteException;
@@ -29,6 +25,9 @@ import org.apache.seatunnel.core.starter.spark.execution.SparkExecution;
 import org.apache.seatunnel.core.starter.utils.ConfigBuilder;
 import org.apache.seatunnel.core.starter.utils.FileUtils;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigUtil;
+import com.typesafe.config.ConfigValueFactory;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.file.Path;

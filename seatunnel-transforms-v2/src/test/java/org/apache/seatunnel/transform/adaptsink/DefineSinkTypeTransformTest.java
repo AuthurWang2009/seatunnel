@@ -17,8 +17,6 @@
 
 package org.apache.seatunnel.transform.adaptsink;
 
-import org.apache.seatunnel.shade.com.google.common.collect.ImmutableMap;
-
 import org.apache.seatunnel.api.configuration.ReadonlyConfig;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtil;
@@ -30,6 +28,8 @@ import org.apache.seatunnel.api.table.type.SeaTunnelRowType;
 import org.apache.seatunnel.api.transform.SeaTunnelMapTransform;
 
 import org.junit.jupiter.api.Test;
+
+import com.google.common.collect.ImmutableMap;
 
 import java.util.Arrays;
 import java.util.List;

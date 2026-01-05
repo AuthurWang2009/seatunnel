@@ -17,11 +17,11 @@
 
 package org.apache.seatunnel.core.starter.execution;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-
 import org.apache.seatunnel.api.options.EnvCommonOptions;
 import org.apache.seatunnel.common.config.CheckResult;
 import org.apache.seatunnel.common.constants.JobMode;
+
+import com.typesafe.config.Config;
 
 import java.net.URL;
 import java.util.List;

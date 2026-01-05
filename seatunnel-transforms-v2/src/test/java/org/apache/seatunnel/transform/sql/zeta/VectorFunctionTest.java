@@ -17,8 +17,6 @@
 
 package org.apache.seatunnel.transform.sql.zeta;
 
-import org.apache.seatunnel.shade.com.google.common.collect.Maps;
-
 import org.apache.seatunnel.api.table.type.SeaTunnelDataType;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
 import org.apache.seatunnel.api.table.type.SeaTunnelRowType;
@@ -29,6 +27,8 @@ import org.apache.seatunnel.transform.sql.SQLEngineFactory;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import com.google.common.collect.Maps;
 
 import java.util.HashMap;
 

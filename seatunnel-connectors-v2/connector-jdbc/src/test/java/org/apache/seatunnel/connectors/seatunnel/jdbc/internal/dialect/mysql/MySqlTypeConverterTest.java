@@ -37,7 +37,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertUnsupported() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder().name("test").columnType("aaa").dataType("aaa").build();
         try {
             MySqlTypeConverter.DEFAULT_INSTANCE.convert(typeDefine);
@@ -51,7 +51,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertNull() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder()
                         .name("test")
                         .columnType("null")
@@ -71,7 +71,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertBit() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder()
                         .name("test")
                         .columnType("bit(1)")
@@ -99,7 +99,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertTinyint() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder()
                         .name("test")
                         .columnType("tinyint(1)")
@@ -149,7 +149,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertSmallint() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder()
                         .name("test")
                         .columnType("smallint")
@@ -174,7 +174,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertMediumint() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder()
                         .name("test")
                         .columnType("mediumint")
@@ -199,7 +199,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertInt() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder().name("test").columnType("int").dataType("int").build();
         Column column = MySqlTypeConverter.DEFAULT_INSTANCE.convert(typeDefine);
         Assertions.assertEquals(typeDefine.getName(), column.getName());
@@ -242,7 +242,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertBigint() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder()
                         .name("test")
                         .columnType("bigint")
@@ -278,7 +278,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertFloat() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder()
                         .name("test")
                         .columnType("float")
@@ -303,7 +303,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertDouble() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder()
                         .name("test")
                         .columnType("double")
@@ -328,7 +328,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertDecimal() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder()
                         .name("test")
                         .columnType("decimal(38,2)")
@@ -375,7 +375,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertEnum() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder()
                         .name("test")
                         .columnType("enum('aaa','bbb')")
@@ -391,7 +391,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertChar() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder()
                         .name("test")
                         .columnType("char(2)")
@@ -420,7 +420,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertText() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder()
                         .name("test")
                         .columnType("tinytext")
@@ -467,7 +467,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertJson() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder().name("test").columnType("json").dataType("json").build();
         Column column = MySqlTypeConverter.DEFAULT_INSTANCE.convert(typeDefine);
         Assertions.assertEquals(typeDefine.getName(), column.getName());
@@ -478,7 +478,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertBinary() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder()
                         .name("test")
                         .columnType("binary(1)")
@@ -507,7 +507,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertBlob() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder()
                         .name("test")
                         .columnType("tinyblob")
@@ -554,7 +554,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertGeometry() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder()
                         .name("test")
                         .columnType("geometry")
@@ -568,7 +568,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertDate() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder().name("test").columnType("date").dataType("date").build();
         Column column = MySqlTypeConverter.DEFAULT_INSTANCE.convert(typeDefine);
         Assertions.assertEquals(typeDefine.getName(), column.getName());
@@ -578,7 +578,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertTime() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder()
                         .name("test")
                         .columnType("time")
@@ -594,7 +594,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertDatetime() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder()
                         .name("test")
                         .columnType("datetime")
@@ -621,7 +621,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertTimestamp() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder()
                         .name("test")
                         .columnType("timestamp")
@@ -1085,7 +1085,7 @@ public class MySqlTypeConverterTest {
 
     @Test
     public void testConvertSet() {
-        BasicTypeDefine<Object> typeDefine =
+        BasicTypeDefine typeDefine =
                 BasicTypeDefine.builder()
                         .name("test")
                         .columnType("SET('reading','sports','music','travel')")

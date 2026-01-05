@@ -17,9 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.jdbc;
 
-import org.apache.seatunnel.shade.com.google.common.io.ByteStreams;
-import org.apache.seatunnel.shade.com.google.common.io.CharStreams;
-
 import org.apache.seatunnel.api.table.catalog.Catalog;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.ConstraintKey;
@@ -31,7 +28,6 @@ import org.apache.seatunnel.api.table.catalog.exception.TableNotExistException;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
 import org.apache.seatunnel.common.exception.SeaTunnelRuntimeException;
 import org.apache.seatunnel.common.utils.ExceptionUtils;
-import org.apache.seatunnel.connectors.seatunnel.jdbc.catalog.iris.IrisCatalog;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.catalog.oracle.OracleCatalog;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.config.JdbcConnectionConfig;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.config.JdbcSourceTableConfig;
@@ -59,6 +55,8 @@ import org.testcontainers.images.PullPolicy;
 import org.testcontainers.lifecycle.Startables;
 
 import com.github.dockerjava.api.model.Image;
+import com.google.common.io.ByteStreams;
+import com.google.common.io.CharStreams;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -404,8 +402,7 @@ public abstract class AbstractJdbcIT extends TestSuiteBase implements TestResour
                                 + ((catalog instanceof OracleCatalog) ? "_INDEX" : "_index"));
         boolean createdDb = false;
 
-        if (!(catalog instanceof IrisCatalog)
-                && !catalog.databaseExists(targetTablePath.getDatabaseName())) {
+        if (!catalog.databaseExists(targetTablePath.getDatabaseName())) {
             catalog.createDatabase(targetTablePath, false);
             Assertions.assertTrue(catalog.databaseExists(targetTablePath.getDatabaseName()));
             createdDb = true;

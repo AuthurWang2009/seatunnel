@@ -17,11 +17,11 @@
 
 package org.apache.seatunnel.api.table.catalog.schema;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigFactory;
-
 import org.apache.seatunnel.api.configuration.ReadonlyConfig;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtilTest;
+
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;

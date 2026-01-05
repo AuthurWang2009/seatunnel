@@ -20,9 +20,6 @@
 
 package org.apache.seatunnel.config.sql;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigFactory;
-
 import org.apache.seatunnel.common.utils.ParserException;
 import org.apache.seatunnel.config.sql.model.BaseConfig;
 import org.apache.seatunnel.config.sql.model.Option;
@@ -33,6 +30,8 @@ import org.apache.seatunnel.config.sql.model.TransformConfig;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;

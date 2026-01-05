@@ -17,14 +17,13 @@
 
 package org.apache.seatunnel.e2e.common.util;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigFactory;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigRenderOptions;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigResolveOptions;
-
 import org.apache.seatunnel.api.configuration.ConfigAdapter;
 import org.apache.seatunnel.common.utils.ParserException;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
+import com.typesafe.config.ConfigRenderOptions;
+import com.typesafe.config.ConfigResolveOptions;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 

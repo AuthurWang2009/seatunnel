@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.api.common;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
+import com.typesafe.config.Config;
 
 /**
  * This interface is the life cycle of a plugin, after a plugin created, will execute prepare method

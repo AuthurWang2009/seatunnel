@@ -65,12 +65,7 @@
                                     </excludes>
                                 </filter>
                             </filters>
-                            <relocations>
-                                <relocation>
-                                    <pattern>org.codehaus</pattern>
-                                    <shadedPattern>${seatunnel.shade.package}.org.codehaus</shadedPattern>
-                                </relocation>
-                            </relocations>
+
                         </configuration>
                     </execution>
                 </executions>

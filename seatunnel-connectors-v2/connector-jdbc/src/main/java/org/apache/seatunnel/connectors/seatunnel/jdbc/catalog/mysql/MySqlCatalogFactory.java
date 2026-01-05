@@ -17,8 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.jdbc.catalog.mysql;
 
-import org.apache.seatunnel.shade.com.google.common.base.Preconditions;
-
 import org.apache.seatunnel.api.configuration.ReadonlyConfig;
 import org.apache.seatunnel.api.configuration.util.OptionRule;
 import org.apache.seatunnel.api.table.catalog.Catalog;
@@ -31,6 +29,7 @@ import org.apache.seatunnel.connectors.seatunnel.jdbc.internal.dialect.DatabaseI
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.auto.service.AutoService;
+import com.google.common.base.Preconditions;
 
 @AutoService(Factory.class)
 public class MySqlCatalogFactory implements CatalogFactory {

@@ -17,8 +17,6 @@
 
 package org.apache.seatunnel.translation.spark.source;
 
-import org.apache.seatunnel.shade.com.google.common.collect.Sets;
-
 import org.apache.seatunnel.api.options.EnvCommonOptions;
 import org.apache.seatunnel.api.source.SeaTunnelSource;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
@@ -39,6 +37,8 @@ import org.apache.spark.sql.connector.read.Scan;
 import org.apache.spark.sql.connector.read.ScanBuilder;
 import org.apache.spark.sql.types.StructType;
 import org.apache.spark.sql.util.CaseInsensitiveStringMap;
+
+import com.google.common.collect.Sets;
 
 import java.util.List;
 import java.util.Map;

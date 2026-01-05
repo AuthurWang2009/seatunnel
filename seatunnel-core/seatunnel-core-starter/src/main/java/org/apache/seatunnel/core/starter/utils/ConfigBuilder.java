@@ -17,20 +17,19 @@
 
 package org.apache.seatunnel.core.starter.utils;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigFactory;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigParseOptions;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigRenderOptions;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigResolveOptions;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigSyntax;
-import org.apache.seatunnel.shade.com.typesafe.config.impl.Parseable;
-
 import org.apache.seatunnel.api.configuration.ConfigAdapter;
 import org.apache.seatunnel.api.sink.TablePlaceholder;
 import org.apache.seatunnel.common.utils.JsonUtils;
 import org.apache.seatunnel.common.utils.ParserException;
 import org.apache.seatunnel.core.starter.exception.ConfigCheckException;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
+import com.typesafe.config.ConfigParseOptions;
+import com.typesafe.config.ConfigRenderOptions;
+import com.typesafe.config.ConfigResolveOptions;
+import com.typesafe.config.ConfigSyntax;
+import com.typesafe.config.impl.Parseable;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 

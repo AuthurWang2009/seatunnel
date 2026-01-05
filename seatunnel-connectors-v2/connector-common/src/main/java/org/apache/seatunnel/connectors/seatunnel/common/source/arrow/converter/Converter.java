@@ -17,8 +17,8 @@
 
 package org.apache.seatunnel.connectors.seatunnel.common.source.arrow.converter;
 
-import org.apache.seatunnel.shade.org.apache.arrow.vector.FieldVector;
-import org.apache.seatunnel.shade.org.apache.arrow.vector.types.Types;
+import org.apache.arrow.vector.FieldVector;
+import org.apache.arrow.vector.types.Types;
 
 import java.util.Map;
 import java.util.function.Function;

@@ -16,8 +16,8 @@
  */
 package org.apache.seatunnel.transform.dynamiccompile.parse;
 
-import org.apache.seatunnel.shade.org.codehaus.commons.compiler.CompileException;
-import org.apache.seatunnel.shade.org.codehaus.janino.ClassBodyEvaluator;
+import org.codehaus.commons.compiler.CompileException;
+import org.codehaus.janino.ClassBodyEvaluator;
 
 import java.util.function.Function;
 

@@ -48,9 +48,8 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.seatunnel</groupId>
-            <artifactId>seatunnel-config-shade</artifactId>
-            <version>${project.version}</version>
+            <groupId>com.typesafe</groupId>
+            <artifactId>config</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.jsqlparser</groupId>

@@ -37,8 +37,6 @@ import org.apache.seatunnel.api.table.catalog.TableSchema;
 import org.apache.seatunnel.api.table.catalog.exception.TableNotExistException;
 import org.apache.seatunnel.api.table.schema.SchemaChangeType;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
-import org.apache.seatunnel.connectors.seatunnel.jdbc.catalog.iris.IrisCatalog;
-import org.apache.seatunnel.connectors.seatunnel.jdbc.catalog.iris.savemode.IrisSaveModeHandler;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.catalog.utils.CatalogUtils;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.config.JdbcSinkConfig;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.config.JdbcSinkOptions;
@@ -282,17 +280,7 @@ public class JdbcSink
                                     CatalogUtils.quoteTableIdentifier(
                                             catalogTable.getTableId().getTableName(), fieldIde));
                     catalogTable.getOptions().put("fieldIde", fieldIde);
-                    if (catalog instanceof IrisCatalog) {
-                        return Optional.of(
-                                new IrisSaveModeHandler(
-                                        schemaSaveMode,
-                                        dataSaveMode,
-                                        catalog,
-                                        tablePath,
-                                        catalogTable,
-                                        config.get(JdbcSinkOptions.CUSTOM_SQL),
-                                        jdbcSinkConfig.isCreateIndex()));
-                    }
+
                     return Optional.of(
                             new JdbcSaveModeHandler(
                                     schemaSaveMode,

@@ -17,9 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.reader;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigFactory;
-
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
@@ -30,6 +27,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import lombok.Getter;
 
 import java.io.File;

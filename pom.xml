@@ -51,7 +51,6 @@
 
         <module>seatunnel-examples</module>
         <module>seatunnel-e2e</module>
-        <module>seatunnel-shade</module>
         <module>seatunnel-ci-tools</module>
     </modules>
 
@@ -168,6 +167,7 @@
         <arrow.version>15.0.1</arrow.version>
         <okhttp.version>4.12.0</okhttp.version>
 
+        <janino.version>3.1.9</janino.version>
     </properties>
 
     <dependencyManagement>
@@ -315,11 +315,7 @@
             </dependency>
             <!-- ***************** slf4j & provider & bridges end ***************** -->
 
-            <dependency>
-                <groupId>org.apache.seatunnel</groupId>
-                <artifactId>seatunnel-config-shade</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+            <!-- OkHttp dependencies -->
             <dependency>
                 <groupId>commons-codec</groupId>
                 <artifactId>commons-codec</artifactId>
@@ -467,6 +463,17 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.codehaus.janino</groupId>
+                <artifactId>janino</artifactId>
+                <version>${janino.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.janino</groupId>
+                <artifactId>commons-compiler</artifactId>
+                <version>${janino.version}</version>
             </dependency>
 
             <dependency>
@@ -934,26 +941,7 @@
                             <searchRegex>import\s+org\.junit\.[^jupiter][^\*\s]*(|\*);(\r\n|\r|\n)</searchRegex>
                             <replacement>$1</replacement>
                         </replaceRegex>
-                        <replaceRegex>
-                            <name>Convert Google Guava imports to shade</name>
-                            <searchRegex>import\s+(static\s+)?com\.google\.common\.([^;]+);(\r\n|\r|\n)</searchRegex>
-                            <replacement>import $1org.apache.seatunnel.shade.com.google.common.$2;$3</replacement>
-                        </replaceRegex>
-                        <replaceRegex>
-                            <name>Convert Jetty imports to shade</name>
-                            <searchRegex>import\s+(static\s+)?org\.eclipse\.jetty\.([^;]+);(\r\n|\r|\n)</searchRegex>
-                            <replacement>import $1org.apache.seatunnel.shade.org.eclipse.jetty.$2;$3</replacement>
-                        </replaceRegex>
-                        <replaceRegex>
-                            <name>Convert Hikari imports to shade</name>
-                            <searchRegex>import\s+(static\s+)?com\.zaxxer\.hikari\.([^;]+);(\r\n|\r|\n)</searchRegex>
-                            <replacement>import $1org.apache.seatunnel.shade.com.zaxxer.hikari.$2;$3</replacement>
-                        </replaceRegex>
-                        <replaceRegex>
-                            <name>Convert Janino imports to shade</name>
-                            <searchRegex>import\s+(static\s+)?org\.codehaus\.(janino|commons)\.([^;]+);(\r\n|\r|\n)</searchRegex>
-                            <replacement>import $1org.apache.seatunnel.shade.org.codehaus.$2.$3;$4</replacement>
-                        </replaceRegex>
+
                     </java>
                     <pom>
                         <sortPom>

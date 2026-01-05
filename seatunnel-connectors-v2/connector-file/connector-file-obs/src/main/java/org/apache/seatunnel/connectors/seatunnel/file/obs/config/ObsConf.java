@@ -17,11 +17,11 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.obs.config;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 
 import org.apache.hadoop.fs.obs.Constants;
+
+import com.typesafe.config.Config;
 
 import java.util.HashMap;
 

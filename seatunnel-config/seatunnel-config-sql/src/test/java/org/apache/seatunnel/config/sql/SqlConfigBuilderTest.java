@@ -20,10 +20,10 @@
 
 package org.apache.seatunnel.config.sql;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import com.typesafe.config.Config;
 
 import java.io.File;
 import java.util.List;

@@ -17,11 +17,6 @@
 
 package org.apache.seatunnel.transform.validator;
 
-import org.apache.seatunnel.shade.com.fasterxml.jackson.annotation.JsonAlias;
-import org.apache.seatunnel.shade.com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.apache.seatunnel.shade.com.fasterxml.jackson.core.type.TypeReference;
-import org.apache.seatunnel.shade.com.google.common.collect.Lists;
-
 import org.apache.seatunnel.api.configuration.Option;
 import org.apache.seatunnel.api.configuration.Options;
 import org.apache.seatunnel.api.configuration.ReadonlyConfig;
@@ -32,6 +27,10 @@ import org.apache.seatunnel.transform.validator.rule.RegexValidationRule;
 import org.apache.seatunnel.transform.validator.rule.UDFValidationRule;
 import org.apache.seatunnel.transform.validator.rule.ValidationRule;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

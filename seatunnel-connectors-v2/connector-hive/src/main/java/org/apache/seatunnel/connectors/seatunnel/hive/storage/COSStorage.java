@@ -17,9 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.hive.storage;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigValueFactory;
-
 import org.apache.seatunnel.api.configuration.ReadonlyConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 import org.apache.seatunnel.connectors.seatunnel.file.cos.config.CosConf;
@@ -27,6 +24,9 @@ import org.apache.seatunnel.connectors.seatunnel.file.cos.config.CosFileBaseOpti
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.conf.Configuration;
+
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigValueFactory;
 
 import java.util.Map;
 

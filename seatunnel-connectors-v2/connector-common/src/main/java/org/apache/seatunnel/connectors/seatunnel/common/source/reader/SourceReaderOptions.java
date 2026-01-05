@@ -17,12 +17,11 @@
 
 package org.apache.seatunnel.connectors.seatunnel.common.source.reader;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-
 import org.apache.seatunnel.api.configuration.Option;
 import org.apache.seatunnel.api.configuration.Options;
 import org.apache.seatunnel.api.configuration.ReadonlyConfig;
 
+import com.typesafe.config.Config;
 import lombok.Getter;
 
 @Getter

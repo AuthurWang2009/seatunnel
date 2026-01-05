@@ -17,8 +17,6 @@
 
 package org.apache.seatunnel.transform.nlpmodel.embedding;
 
-import org.apache.seatunnel.shade.com.google.common.annotations.VisibleForTesting;
-
 import org.apache.seatunnel.api.configuration.ReadonlyConfig;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.Column;
@@ -39,6 +37,7 @@ import org.apache.seatunnel.transform.nlpmodel.embedding.remote.qianfan.QianfanM
 import org.apache.seatunnel.transform.nlpmodel.embedding.remote.zhipu.ZhipuModel;
 import org.apache.seatunnel.transform.nlpmodel.llm.LLMTransformConfig;
 
+import com.google.common.annotations.VisibleForTesting;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 

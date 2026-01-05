@@ -16,11 +16,11 @@
  */
 package org.apache.seatunnel.transform.dynamiccompile.parse;
 
-import org.apache.seatunnel.shade.scala.tools.nsc.Settings;
-import org.apache.seatunnel.shade.scala.tools.nsc.interpreter.IMain;
-import org.apache.seatunnel.shade.scala.tools.nsc.interpreter.shell.ReplReporterImpl;
-
 import org.apache.seatunnel.transform.exception.TransformException;
+
+import scala.tools.nsc.Settings;
+import scala.tools.nsc.interpreter.IMain;
+import scala.tools.nsc.interpreter.shell.ReplReporterImpl;
 
 import java.util.function.Function;
 import java.util.regex.Matcher;

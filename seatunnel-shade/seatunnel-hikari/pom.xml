@@ -64,13 +64,7 @@
                                     </excludes>
                                 </filter>
                             </filters>
-                            <relocations>
-                                <!-- rename hikari to avoid jar conflict from spark -->
-                                <relocation>
-                                    <pattern>com.zaxxer.hikari</pattern>
-                                    <shadedPattern>${seatunnel.shade.package}.com.zaxxer.hikari</shadedPattern>
-                                </relocation>
-                            </relocations>
+
                         </configuration>
                     </execution>
                 </executions>

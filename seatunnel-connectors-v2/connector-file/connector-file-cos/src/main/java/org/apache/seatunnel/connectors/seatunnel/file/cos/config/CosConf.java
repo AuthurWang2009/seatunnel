@@ -17,11 +17,11 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.cos.config;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 
 import org.apache.hadoop.fs.CosNConfigKeys;
+
+import com.typesafe.config.Config;
 
 import java.util.HashMap;
 

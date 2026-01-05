@@ -17,9 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.hive.source.config;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigValueFactory;
-
 import org.apache.seatunnel.api.common.SeaTunnelAPIErrorCode;
 import org.apache.seatunnel.api.configuration.ReadonlyConfig;
 import org.apache.seatunnel.api.options.ConnectorCommonOptions;
@@ -50,6 +47,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.hive.metastore.api.FieldSchema;
 import org.apache.hadoop.hive.metastore.api.Table;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigValueFactory;
 import lombok.Getter;
 import lombok.SneakyThrows;
 

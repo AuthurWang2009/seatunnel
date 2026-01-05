@@ -2,13 +2,13 @@
  *   Copyright (C) 2011-2012 Typesafe Inc. <http://typesafe.com>
  */
 
-package org.apache.seatunnel.shade.com.typesafe.config.impl;
+package com.typesafe.config.impl;
 
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigException;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigObject;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigOrigin;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigRenderOptions;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigValue;
+import com.typesafe.config.ConfigException;
+import com.typesafe.config.ConfigObject;
+import com.typesafe.config.ConfigOrigin;
+import com.typesafe.config.ConfigRenderOptions;
+import com.typesafe.config.ConfigValue;
 
 import java.io.ObjectStreamException;
 import java.io.Serializable;

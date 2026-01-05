@@ -17,8 +17,6 @@
 
 package org.apache.seatunnel.core.starter.spark.execution;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-
 import org.apache.seatunnel.api.common.JobContext;
 import org.apache.seatunnel.api.configuration.ReadonlyConfig;
 import org.apache.seatunnel.api.sink.SeaTunnelSink;
@@ -32,6 +30,7 @@ import org.apache.seatunnel.translation.spark.execution.DatasetTableInfo;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 
+import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;

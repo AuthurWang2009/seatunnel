@@ -17,8 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.sink.config;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-
 import org.apache.seatunnel.api.table.type.SeaTunnelRowType;
 import org.apache.seatunnel.common.exception.CommonErrorCodeDeprecated;
 import org.apache.seatunnel.connectors.seatunnel.file.config.BaseFileSinkConfig;
@@ -31,6 +29,7 @@ import org.apache.seatunnel.format.csv.constant.CsvStringQuoteMode;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import com.typesafe.config.Config;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -43,7 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.apache.seatunnel.shade.com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkArgument;
 
 @Data
 public class FileSinkConfig extends BaseFileSinkConfig implements PartitionConfig {

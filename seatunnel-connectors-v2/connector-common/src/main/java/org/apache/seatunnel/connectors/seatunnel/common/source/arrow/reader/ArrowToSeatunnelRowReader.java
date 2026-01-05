@@ -17,13 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.common.source.arrow.reader;
 
-import org.apache.seatunnel.shade.org.apache.arrow.memory.RootAllocator;
-import org.apache.seatunnel.shade.org.apache.arrow.vector.FieldVector;
-import org.apache.seatunnel.shade.org.apache.arrow.vector.VectorSchemaRoot;
-import org.apache.seatunnel.shade.org.apache.arrow.vector.ipc.ArrowStreamReader;
-import org.apache.seatunnel.shade.org.apache.arrow.vector.types.Types;
-import org.apache.seatunnel.shade.org.apache.arrow.vector.util.Text;
-
 import org.apache.seatunnel.api.table.type.ArrayType;
 import org.apache.seatunnel.api.table.type.MapType;
 import org.apache.seatunnel.api.table.type.SeaTunnelDataType;
@@ -32,6 +25,13 @@ import org.apache.seatunnel.api.table.type.SeaTunnelRowType;
 import org.apache.seatunnel.api.table.type.SqlType;
 import org.apache.seatunnel.connectors.seatunnel.common.source.arrow.converter.Converter;
 import org.apache.seatunnel.connectors.seatunnel.common.source.arrow.converter.DefaultConverter;
+
+import org.apache.arrow.memory.RootAllocator;
+import org.apache.arrow.vector.FieldVector;
+import org.apache.arrow.vector.VectorSchemaRoot;
+import org.apache.arrow.vector.ipc.ArrowStreamReader;
+import org.apache.arrow.vector.types.Types;
+import org.apache.arrow.vector.util.Text;
 
 import lombok.extern.slf4j.Slf4j;
 

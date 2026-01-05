@@ -29,10 +29,9 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.lifecycle.Startables;
-import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.DockerLoggerFactory;
 
 import lombok.extern.slf4j.Slf4j;
@@ -53,55 +52,53 @@ import static org.awaitility.Awaitility.given;
 /**
  * This test case is used to test that the jdbc connector returns the expected error when
  * encountering an unsupported data type. If a certain type is supported and the test case becomes
- * invalid, we need to find a replacement to allow the test case t o continue to be executed,
- * instead of deleting it.
+ * invalid, we need to find a replacement to allow the test case to continue to be executed, instead
+ * of deleting it.
  */
 @Slf4j
 public class JdbcErrorIT extends TestSuiteBase implements TestResource {
-    private static final String PG_IMAGE = "postgis/postgis";
-    private PostgreSQLContainer<?> POSTGRESQL_CONTAINER;
-    private static final String PG_SOURCE_DDL1 =
-            "CREATE TABLE IF NOT EXISTS pg_e2e_source_table1 (\n"
-                    + "  gid SERIAL PRIMARY KEY,"
-                    + " timearray1 timestamp[],"
-                    + " timearray2 timestamp[]\n"
+    private static final String MYSQL_IMAGE = "mysql:8.0";
+    private MySQLContainer<?> MYSQL_CONTAINER;
+    private static final String MYSQL_SOURCE_DDL1 =
+            "CREATE TABLE IF NOT EXISTS mysql_e2e_source_table1 (\n"
+                    + "  gid INT AUTO_INCREMENT PRIMARY KEY,"
+                    + "  geo1 POINT,"
+                    + "  geo2 POINT\n"
                     + ")";
-    private static final String PG_SOURCE_DDL2 =
-            "CREATE TABLE IF NOT EXISTS pg_e2e_source_table2 (\n"
-                    + "  gid SERIAL PRIMARY KEY,"
-                    + " str VARCHAR(255),"
-                    + " timearray2 timestamp[]\n"
+    private static final String MYSQL_SOURCE_DDL2 =
+            "CREATE TABLE IF NOT EXISTS mysql_e2e_source_table2 (\n"
+                    + "  gid INT AUTO_INCREMENT PRIMARY KEY,"
+                    + "  str VARCHAR(255),"
+                    + "  geo2 POINT\n"
                     + ")";
-    private static final String PG_SOURCE_DDL3 =
-            "CREATE TABLE IF NOT EXISTS pg_e2e_source_table3 (\n"
-                    + "  gid SERIAL PRIMARY KEY,"
-                    + " str1 VARCHAR(255),"
-                    + " str2 VARCHAR(255)\n"
+    private static final String MYSQL_SOURCE_DDL3 =
+            "CREATE TABLE IF NOT EXISTS mysql_e2e_source_table3 (\n"
+                    + "  gid INT AUTO_INCREMENT PRIMARY KEY,"
+                    + "  str1 VARCHAR(255),"
+                    + "  str2 VARCHAR(255)\n"
                     + ")";
 
     @BeforeAll
     @Override
     public void startUp() throws Exception {
-        POSTGRESQL_CONTAINER =
-                new PostgreSQLContainer<>(
-                                DockerImageName.parse(PG_IMAGE)
-                                        .asCompatibleSubstituteFor("postgres"))
+        MYSQL_CONTAINER =
+                new MySQLContainer<>(MYSQL_IMAGE)
                         .withNetwork(TestSuiteBase.NETWORK)
-                        .withNetworkAliases("postgresql")
-                        .withCommand("postgres -c max_prepared_transactions=100")
+                        .withNetworkAliases("mysql")
                         .withDatabaseName("seatunnel")
+                        .withUsername("root")
                         .withLogConsumer(
-                                new Slf4jLogConsumer(DockerLoggerFactory.getLogger(PG_IMAGE)));
-        Startables.deepStart(Stream.of(POSTGRESQL_CONTAINER)).join();
-        log.info("PostgreSQL container started");
-        Class.forName(POSTGRESQL_CONTAINER.getDriverClassName());
+                                new Slf4jLogConsumer(DockerLoggerFactory.getLogger(MYSQL_IMAGE)));
+        Startables.deepStart(Stream.of(MYSQL_CONTAINER)).join();
+        log.info("MySQL container started");
+        Class.forName(MYSQL_CONTAINER.getDriverClassName());
         given().ignoreExceptions()
                 .await()
                 .atLeast(100, TimeUnit.MILLISECONDS)
                 .pollInterval(500, TimeUnit.MILLISECONDS)
                 .atMost(2, TimeUnit.MINUTES)
                 .untilAsserted(this::initializeJdbcTable);
-        log.info("pg data initialization succeeded. Procedure");
+        log.info("mysql data initialization succeeded. Procedure");
     }
 
     @Test
@@ -110,10 +107,10 @@ public class JdbcErrorIT extends TestSuiteBase implements TestResource {
                 ReadonlyConfig.fromMap(
                         new HashMap<String, Object>() {
                             {
-                                put("url", POSTGRESQL_CONTAINER.getJdbcUrl());
-                                put("driver", "org.postgresql.Driver");
-                                put("user", POSTGRESQL_CONTAINER.getUsername());
-                                put("password", POSTGRESQL_CONTAINER.getPassword());
+                                put("url", MYSQL_CONTAINER.getJdbcUrl());
+                                put("driver", MYSQL_CONTAINER.getDriverClassName());
+                                put("user", MYSQL_CONTAINER.getUsername());
+                                put("password", MYSQL_CONTAINER.getPassword());
                                 put(
                                         "table_list",
                                         new ArrayList<Map<String, Object>>() {
@@ -123,7 +120,7 @@ public class JdbcErrorIT extends TestSuiteBase implements TestResource {
                                                             {
                                                                 put(
                                                                         "table_path",
-                                                                        "seatunnel.public.pg_e2e_source_table1");
+                                                                        "seatunnel.mysql_e2e_source_table1");
                                                             }
                                                         });
                                                 add(
@@ -131,10 +128,10 @@ public class JdbcErrorIT extends TestSuiteBase implements TestResource {
                                                             {
                                                                 put(
                                                                         "table_path",
-                                                                        "seatunnel.public.pg_e2e_source_table2");
+                                                                        "seatunnel.mysql_e2e_source_table2");
                                                                 put(
                                                                         "query",
-                                                                        "select * from seatunnel.public.pg_e2e_source_table2");
+                                                                        "select * from seatunnel.mysql_e2e_source_table2");
                                                             }
                                                         });
                                                 add(
@@ -142,7 +139,7 @@ public class JdbcErrorIT extends TestSuiteBase implements TestResource {
                                                             {
                                                                 put(
                                                                         "table_path",
-                                                                        "seatunnel.public.pg_e2e_source_table3");
+                                                                        "seatunnel.mysql_e2e_source_table3");
                                                             }
                                                         });
                                             }
@@ -161,25 +158,17 @@ public class JdbcErrorIT extends TestSuiteBase implements TestResource {
                             source.getProducedCatalogTables();
                         });
         Assertions.assertEquals(
-                "ErrorCode:[COMMON-21], ErrorDescription:['Postgres' tables unsupported get catalog table，"
+                "ErrorCode:[COMMON-21], ErrorDescription:['MySQL' tables unsupported get catalog table，"
                         + "the corresponding field types in the following tables are not supported:"
-                        + " '{\"seatunnel.public.pg_e2e_source_table1\":{\"timearray1\":\"_timestamp\",\"timearray2\":\"_timestamp\"},"
-                        + "\"select * from seatunnel.public.pg_e2e_source_table2\":{\"timearray2\":\"_timestamp\"}}']",
+                        + " '{\"seatunnel.mysql_e2e_source_table1\":{\"geo1\":\"POINT\",\"geo2\":\"POINT\"}}']",
                 exception.getMessage());
         Map<String, Map<String, String>> result = new LinkedHashMap<>();
         result.put(
-                "seatunnel.public.pg_e2e_source_table1",
-                new HashMap<String, String>() {
+                "seatunnel.mysql_e2e_source_table1",
+                new LinkedHashMap<String, String>() {
                     {
-                        put("timearray1", "_timestamp");
-                        put("timearray2", "_timestamp");
-                    }
-                });
-        result.put(
-                "select * from seatunnel.public.pg_e2e_source_table2",
-                new HashMap<String, String>() {
-                    {
-                        put("timearray2", "_timestamp");
+                        put("geo1", "POINT");
+                        put("geo2", "POINT");
                     }
                 });
         Assertions.assertEquals(result, exception.getParamsValueAs("tableUnsupportedTypes"));
@@ -188,26 +177,26 @@ public class JdbcErrorIT extends TestSuiteBase implements TestResource {
     private void initializeJdbcTable() {
         try (Connection connection = getJdbcConnection()) {
             Statement statement = connection.createStatement();
-            statement.execute(PG_SOURCE_DDL1);
-            statement.execute(PG_SOURCE_DDL2);
-            statement.execute(PG_SOURCE_DDL3);
+            statement.execute(MYSQL_SOURCE_DDL1);
+            statement.execute(MYSQL_SOURCE_DDL2);
+            statement.execute(MYSQL_SOURCE_DDL3);
         } catch (SQLException e) {
-            throw new RuntimeException("Initializing PostgreSql table failed!", e);
+            throw new RuntimeException("Initializing MySQL table failed!", e);
         }
     }
 
     private Connection getJdbcConnection() throws SQLException {
         return DriverManager.getConnection(
-                POSTGRESQL_CONTAINER.getJdbcUrl(),
-                POSTGRESQL_CONTAINER.getUsername(),
-                POSTGRESQL_CONTAINER.getPassword());
+                MYSQL_CONTAINER.getJdbcUrl(),
+                MYSQL_CONTAINER.getUsername(),
+                MYSQL_CONTAINER.getPassword());
     }
 
     @AfterAll
     @Override
     public void tearDown() {
-        if (POSTGRESQL_CONTAINER != null) {
-            POSTGRESQL_CONTAINER.stop();
+        if (MYSQL_CONTAINER != null) {
+            MYSQL_CONTAINER.stop();
         }
     }
 }

@@ -17,14 +17,13 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.config;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-
 import org.apache.seatunnel.common.utils.DateTimeUtils;
 import org.apache.seatunnel.common.utils.DateUtils;
 import org.apache.seatunnel.common.utils.TimeUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.typesafe.config.Config;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -32,7 +31,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.Locale;
 
-import static org.apache.seatunnel.shade.com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 @Data
 public class BaseFileSinkConfig implements DelimiterConfig, Serializable {

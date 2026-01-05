@@ -17,8 +17,6 @@
 
 package org.apache.seatunnel.core.starter.spark;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-
 import org.apache.seatunnel.api.common.JobContext;
 import org.apache.seatunnel.common.Constants;
 import org.apache.seatunnel.common.config.DeployMode;
@@ -34,6 +32,8 @@ import org.apache.seatunnel.translation.spark.execution.DatasetTableInfo;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import com.typesafe.config.Config;
 
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;

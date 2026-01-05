@@ -49,7 +49,7 @@ import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Optional;
 
-import static org.apache.seatunnel.shade.com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /** Compatible kafka connect deserialization schema */
 @RequiredArgsConstructor
@@ -143,7 +143,7 @@ public class CompatibleKafkaConnectDeserializationSchema
         }
 
         try {
-            org.apache.seatunnel.shade.com.fasterxml.jackson.databind.JsonNode jsonData =
+            com.fasterxml.jackson.databind.JsonNode jsonData =
                     JsonUtils.stringToJsonNode(jsonNode.toString());
             return (SeaTunnelRow) runtimeConverter.convert(jsonData, null);
         } catch (Throwable t) {

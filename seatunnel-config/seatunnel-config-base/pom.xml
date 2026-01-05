@@ -98,12 +98,7 @@
                             </excludes>
                         </filter>
                     </filters>
-                    <relocations>
-                        <relocation>
-                            <pattern>com.typesafe.config</pattern>
-                            <shadedPattern>${seatunnel.shade.package}.com.typesafe.config</shadedPattern>
-                        </relocation>
-                    </relocations>
+
                     <transformers>
                         <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer" />
                         <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer" />

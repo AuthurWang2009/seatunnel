@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.core.starter.flowcontrol;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
+import com.typesafe.config.Config;
 
 import java.util.Map;
 import java.util.Optional;

@@ -17,11 +17,11 @@
 
 package org.apache.seatunnel.transform.nlpmodel;
 
-import org.apache.seatunnel.shade.com.fasterxml.jackson.core.type.TypeReference;
-
 import org.apache.seatunnel.api.configuration.Option;
 import org.apache.seatunnel.api.configuration.Options;
 import org.apache.seatunnel.api.table.type.SqlType;
+
+import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.io.Serializable;
 import java.util.Map;

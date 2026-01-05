@@ -17,8 +17,6 @@
 
 package org.apache.seatunnel.e2e.connector.file.local;
 
-import org.apache.seatunnel.shade.com.google.common.collect.Lists;
-
 import org.apache.seatunnel.api.table.catalog.TablePath;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileSystemType;
 import org.apache.seatunnel.connectors.seatunnel.file.hadoop.HadoopFileSystemProxy;
@@ -44,6 +42,7 @@ import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.shaded.com.github.dockerjava.core.command.ExecStartResultCallback;
 
 import com.github.dockerjava.api.command.ExecCreateCmdResponse;
+import com.google.common.collect.Lists;
 import io.airlift.compress.lzo.LzopCodec;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

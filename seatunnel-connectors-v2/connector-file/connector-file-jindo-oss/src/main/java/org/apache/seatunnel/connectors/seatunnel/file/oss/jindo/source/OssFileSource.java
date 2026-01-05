@@ -17,8 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.oss.jindo.source;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-
 import org.apache.seatunnel.api.common.PrepareFailException;
 import org.apache.seatunnel.api.common.SeaTunnelAPIErrorCode;
 import org.apache.seatunnel.api.options.ConnectorCommonOptions;
@@ -42,6 +40,7 @@ import org.apache.seatunnel.connectors.seatunnel.file.source.BaseFileSource;
 import org.apache.seatunnel.connectors.seatunnel.file.source.reader.ReadStrategyFactory;
 
 import com.google.auto.service.AutoService;
+import com.typesafe.config.Config;
 
 import java.io.IOException;
 

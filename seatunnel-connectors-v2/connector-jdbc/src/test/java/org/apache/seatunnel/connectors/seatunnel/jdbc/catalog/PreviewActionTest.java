@@ -27,12 +27,8 @@ import org.apache.seatunnel.api.table.catalog.TableIdentifier;
 import org.apache.seatunnel.api.table.catalog.TablePath;
 import org.apache.seatunnel.api.table.catalog.TableSchema;
 import org.apache.seatunnel.api.table.type.BasicType;
-import org.apache.seatunnel.connectors.seatunnel.jdbc.catalog.dm.DamengCatalogFactory;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.catalog.mysql.MySqlCatalogFactory;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.catalog.oceanbase.OceanBaseCatalogFactory;
-import org.apache.seatunnel.connectors.seatunnel.jdbc.catalog.oracle.OracleCatalogFactory;
-import org.apache.seatunnel.connectors.seatunnel.jdbc.catalog.psql.PostgresCatalogFactory;
-import org.apache.seatunnel.connectors.seatunnel.jdbc.catalog.sqlserver.SqlServerCatalogFactory;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.catalog.tidb.TiDBCatalogFactory;
 
 import org.junit.jupiter.api.Assertions;
@@ -101,54 +97,6 @@ public class PreviewActionTest {
                 "CREATE TABLE `testtable` (\n"
                         + "\t`test` LONGTEXT NULL COMMENT ''\n"
                         + ") COMMENT = 'comment';",
-                Optional.of(CATALOG_TABLE));
-    }
-
-    @Test
-    public void testDMPreviewAction() {
-        DamengCatalogFactory factory = new DamengCatalogFactory();
-        Catalog catalog =
-                factory.createCatalog(
-                        "Dameng",
-                        ReadonlyConfig.fromMap(
-                                new HashMap<String, Object>() {
-                                    {
-                                        put("url", "jdbc:mysql://localhost:3306/test");
-                                        put("username", "root");
-                                        put("password", "root");
-                                    }
-                                }));
-        Assertions.assertThrows(
-                UnsupportedOperationException.class,
-                () ->
-                        assertPreviewResult(
-                                catalog,
-                                Catalog.ActionType.CREATE_DATABASE,
-                                "CREATE DATABASE \"testddatabase\";",
-                                Optional.empty()));
-        Assertions.assertThrows(
-                UnsupportedOperationException.class,
-                () ->
-                        assertPreviewResult(
-                                catalog,
-                                Catalog.ActionType.DROP_DATABASE,
-                                "DROP DATABASE \"testddatabase\";",
-                                Optional.empty()));
-        assertPreviewResult(
-                catalog,
-                Catalog.ActionType.TRUNCATE_TABLE,
-                "TRUNCATE TABLE \"null\".\"testtable\"",
-                Optional.empty());
-        assertPreviewResult(
-                catalog,
-                Catalog.ActionType.DROP_TABLE,
-                "DROP TABLE \"testtable\"",
-                Optional.empty());
-
-        assertPreviewResult(
-                catalog,
-                Catalog.ActionType.CREATE_TABLE,
-                "CREATE TABLE \"testtable\" (\n" + "\"test\" TEXT\n" + ")",
                 Optional.of(CATALOG_TABLE));
     }
 
@@ -237,146 +185,6 @@ public class PreviewActionTest {
                 "CREATE TABLE `testtable` (\n"
                         + "\t`test` LONGTEXT NULL COMMENT ''\n"
                         + ") COMMENT = 'comment';",
-                Optional.of(CATALOG_TABLE));
-    }
-
-    @Test
-    public void testOraclePreviewAction() {
-        OracleCatalogFactory factory = new OracleCatalogFactory();
-        Catalog catalog =
-                factory.createCatalog(
-                        "test",
-                        ReadonlyConfig.fromMap(
-                                new HashMap<String, Object>() {
-                                    {
-                                        put("url", "jdbc:mysql://localhost:3306/test");
-                                        put("username", "root");
-                                        put("password", "root");
-                                    }
-                                }));
-        Assertions.assertThrows(
-                UnsupportedOperationException.class,
-                () ->
-                        assertPreviewResult(
-                                catalog,
-                                Catalog.ActionType.CREATE_DATABASE,
-                                "CREATE DATABASE `testddatabase`;",
-                                Optional.empty()));
-        Assertions.assertThrows(
-                UnsupportedOperationException.class,
-                () ->
-                        assertPreviewResult(
-                                catalog,
-                                Catalog.ActionType.DROP_DATABASE,
-                                "DROP DATABASE `testddatabase`;",
-                                Optional.empty()));
-        assertPreviewResult(
-                catalog,
-                Catalog.ActionType.TRUNCATE_TABLE,
-                "TRUNCATE TABLE \"null\".\"testtable\"",
-                Optional.empty());
-        assertPreviewResult(
-                catalog,
-                Catalog.ActionType.DROP_TABLE,
-                "DROP TABLE \"testtable\"",
-                Optional.empty());
-        assertPreviewResult(
-                catalog,
-                Catalog.ActionType.CREATE_TABLE,
-                "CREATE TABLE \"testtable\" (\n" + "\"test\" VARCHAR2(4000)\n" + ")",
-                Optional.of(CATALOG_TABLE));
-    }
-
-    @Test
-    public void testPostgresPreviewAction() {
-        PostgresCatalogFactory factory = new PostgresCatalogFactory();
-        Catalog catalog =
-                factory.createCatalog(
-                        "test",
-                        ReadonlyConfig.fromMap(
-                                new HashMap<String, Object>() {
-                                    {
-                                        put("url", "jdbc:mysql://localhost:3306/test");
-                                        put("username", "root");
-                                        put("password", "root");
-                                    }
-                                }));
-        assertPreviewResult(
-                catalog,
-                Catalog.ActionType.CREATE_DATABASE,
-                "CREATE DATABASE \"testddatabase\"",
-                Optional.empty());
-        assertPreviewResult(
-                catalog,
-                Catalog.ActionType.DROP_DATABASE,
-                "DROP DATABASE \"testddatabase\"",
-                Optional.empty());
-        assertPreviewResult(
-                catalog,
-                Catalog.ActionType.TRUNCATE_TABLE,
-                "TRUNCATE TABLE  \"null\".\"testtable\"",
-                Optional.empty());
-        assertPreviewResult(
-                catalog,
-                Catalog.ActionType.DROP_TABLE,
-                "DROP TABLE \"null\".\"testtable\"",
-                Optional.empty());
-
-        assertPreviewResult(
-                catalog,
-                Catalog.ActionType.CREATE_TABLE,
-                "CREATE TABLE \"testtable\" (\n" + "\"test\" text\n" + ");",
-                Optional.of(CATALOG_TABLE));
-    }
-
-    @Test
-    public void testSqlServerPreviewAction() {
-        SqlServerCatalogFactory factory = new SqlServerCatalogFactory();
-        Catalog catalog =
-                factory.createCatalog(
-                        "test",
-                        ReadonlyConfig.fromMap(
-                                new HashMap<String, Object>() {
-                                    {
-                                        put(
-                                                "url",
-                                                "jdbc:sqlserver://localhost:1433;databaseName=column_type_test");
-                                        put("username", "root");
-                                        put("password", "root");
-                                    }
-                                }));
-        assertPreviewResult(
-                catalog,
-                Catalog.ActionType.CREATE_DATABASE,
-                "CREATE DATABASE testddatabase",
-                Optional.empty());
-        assertPreviewResult(
-                catalog,
-                Catalog.ActionType.DROP_DATABASE,
-                "DROP DATABASE testddatabase;",
-                Optional.empty());
-        assertPreviewResult(
-                catalog,
-                Catalog.ActionType.TRUNCATE_TABLE,
-                "TRUNCATE TABLE  [testddatabase].[testtable]",
-                Optional.empty());
-        assertPreviewResult(
-                catalog,
-                Catalog.ActionType.DROP_TABLE,
-                "DROP TABLE testddatabase.testtable",
-                Optional.empty());
-        assertPreviewResult(
-                catalog,
-                Catalog.ActionType.CREATE_TABLE,
-                "IF OBJECT_ID('[testddatabase].[testtable]', 'U') IS NULL \n"
-                        + "BEGIN \n"
-                        + "CREATE TABLE [testddatabase].[testtable] ( \n"
-                        + "\t[test] NVARCHAR(MAX) NULL\n"
-                        + ");\n"
-                        + "EXEC [testddatabase].sys.sp_addextendedproperty 'MS_Description', N'comment', 'schema', N'null', 'table', N'testtable';\n"
-                        + "EXEC [testddatabase].sys.sp_addextendedproperty 'MS_Description', N'', 'schema', N'null', 'table', N'testtable', 'column', N'test';\n"
-                        + "\n"
-                        + "END",
                 Optional.of(CATALOG_TABLE));
     }
 

@@ -17,11 +17,10 @@
 
 package org.apache.seatunnel.connectors.seatunnel.jdbc.config;
 
-import org.apache.seatunnel.shade.com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.apache.seatunnel.shade.com.fasterxml.jackson.annotation.JsonProperty;
-
 import org.apache.seatunnel.api.configuration.ReadonlyConfig;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;

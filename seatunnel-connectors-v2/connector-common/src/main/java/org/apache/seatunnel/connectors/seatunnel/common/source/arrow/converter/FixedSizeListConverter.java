@@ -17,8 +17,8 @@
 
 package org.apache.seatunnel.connectors.seatunnel.common.source.arrow.converter;
 
-import org.apache.seatunnel.shade.org.apache.arrow.vector.complex.FixedSizeListVector;
-import org.apache.seatunnel.shade.org.apache.arrow.vector.types.Types;
+import org.apache.arrow.vector.complex.FixedSizeListVector;
+import org.apache.arrow.vector.types.Types;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

@@ -17,13 +17,13 @@
 
 package org.apache.seatunnel.config;
 
-import org.apache.seatunnel.shade.com.typesafe.config.Config;
-import org.apache.seatunnel.shade.com.typesafe.config.ConfigFactory;
-
 import org.apache.seatunnel.config.utils.FileUtils;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

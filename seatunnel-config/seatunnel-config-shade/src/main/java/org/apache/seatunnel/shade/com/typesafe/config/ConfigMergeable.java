@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.seatunnel.shade.com.typesafe.config;
+package com.typesafe.config;
 
 import java.io.Serializable;
 
