@@ -17,8 +17,8 @@
 
 package org.apache.seatunnel.format.json.debezium;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 import org.apache.seatunnel.format.json.JsonFormatOptions;
 
 import java.util.Map;
@@ -27,10 +27,11 @@ public class DebeziumJsonFormatOptions {
 
     public static final int GENERATE_ROW_SIZE = 5;
 
-    public static final Option<Boolean> IGNORE_PARSE_ERRORS = JsonFormatOptions.IGNORE_PARSE_ERRORS;
+    public static final ConfigEntry<Boolean> IGNORE_PARSE_ERRORS =
+            JsonFormatOptions.IGNORE_PARSE_ERRORS;
 
-    public static final Option<Boolean> SCHEMA_INCLUDE =
-            Options.key("schema-include")
+    public static final ConfigEntry<Boolean> SCHEMA_INCLUDE =
+            ConfigOption.key("schema-include")
                     .booleanType()
                     .defaultValue(false)
                     .withDescription(

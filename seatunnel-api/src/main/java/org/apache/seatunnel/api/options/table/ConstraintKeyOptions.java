@@ -17,8 +17,8 @@
 
 package org.apache.seatunnel.api.options.table;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 import org.apache.seatunnel.api.table.catalog.ConstraintKey;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -28,41 +28,41 @@ import java.util.Map;
 
 public interface ConstraintKeyOptions {
 
-    Option<List<Map<String, Object>>> CONSTRAINT_KEYS =
-            Options.key("constraintKeys")
+    ConfigEntry<List<Map<String, Object>>> CONSTRAINT_KEYS =
+            ConfigOption.key("constraintKeys")
                     .type(new TypeReference<List<Map<String, Object>>>() {})
                     .noDefaultValue()
                     .withDescription(
                             "SeaTunnel Schema Constraint Keys. e.g. [{name: \"xx_index\", type: \"KEY\", columnKeys: [{columnName: \"name\", sortType: \"ASC\"}]}]");
 
-    Option<String> CONSTRAINT_KEY_NAME =
-            Options.key("constraintName")
+    ConfigEntry<String> CONSTRAINT_KEY_NAME =
+            ConfigOption.key("constraintName")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("SeaTunnel Schema Constraint Key Name");
 
-    Option<ConstraintKey.ConstraintType> CONSTRAINT_KEY_TYPE =
-            Options.key("constraintType")
+    ConfigEntry<ConstraintKey.ConstraintType> CONSTRAINT_KEY_TYPE =
+            ConfigOption.key("constraintType")
                     .enumType(ConstraintKey.ConstraintType.class)
                     .noDefaultValue()
                     .withDescription(
                             "SeaTunnel Schema Constraint Key Type, e.g. KEY, UNIQUE_KEY, FOREIGN_KEY");
 
-    Option<List<Map<String, Object>>> CONSTRAINT_KEY_COLUMNS =
-            Options.key("constraintColumns")
+    ConfigEntry<List<Map<String, Object>>> CONSTRAINT_KEY_COLUMNS =
+            ConfigOption.key("constraintColumns")
                     .type(new TypeReference<List<Map<String, Object>>>() {})
                     .noDefaultValue()
                     .withDescription(
                             "SeaTunnel Schema Constraint Key Columns. e.g. [{columnName: \"name\", sortType: \"ASC\"}]");
 
-    Option<String> CONSTRAINT_KEY_COLUMN_NAME =
-            Options.key("columnName")
+    ConfigEntry<String> CONSTRAINT_KEY_COLUMN_NAME =
+            ConfigOption.key("columnName")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("SeaTunnel Schema Constraint Key Column Name");
 
-    Option<ConstraintKey.ColumnSortType> CONSTRAINT_KEY_COLUMN_SORT_TYPE =
-            Options.key("sortType")
+    ConfigEntry<ConstraintKey.ColumnSortType> CONSTRAINT_KEY_COLUMN_SORT_TYPE =
+            ConfigOption.key("sortType")
                     .enumType(ConstraintKey.ColumnSortType.class)
                     .defaultValue(ConstraintKey.ColumnSortType.ASC)
                     .withDescription(

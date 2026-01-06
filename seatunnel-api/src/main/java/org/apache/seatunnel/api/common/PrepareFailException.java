@@ -17,10 +17,9 @@
 
 package org.apache.seatunnel.api.common;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.common.constants.PluginType;
 import org.apache.seatunnel.common.exception.SeaTunnelRuntimeException;
-
-import com.typesafe.config.Config;
 
 /** This exception will throw when {@link SeaTunnelPluginLifeCycle#prepare(Config)} failed. */
 public class PrepareFailException extends SeaTunnelRuntimeException {

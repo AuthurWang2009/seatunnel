@@ -17,35 +17,38 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.ftp.config;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions;
 import org.apache.seatunnel.connectors.seatunnel.file.ftp.system.FtpConnectionMode;
 
 import static org.apache.seatunnel.connectors.seatunnel.file.ftp.system.FtpConnectionMode.ACTIVE_LOCAL;
 
 public class FtpFileBaseOptions extends FileBaseOptions {
-    public static final Option<String> FTP_PASSWORD =
-            Options.key("password")
+    public static final ConfigEntry<String> FTP_PASSWORD =
+            ConfigOption.key("password")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("FTP server password");
-    public static final Option<String> FTP_USERNAME =
-            Options.key("user")
+    public static final ConfigEntry<String> FTP_USERNAME =
+            ConfigOption.key("user")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("FTP server username");
-    public static final Option<String> FTP_HOST =
-            Options.key("host").stringType().noDefaultValue().withDescription("FTP server host");
-    public static final Option<Integer> FTP_PORT =
-            Options.key("port").intType().noDefaultValue().withDescription("FTP server port");
-    public static final Option<FtpConnectionMode> FTP_CONNECTION_MODE =
-            Options.key("connection_mode")
+    public static final ConfigEntry<String> FTP_HOST =
+            ConfigOption.key("host")
+                    .stringType()
+                    .noDefaultValue()
+                    .withDescription("FTP server host");
+    public static final ConfigEntry<Integer> FTP_PORT =
+            ConfigOption.key("port").intType().noDefaultValue().withDescription("FTP server port");
+    public static final ConfigEntry<FtpConnectionMode> FTP_CONNECTION_MODE =
+            ConfigOption.key("connection_mode")
                     .enumType(FtpConnectionMode.class)
                     .defaultValue(ACTIVE_LOCAL)
                     .withDescription("FTP server connection mode ");
-    public static final Option<Boolean> FTP_REMOTE_VERIFICATION_ENABLED =
-            Options.key("remote_verification_enabled")
+    public static final ConfigEntry<Boolean> FTP_REMOTE_VERIFICATION_ENABLED =
+            ConfigOption.key("remote_verification_enabled")
                     .booleanType()
                     .defaultValue(true)
                     .withDescription(

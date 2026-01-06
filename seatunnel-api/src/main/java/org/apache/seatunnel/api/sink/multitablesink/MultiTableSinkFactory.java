@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.api.sink.multitablesink;
 
-import org.apache.seatunnel.api.configuration.util.OptionRule;
+import org.apache.seatunnel.api.config.util.OptionRule;
 import org.apache.seatunnel.api.table.connector.TableSink;
 import org.apache.seatunnel.api.table.factory.Factory;
 import org.apache.seatunnel.api.table.factory.MultiTableFactoryContext;

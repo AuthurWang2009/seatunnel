@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.replace;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Data;
@@ -33,38 +33,38 @@ import java.util.List;
 @Setter
 public class ReplaceTransformConfig implements Serializable {
 
-    public static final Option<String> KEY_REPLACE_FIELD =
-            Options.key("replace_field")
+    public static final ConfigEntry<String> KEY_REPLACE_FIELD =
+            ConfigOption.key("replace_field")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("The field you want to replace");
 
-    public static final Option<String> KEY_PATTERN =
-            Options.key("pattern")
+    public static final ConfigEntry<String> KEY_PATTERN =
+            ConfigOption.key("pattern")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("The old string that will be replaced");
 
-    public static final Option<String> KEY_REPLACEMENT =
-            Options.key("replacement")
+    public static final ConfigEntry<String> KEY_REPLACEMENT =
+            ConfigOption.key("replacement")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("The new string for replace");
 
-    public static final Option<Boolean> KEY_IS_REGEX =
-            Options.key("is_regex")
+    public static final ConfigEntry<Boolean> KEY_IS_REGEX =
+            ConfigOption.key("is_regex")
                     .booleanType()
                     .defaultValue(false)
                     .withDescription("Use regex for string match");
 
-    public static final Option<Boolean> KEY_REPLACE_FIRST =
-            Options.key("replace_first")
+    public static final ConfigEntry<Boolean> KEY_REPLACE_FIRST =
+            ConfigOption.key("replace_first")
                     .booleanType()
                     .noDefaultValue()
                     .withDescription("Replace the first match string");
 
-    public static final Option<List<TableTransforms>> MULTI_TABLES =
-            Options.key("table_transform")
+    public static final ConfigEntry<List<TableTransforms>> MULTI_TABLES =
+            ConfigOption.key("table_transform")
                     .listType(TableTransforms.class)
                     .noDefaultValue()
                     .withDescription("");

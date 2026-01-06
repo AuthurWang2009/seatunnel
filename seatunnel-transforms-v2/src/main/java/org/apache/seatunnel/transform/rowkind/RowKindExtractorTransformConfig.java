@@ -17,8 +17,8 @@
 
 package org.apache.seatunnel.transform.rowkind;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,14 +31,14 @@ public class RowKindExtractorTransformConfig implements Serializable {
 
     public static final String PLUGIN_NAME = "RowKindExtractor";
 
-    public static final Option<String> CUSTOM_FIELD_NAME =
-            Options.key("custom_field_name")
+    public static final ConfigEntry<String> CUSTOM_FIELD_NAME =
+            ConfigOption.key("custom_field_name")
                     .stringType()
                     .defaultValue("row_kind")
                     .withDescription("Custom field name of the RowKind field");
 
-    public static final Option<RowKindExtractorTransformType> TRANSFORM_TYPE =
-            Options.key("transform_type")
+    public static final ConfigEntry<RowKindExtractorTransformType> TRANSFORM_TYPE =
+            ConfigOption.key("transform_type")
                     .enumType(RowKindExtractorTransformType.class)
                     .defaultValue(RowKindExtractorTransformType.SHORT)
                     .withDescription("transform RowKind field value format");

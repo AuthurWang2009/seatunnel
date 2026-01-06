@@ -17,23 +17,29 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.sftp.config;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions;
 
 public class SftpFileBaseOptions extends FileBaseOptions {
-    public static final Option<String> SFTP_PASSWORD =
-            Options.key("password")
+    public static final ConfigEntry<String> SFTP_PASSWORD =
+            ConfigOption.key("password")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("SFTP server password");
-    public static final Option<String> SFTP_USER =
-            Options.key("user")
+    public static final ConfigEntry<String> SFTP_USER =
+            ConfigOption.key("user")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("SFTP server username");
-    public static final Option<String> SFTP_HOST =
-            Options.key("host").stringType().noDefaultValue().withDescription("SFTP server host");
-    public static final Option<Integer> SFTP_PORT =
-            Options.key("port").intType().noDefaultValue().withDescription("SFTP server port");
+    public static final ConfigEntry<String> SFTP_HOST =
+            ConfigOption.key("host")
+                    .stringType()
+                    .noDefaultValue()
+                    .withDescription("SFTP server host");
+    public static final ConfigEntry<Integer> SFTP_PORT =
+            ConfigOption.key("port")
+                    .intType()
+                    .noDefaultValue()
+                    .withDescription("SFTP server port");
 }

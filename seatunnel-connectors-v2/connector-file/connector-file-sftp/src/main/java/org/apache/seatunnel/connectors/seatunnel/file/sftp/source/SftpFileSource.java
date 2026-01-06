@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.sftp.source;
 
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileSystemType;
 import org.apache.seatunnel.connectors.seatunnel.file.sftp.config.MultipleTableSFTPFileSourceConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.source.BaseMultipleTableFileSource;

@@ -17,8 +17,8 @@
 
 package org.apache.seatunnel.api.options.table;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -28,50 +28,50 @@ import java.util.Map;
 public interface ColumnOptions {
 
     // todo: how to define List<Map<String, Object>>
-    Option<List<Map<String, Object>>> COLUMNS =
-            Options.key("columns")
+    ConfigEntry<List<Map<String, Object>>> COLUMNS =
+            ConfigOption.key("columns")
                     .type(new TypeReference<List<Map<String, Object>>>() {})
                     .noDefaultValue()
                     .withDescription("SeaTunnel Schema Columns");
 
-    Option<String> COLUMN_NAME =
-            Options.key("name")
+    ConfigEntry<String> COLUMN_NAME =
+            ConfigOption.key("name")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("SeaTunnel Schema Column Name");
 
-    Option<String> TYPE =
-            Options.key("type")
+    ConfigEntry<String> TYPE =
+            ConfigOption.key("type")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("SeaTunnel Schema Column Type");
 
-    Option<Integer> COLUMN_SCALE =
-            Options.key("columnScale")
+    ConfigEntry<Integer> COLUMN_SCALE =
+            ConfigOption.key("columnScale")
                     .intType()
                     .noDefaultValue()
                     .withDescription("SeaTunnel Schema Column scale");
 
-    Option<Long> COLUMN_LENGTH =
-            Options.key("columnLength")
+    ConfigEntry<Long> COLUMN_LENGTH =
+            ConfigOption.key("columnLength")
                     .longType()
                     .defaultValue(0L)
                     .withDescription("SeaTunnel Schema Column Length");
 
-    Option<Boolean> NULLABLE =
-            Options.key("nullable")
+    ConfigEntry<Boolean> NULLABLE =
+            ConfigOption.key("nullable")
                     .booleanType()
                     .defaultValue(true)
                     .withDescription("SeaTunnel Schema Column Nullable");
 
-    Option<Object> DEFAULT_VALUE =
-            Options.key("defaultValue")
+    ConfigEntry<Object> DEFAULT_VALUE =
+            ConfigOption.key("defaultValue")
                     .objectType(Object.class)
                     .noDefaultValue()
                     .withDescription("SeaTunnel Schema Column Default Value");
 
-    Option<String> COLUMN_COMMENT =
-            Options.key("comment")
+    ConfigEntry<String> COLUMN_COMMENT =
+            ConfigOption.key("comment")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("SeaTunnel Schema Column Comment");

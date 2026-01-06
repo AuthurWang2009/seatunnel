@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.copy;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -33,21 +33,21 @@ import java.util.Optional;
 @Setter
 public class CopyTransformConfig implements Serializable {
     @Deprecated
-    public static final Option<String> SRC_FIELD =
-            Options.key("src_field")
+    public static final ConfigEntry<String> SRC_FIELD =
+            ConfigOption.key("src_field")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("Src field you want to copy");
 
     @Deprecated
-    public static final Option<String> DEST_FIELD =
-            Options.key("dest_field")
+    public static final ConfigEntry<String> DEST_FIELD =
+            ConfigOption.key("dest_field")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("Copy Src field to Dest field");
 
-    public static final Option<Map<String, String>> FIELDS =
-            Options.key("fields")
+    public static final ConfigEntry<Map<String, String>> FIELDS =
+            ConfigOption.key("fields")
                     .mapType()
                     .noDefaultValue()
                     .withDescription(

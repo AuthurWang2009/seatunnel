@@ -17,45 +17,45 @@
 
 package org.apache.seatunnel.connectors.seatunnel.hive.config;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class HiveConfig {
-    public static final Option<String> TABLE_NAME =
-            Options.key("table_name")
+    public static final ConfigEntry<String> TABLE_NAME =
+            ConfigOption.key("table_name")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("Hive table name");
-    public static final Option<String> METASTORE_URI =
-            Options.key("metastore_uri")
+    public static final ConfigEntry<String> METASTORE_URI =
+            ConfigOption.key("metastore_uri")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("Hive metastore uri");
 
-    public static final Option<Boolean> ABORT_DROP_PARTITION_METADATA =
-            Options.key("abort_drop_partition_metadata")
+    public static final ConfigEntry<Boolean> ABORT_DROP_PARTITION_METADATA =
+            ConfigOption.key("abort_drop_partition_metadata")
                     .booleanType()
                     .defaultValue(false)
                     .withDescription(
                             "Flag to decide whether to drop partition metadata from Hive Metastore during an abort operation. Note: this only affects the metadata in the metastore, the data in the partition will always be deleted(data generated during the synchronization process).");
 
-    public static final Option<String> HIVE_SITE_PATH =
-            Options.key("hive_site_path")
+    public static final ConfigEntry<String> HIVE_SITE_PATH =
+            ConfigOption.key("hive_site_path")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("The path of hive-site.xml");
 
-    public static final Option<Map<String, String>> HADOOP_CONF =
-            Options.key("hive.hadoop.conf")
+    public static final ConfigEntry<Map<String, String>> HADOOP_CONF =
+            ConfigOption.key("hive.hadoop.conf")
                     .mapType()
                     .defaultValue(new HashMap<>())
                     .withDescription("Properties in hadoop conf");
 
-    public static final Option<String> HADOOP_CONF_PATH =
-            Options.key("hive.hadoop.conf-path")
+    public static final ConfigEntry<String> HADOOP_CONF_PATH =
+            ConfigOption.key("hive.hadoop.conf-path")
                     .stringType()
                     .noDefaultValue()
                     .withDescription(

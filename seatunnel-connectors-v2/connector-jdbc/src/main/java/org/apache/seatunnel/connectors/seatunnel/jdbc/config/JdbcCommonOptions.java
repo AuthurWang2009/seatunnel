@@ -17,115 +17,115 @@
 
 package org.apache.seatunnel.connectors.seatunnel.jdbc.config;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
-import org.apache.seatunnel.api.configuration.util.OptionRule;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
+import org.apache.seatunnel.api.config.util.OptionRule;
 
 import java.util.Map;
 
 public class JdbcCommonOptions {
 
-    public static final Option<String> URL =
-            Options.key("url")
+    public static final ConfigEntry<String> URL =
+            ConfigOption.key("url")
                     .stringType()
                     .noDefaultValue()
                     .withFallbackKeys("base-url")
                     .withDescription("url");
 
-    public static final Option<String> DRIVER =
-            Options.key("driver").stringType().noDefaultValue().withDescription("driver");
+    public static final ConfigEntry<String> DRIVER =
+            ConfigOption.key("driver").stringType().noDefaultValue().withDescription("driver");
 
-    public static final Option<String> SCHEMA =
-            Options.key("schema")
+    public static final ConfigEntry<String> SCHEMA =
+            ConfigOption.key("schema")
                     .stringType()
                     .noDefaultValue()
                     .withDescription(
                             "for databases that support the schema parameter, give it priority.");
 
-    public static final Option<Integer> CONNECTION_CHECK_TIMEOUT_SEC =
-            Options.key("connection_check_timeout_sec")
+    public static final ConfigEntry<Integer> CONNECTION_CHECK_TIMEOUT_SEC =
+            ConfigOption.key("connection_check_timeout_sec")
                     .intType()
                     .defaultValue(30)
                     .withDescription("connection check time second");
 
-    public static final Option<String> COMPATIBLE_MODE =
-            Options.key("compatible_mode")
+    public static final ConfigEntry<String> COMPATIBLE_MODE =
+            ConfigOption.key("compatible_mode")
                     .stringType()
                     .noDefaultValue()
                     .withFallbackKeys("compatibleMode")
                     .withDescription(
                             "The compatible mode of database, required when the database supports multiple compatible modes. For example, when using OceanBase database, you need to set it to 'mysql' or 'oracle'.");
 
-    public static final Option<String> DIALECT =
-            Options.key("dialect")
+    public static final ConfigEntry<String> DIALECT =
+            ConfigOption.key("dialect")
                     .stringType()
                     .noDefaultValue()
                     .withDescription(
                             "The appointed dialect, if it does not exist, is still obtained according to the url");
 
-    public static final Option<String> USERNAME =
-            Options.key("username")
+    public static final ConfigEntry<String> USERNAME =
+            ConfigOption.key("username")
                     .stringType()
                     .noDefaultValue()
                     .withFallbackKeys("user")
                     .withDescription("user");
 
-    public static final Option<String> PASSWORD =
-            Options.key("password").stringType().noDefaultValue().withDescription("password");
+    public static final ConfigEntry<String> PASSWORD =
+            ConfigOption.key("password").stringType().noDefaultValue().withDescription("password");
 
-    public static final Option<String> QUERY =
-            Options.key("query").stringType().noDefaultValue().withDescription("query");
+    public static final ConfigEntry<String> QUERY =
+            ConfigOption.key("query").stringType().noDefaultValue().withDescription("query");
 
-    public static final Option<Boolean> DECIMAL_TYPE_NARROWING =
-            Options.key("decimal_type_narrowing")
+    public static final ConfigEntry<Boolean> DECIMAL_TYPE_NARROWING =
+            ConfigOption.key("decimal_type_narrowing")
                     .booleanType()
                     .defaultValue(true)
                     .withDescription(
                             "decimal type narrowing, if true, the decimal type will be narrowed to the int or long type if without loss of precision. Only support for Oracle at now.");
 
-    public static final Option<Boolean> INT_TYPE_NARROWING =
-            Options.key("int_type_narrowing")
+    public static final ConfigEntry<Boolean> INT_TYPE_NARROWING =
+            ConfigOption.key("int_type_narrowing")
                     .booleanType()
                     .defaultValue(true)
                     .withDescription(
                             "int type narrowing, if true, the tinyint(1) type will be narrowed to the boolean type if without loss of precision. Support for MySQL at now.");
 
-    public static final Option<Boolean> HANDLE_BLOB_AS_STRING =
-            Options.key("handle_blob_as_string")
+    public static final ConfigEntry<Boolean> HANDLE_BLOB_AS_STRING =
+            ConfigOption.key("handle_blob_as_string")
                     .booleanType()
                     .defaultValue(false)
                     .withDescription(
                             "If true, BLOB type will be converted to STRING type. Only support for Oracle at now.");
 
-    public static final Option<Boolean> USE_KERBEROS =
-            Options.key("use_kerberos")
+    public static final ConfigEntry<Boolean> USE_KERBEROS =
+            ConfigOption.key("use_kerberos")
                     .booleanType()
                     .defaultValue(false)
                     .withDescription("Whether to enable Kerberos, default is false.");
 
-    public static final Option<String> KERBEROS_PRINCIPAL =
-            Options.key("kerberos_principal")
+    public static final ConfigEntry<String> KERBEROS_PRINCIPAL =
+            ConfigOption.key("kerberos_principal")
                     .stringType()
                     .noDefaultValue()
                     .withDescription(
                             "When use kerberos, we should set kerberos principal such as 'test_user@xxx'.");
 
-    public static final Option<String> KERBEROS_KEYTAB_PATH =
-            Options.key("kerberos_keytab_path")
+    public static final ConfigEntry<String> KERBEROS_KEYTAB_PATH =
+            ConfigOption.key("kerberos_keytab_path")
                     .stringType()
                     .noDefaultValue()
                     .withDescription(
                             "When use kerberos, we should set kerberos principal file path such as '/home/test/test_user.keytab'.");
 
-    public static final Option<String> KRB5_PATH =
-            Options.key("krb5_path")
+    public static final ConfigEntry<String> KRB5_PATH =
+            ConfigOption.key("krb5_path")
                     .stringType()
                     .defaultValue("/etc/krb5.conf")
                     .withDescription(
                             "When use kerberos, we should set krb5 path file path such as '/seatunnel/krb5.conf' or use the default path '/etc/krb5.conf");
 
-    public static final Option<Map<String, String>> PROPERTIES =
-            Options.key("properties")
+    public static final ConfigEntry<Map<String, String>> PROPERTIES =
+            ConfigOption.key("properties")
                     .mapType()
                     .noDefaultValue()
                     .withDescription("additional connection configuration parameters");

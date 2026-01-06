@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.table;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.table.catalog.TablePath;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
@@ -39,8 +39,8 @@ public class TableFilterConfig implements Serializable {
 
     public static final String PLUGIN_NAME = "TableFilter";
 
-    public static final Option<String> DATABASE_PATTERN =
-            Options.key("database_pattern")
+    public static final ConfigEntry<String> DATABASE_PATTERN =
+            ConfigOption.key("database_pattern")
                     .stringType()
                     .noDefaultValue()
                     .withDescription(
@@ -48,8 +48,8 @@ public class TableFilterConfig implements Serializable {
                                     + "The default value is null, which means no filtering. "
                                     + "If you want to filter the database name, please set it to a regular expression.");
 
-    public static final Option<String> SCHEMA_PATTERN =
-            Options.key("schema_pattern")
+    public static final ConfigEntry<String> SCHEMA_PATTERN =
+            ConfigOption.key("schema_pattern")
                     .stringType()
                     .noDefaultValue()
                     .withDescription(
@@ -57,8 +57,8 @@ public class TableFilterConfig implements Serializable {
                                     + "The default value is null, which means no filtering. "
                                     + "If you want to filter the schema name, please set it to a regular expression.");
 
-    public static final Option<String> TABLE_PATTERN =
-            Options.key("table_pattern")
+    public static final ConfigEntry<String> TABLE_PATTERN =
+            ConfigOption.key("table_pattern")
                     .stringType()
                     .noDefaultValue()
                     .withDescription(
@@ -66,8 +66,8 @@ public class TableFilterConfig implements Serializable {
                                     + "The default value is null, which means no filtering. "
                                     + "If you want to filter the table name, please set it to a regular expression.");
 
-    public static final Option<PatternMode> PATTERN_MODE =
-            Options.key("pattern_mode")
+    public static final ConfigEntry<PatternMode> PATTERN_MODE =
+            ConfigOption.key("pattern_mode")
                     .enumType(PatternMode.class)
                     .defaultValue(PatternMode.INCLUDE)
                     .withDescription(

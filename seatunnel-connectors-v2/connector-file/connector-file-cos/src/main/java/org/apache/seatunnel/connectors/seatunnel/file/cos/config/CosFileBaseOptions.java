@@ -17,23 +17,23 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.cos.config;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseSourceOptions;
 
 public class CosFileBaseOptions extends FileBaseSourceOptions {
-    public static final Option<String> SECRET_ID =
-            Options.key("secret_id")
+    public static final ConfigEntry<String> SECRET_ID =
+            ConfigOption.key("secret_id")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("COS bucket secret id");
-    public static final Option<String> SECRET_KEY =
-            Options.key("secret_key")
+    public static final ConfigEntry<String> SECRET_KEY =
+            ConfigOption.key("secret_key")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("COS bucket secret key");
-    public static final Option<String> REGION =
-            Options.key("region").stringType().noDefaultValue().withDescription("COS region");
-    public static final Option<String> BUCKET =
-            Options.key("bucket").stringType().noDefaultValue().withDescription("COS bucket");
+    public static final ConfigEntry<String> REGION =
+            ConfigOption.key("region").stringType().noDefaultValue().withDescription("COS region");
+    public static final ConfigEntry<String> BUCKET =
+            ConfigOption.key("bucket").stringType().noDefaultValue().withDescription("COS bucket");
 }

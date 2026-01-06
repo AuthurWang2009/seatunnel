@@ -18,21 +18,21 @@
 
 package org.apache.seatunnel.format.compatible.kafka.connect.json;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 
 import java.util.Map;
 
 public class KafkaConnectJsonFormatOptions {
 
-    public static final Option<Boolean> KEY_CONVERTER_SCHEMA_ENABLED =
-            Options.key("key_converter_schema_enabled")
+    public static final ConfigEntry<Boolean> KEY_CONVERTER_SCHEMA_ENABLED =
+            ConfigOption.key("key_converter_schema_enabled")
                     .booleanType()
                     .defaultValue(true)
                     .withDescription("kafka connect key converter schema enabled.");
 
-    public static final Option<Boolean> VALUE_CONVERTER_SCHEMA_ENABLED =
-            Options.key("value_converter_schema_enabled")
+    public static final ConfigEntry<Boolean> VALUE_CONVERTER_SCHEMA_ENABLED =
+            ConfigOption.key("value_converter_schema_enabled")
                     .booleanType()
                     .defaultValue(true)
                     .withDescription("kafka connect value converter schema enabled.");

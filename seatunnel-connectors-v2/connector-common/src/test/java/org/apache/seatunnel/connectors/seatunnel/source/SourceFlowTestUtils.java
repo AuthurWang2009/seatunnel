@@ -20,7 +20,7 @@ package org.apache.seatunnel.connectors.seatunnel.source;
 import org.apache.seatunnel.api.common.JobContext;
 import org.apache.seatunnel.api.common.metrics.AbstractMetricsContext;
 import org.apache.seatunnel.api.common.metrics.MetricsContext;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.event.EventListener;
 import org.apache.seatunnel.api.source.Boundedness;
 import org.apache.seatunnel.api.source.Collector;

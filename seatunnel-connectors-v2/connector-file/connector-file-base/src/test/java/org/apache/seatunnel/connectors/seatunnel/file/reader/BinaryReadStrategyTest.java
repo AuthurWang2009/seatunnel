@@ -17,6 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.reader;
 
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
@@ -61,7 +62,7 @@ public class BinaryReadStrategyTest {
         File testFile = createTestFile("test_binary_default.bin", 2048);
 
         Config config = createConfig(testFile.getParent(), null, null);
-        binaryReadStrategy.setPluginConfig(config);
+        binaryReadStrategy.setPluginConfig(ReadonlyConfig.fromConfig(config));
         binaryReadStrategy.init(localConf);
 
         TestCollector collector = new TestCollector();
@@ -93,7 +94,7 @@ public class BinaryReadStrategyTest {
         File testFile = createTestFile("test_binary_custom.bin", 1500);
 
         Config config = createConfig(testFile.getParent(), 512, null);
-        binaryReadStrategy.setPluginConfig(config);
+        binaryReadStrategy.setPluginConfig(ReadonlyConfig.fromConfig(config));
         binaryReadStrategy.init(localConf);
 
         TestCollector collector = new TestCollector();
@@ -120,7 +121,7 @@ public class BinaryReadStrategyTest {
         File testFile = createTestFile("test_binary_complete.bin", 2048);
 
         Config config = createConfig(testFile.getParent(), null, true);
-        binaryReadStrategy.setPluginConfig(config);
+        binaryReadStrategy.setPluginConfig(ReadonlyConfig.fromConfig(config));
         binaryReadStrategy.init(localConf);
 
         TestCollector collector = new TestCollector();

@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.api.sink;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.ConstraintKey;
 import org.apache.seatunnel.api.table.catalog.PhysicalColumn;
@@ -38,23 +38,24 @@ import java.util.List;
 import java.util.Map;
 
 public class TablePlaceholderProcessorTest {
-    private static final Option<String> DATABASE =
-            Options.key("database").stringType().noDefaultValue();
-    private static final Option<String> SCHEMA =
-            Options.key("schema").stringType().noDefaultValue();
-    private static final Option<String> TABLE = Options.key("table").stringType().noDefaultValue();
-    private static final Option<String> PRIMARY_KEY =
-            Options.key("primary_key").stringType().noDefaultValue();
-    private static final Option<List<String>> PRIMARY_KEY_ARRAY =
-            Options.key("primary_key_array").listType(String.class).noDefaultValue();
-    private static final Option<String> UNIQUE_KEY =
-            Options.key("unique_key").stringType().noDefaultValue();
-    private static final Option<List<String>> UNIQUE_KEY_ARRAY =
-            Options.key("unique_key_array").listType(String.class).noDefaultValue();
-    private static final Option<String> FIELD_NAMES =
-            Options.key("field_names").stringType().noDefaultValue();
-    private static final Option<List<String>> FIELD_NAMES_ARRAY =
-            Options.key("field_names_array").listType(String.class).noDefaultValue();
+    private static final ConfigEntry<String> DATABASE =
+            ConfigOption.key("database").stringType().noDefaultValue();
+    private static final ConfigEntry<String> SCHEMA =
+            ConfigOption.key("schema").stringType().noDefaultValue();
+    private static final ConfigEntry<String> TABLE =
+            ConfigOption.key("table").stringType().noDefaultValue();
+    private static final ConfigEntry<String> PRIMARY_KEY =
+            ConfigOption.key("primary_key").stringType().noDefaultValue();
+    private static final ConfigEntry<List<String>> PRIMARY_KEY_ARRAY =
+            ConfigOption.key("primary_key_array").listType(String.class).noDefaultValue();
+    private static final ConfigEntry<String> UNIQUE_KEY =
+            ConfigOption.key("unique_key").stringType().noDefaultValue();
+    private static final ConfigEntry<List<String>> UNIQUE_KEY_ARRAY =
+            ConfigOption.key("unique_key_array").listType(String.class).noDefaultValue();
+    private static final ConfigEntry<String> FIELD_NAMES =
+            ConfigOption.key("field_names").stringType().noDefaultValue();
+    private static final ConfigEntry<List<String>> FIELD_NAMES_ARRAY =
+            ConfigOption.key("field_names_array").listType(String.class).noDefaultValue();
 
     @Test
     public void testSinkOptions() {

@@ -55,8 +55,8 @@ public class BinaryReadStrategy extends AbstractReadStrategy {
         basePath = new File(pluginConfig.getString(FileBaseSourceOptions.FILE_PATH.key()));
 
         // Load binary chunk size configuration
-        if (pluginConfig.hasPath(FileBaseSourceOptions.BINARY_CHUNK_SIZE.key())) {
-            binaryChunkSize = pluginConfig.getInt(FileBaseSourceOptions.BINARY_CHUNK_SIZE.key());
+        if (pluginConfig.getOptional(FileBaseSourceOptions.BINARY_CHUNK_SIZE).isPresent()) {
+            binaryChunkSize = pluginConfig.get(FileBaseSourceOptions.BINARY_CHUNK_SIZE);
             // Validate chunk size - should be positive and reasonable
             if (binaryChunkSize <= 0) {
                 throw new IllegalArgumentException(
@@ -69,9 +69,9 @@ public class BinaryReadStrategy extends AbstractReadStrategy {
         }
 
         // Load complete file mode configuration
-        if (pluginConfig.hasPath(FileBaseSourceOptions.BINARY_COMPLETE_FILE_MODE.key())) {
-            completeFileMode =
-                    pluginConfig.getBoolean(FileBaseSourceOptions.BINARY_COMPLETE_FILE_MODE.key());
+        if (pluginConfig.getOptional(FileBaseSourceOptions.BINARY_COMPLETE_FILE_MODE).isPresent()) {
+            boolean isCompleteFileMode =
+                    pluginConfig.get(FileBaseSourceOptions.BINARY_COMPLETE_FILE_MODE);
         }
     }
 

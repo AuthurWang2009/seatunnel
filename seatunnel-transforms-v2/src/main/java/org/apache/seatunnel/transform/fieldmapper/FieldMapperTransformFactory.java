@@ -17,8 +17,8 @@
 
 package org.apache.seatunnel.transform.fieldmapper;
 
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
-import org.apache.seatunnel.api.configuration.util.OptionRule;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.util.OptionRule;
 import org.apache.seatunnel.api.table.connector.TableTransform;
 import org.apache.seatunnel.api.table.factory.Factory;
 import org.apache.seatunnel.api.table.factory.TableTransformFactory;

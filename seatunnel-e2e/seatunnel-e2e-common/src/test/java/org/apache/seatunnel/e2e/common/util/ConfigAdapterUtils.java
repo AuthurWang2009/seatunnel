@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.e2e.common.util;
 
-import org.apache.seatunnel.api.configuration.ConfigAdapter;
+import org.apache.seatunnel.api.config.ConfigAdapter;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;

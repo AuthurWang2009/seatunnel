@@ -17,14 +17,14 @@
 
 package org.apache.seatunnel.core.starter.command;
 
+import org.apache.seatunnel.api.config.ConfigLoader;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.core.starter.exception.CommandExecuteException;
 import org.apache.seatunnel.core.starter.exception.ConfigCheckException;
 import org.apache.seatunnel.core.starter.utils.ConfigShadeUtils;
 
 import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 import com.typesafe.config.ConfigRenderOptions;
-import com.typesafe.config.ConfigResolveOptions;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.file.Path;
@@ -51,20 +51,14 @@ public class ConfEncryptCommand implements Command<AbstractCommandArgs> {
         String encryptConfigFile = abstractCommandArgs.getConfigFile();
         Path configPath = Paths.get(encryptConfigFile);
         checkConfigExist(configPath);
-        Config config =
-                ConfigFactory.parseFile(configPath.toFile())
-                        .resolve(ConfigResolveOptions.defaults().setAllowUnresolved(true));
         if (abstractCommandArgs.getVariables() != null) {
             abstractCommandArgs.getVariables().stream()
                     .filter(Objects::nonNull)
                     .map(variable -> variable.split("=", 2))
                     .filter(pair -> pair.length == 2)
                     .forEach(pair -> System.setProperty(pair[0], pair[1]));
-            config =
-                    config.resolveWith(
-                            ConfigFactory.systemProperties(),
-                            ConfigResolveOptions.defaults().setAllowUnresolved(true));
         }
+        Config config = ((ReadonlyConfig) ConfigLoader.load(configPath)).toConfig();
         Config encryptConfig = ConfigShadeUtils.encryptConfig(config);
         log.info(
                 "Encrypt config: \n{}",

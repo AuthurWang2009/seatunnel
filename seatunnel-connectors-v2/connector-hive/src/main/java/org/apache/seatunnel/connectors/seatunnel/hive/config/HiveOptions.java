@@ -17,26 +17,26 @@
 
 package org.apache.seatunnel.connectors.seatunnel.hive.config;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseSourceOptions;
 
 public class HiveOptions extends FileBaseSourceOptions {
 
-    public static final Option<String> TABLE_NAME =
-            Options.key("table_name")
+    public static final ConfigEntry<String> TABLE_NAME =
+            ConfigOption.key("table_name")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("Hive table name");
 
-    public static final Option<String> METASTORE_URI =
-            Options.key("metastore_uri")
+    public static final ConfigEntry<String> METASTORE_URI =
+            ConfigOption.key("metastore_uri")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("Hive metastore uri");
 
-    public static final Option<String> HIVE_SITE_PATH =
-            Options.key("hive_site_path")
+    public static final ConfigEntry<String> HIVE_SITE_PATH =
+            ConfigOption.key("hive_site_path")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("The path of hive-site.xml");

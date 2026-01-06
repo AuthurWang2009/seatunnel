@@ -17,7 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.source.reader;
 
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
 import org.apache.seatunnel.api.serialization.DeserializationSchema;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
@@ -51,13 +50,11 @@ public class JsonReadStrategy extends AbstractReadStrategy {
     @Override
     public void init(HadoopConf conf) {
         super.init(conf);
-        if (pluginConfig.hasPath(FileBaseSourceOptions.COMPRESS_CODEC.key())) {
-            String compressCodec =
-                    pluginConfig.getString(FileBaseSourceOptions.COMPRESS_CODEC.key());
-            compressFormat = CompressFormat.valueOf(compressCodec.toUpperCase());
+        if (pluginConfig.getOptional(FileBaseSourceOptions.COMPRESS_CODEC).isPresent()) {
+            compressFormat = pluginConfig.get(FileBaseSourceOptions.COMPRESS_CODEC);
         }
         encoding =
-                ReadonlyConfig.fromConfig(pluginConfig)
+                pluginConfig
                         .getOptional(FileBaseSourceOptions.ENCODING)
                         .orElse(StandardCharsets.UTF_8.name());
     }

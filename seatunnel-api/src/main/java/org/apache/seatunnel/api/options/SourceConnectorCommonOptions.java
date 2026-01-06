@@ -17,14 +17,14 @@
 
 package org.apache.seatunnel.api.options;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 import org.apache.seatunnel.api.env.ParsingMode;
 
 public class SourceConnectorCommonOptions extends ConnectorCommonOptions {
 
-    public static Option<ParsingMode> DAG_PARSING_MODE =
-            Options.key("dag-parsing.mode")
+    public static ConfigEntry<ParsingMode> DAG_PARSING_MODE =
+            ConfigOption.key("dag-parsing.mode")
                     .enumType(ParsingMode.class)
                     .defaultValue(ParsingMode.SINGLENESS)
                     .withDescription("Whether to enable parsing support for multi-table source");

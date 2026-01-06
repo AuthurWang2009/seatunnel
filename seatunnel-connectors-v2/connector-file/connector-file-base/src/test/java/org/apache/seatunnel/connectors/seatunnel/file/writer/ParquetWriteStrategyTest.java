@@ -17,6 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.writer;
 
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtil;
 import org.apache.seatunnel.api.table.type.BasicType;
@@ -78,7 +79,9 @@ public class ParquetWriteStrategyTest {
                             PrimitiveByteArrayType.INSTANCE
                         });
         FileSinkConfig writeSinkConfig =
-                new FileSinkConfig(ConfigFactory.parseMap(writeConfig), writeRowType);
+                new FileSinkConfig(
+                        ReadonlyConfig.fromConfig(ConfigFactory.parseMap(writeConfig)),
+                        writeRowType);
         ParquetWriteStrategy writeStrategy = new ParquetWriteStrategy(writeSinkConfig);
         ParquetReadStrategyTest.LocalConf hadoopConf =
                 new ParquetReadStrategyTest.LocalConf(FS_DEFAULT_NAME_DEFAULT);

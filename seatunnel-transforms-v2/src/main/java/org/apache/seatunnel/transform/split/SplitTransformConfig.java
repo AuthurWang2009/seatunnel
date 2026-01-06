@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.split;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -30,20 +30,20 @@ import java.util.List;
 @Getter
 @Setter
 public class SplitTransformConfig implements Serializable {
-    public static final Option<String> KEY_SEPARATOR =
-            Options.key("separator")
+    public static final ConfigEntry<String> KEY_SEPARATOR =
+            ConfigOption.key("separator")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("The separator to split the field");
 
-    public static final Option<String> KEY_SPLIT_FIELD =
-            Options.key("split_field")
+    public static final ConfigEntry<String> KEY_SPLIT_FIELD =
+            ConfigOption.key("split_field")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("The field to be split");
 
-    public static final Option<List<String>> KEY_OUTPUT_FIELDS =
-            Options.key("output_fields")
+    public static final ConfigEntry<List<String>> KEY_OUTPUT_FIELDS =
+            ConfigOption.key("output_fields")
                     .listType()
                     .noDefaultValue()
                     .withDescription("The result fields after split");

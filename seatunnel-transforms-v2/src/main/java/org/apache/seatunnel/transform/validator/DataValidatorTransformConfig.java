@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.validator;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.transform.validator.rule.LengthValidationRule;
 import org.apache.seatunnel.transform.validator.rule.NotNullValidationRule;
 import org.apache.seatunnel.transform.validator.rule.RangeValidationRule;
@@ -48,8 +48,8 @@ import java.util.Map;
 @Slf4j
 public class DataValidatorTransformConfig implements Serializable {
 
-    public static final Option<List<Map<String, Object>>> FIELD_RULES =
-            Options.key("field_rules")
+    public static final ConfigEntry<List<Map<String, Object>>> FIELD_RULES =
+            ConfigOption.key("field_rules")
                     .type(new TypeReference<List<Map<String, Object>>>() {})
                     .noDefaultValue()
                     .withDescription("Field validation rules");

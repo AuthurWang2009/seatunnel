@@ -19,9 +19,9 @@ package org.apache.seatunnel.api.table.factory;
 
 import org.apache.seatunnel.api.common.JobContext;
 import org.apache.seatunnel.api.common.PluginIdentifier;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
-import org.apache.seatunnel.api.configuration.util.ConfigValidator;
-import org.apache.seatunnel.api.configuration.util.OptionRule;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.util.ConfigValidator;
+import org.apache.seatunnel.api.config.util.OptionRule;
 import org.apache.seatunnel.api.env.ParsingMode;
 import org.apache.seatunnel.api.options.ConnectorCommonOptions;
 import org.apache.seatunnel.api.options.EnvCommonOptions;
@@ -115,7 +115,7 @@ public final class FactoryUtil {
                                         EngineType.SEATUNNEL.getEngine(),
                                         PluginType.SOURCE.getType(),
                                         factoryId));
-                source.prepare(options.toConfig());
+                source.prepare(options);
 
             } else {
                 if (factory == null) {
@@ -219,7 +219,7 @@ public final class FactoryUtil {
                                         EngineType.SEATUNNEL.getEngine(),
                                         PluginType.SINK.getType(),
                                         factoryId));
-                sink.prepare(config.toConfig());
+                sink.prepare(config);
                 sink.setTypeInfo(catalogTable.getSeaTunnelRowType());
 
                 return sink;

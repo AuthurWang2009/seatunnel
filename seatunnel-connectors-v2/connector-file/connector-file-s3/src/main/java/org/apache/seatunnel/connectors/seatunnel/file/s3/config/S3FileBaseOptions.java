@@ -17,33 +17,33 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.s3.config;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseSourceOptions;
 
 import java.util.Map;
 
 public class S3FileBaseOptions extends FileBaseSourceOptions {
-    public static final Option<String> S3_ACCESS_KEY =
-            Options.key("access_key")
+    public static final ConfigEntry<String> S3_ACCESS_KEY =
+            ConfigOption.key("access_key")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("S3 access key");
-    public static final Option<String> S3_SECRET_KEY =
-            Options.key("secret_key")
+    public static final ConfigEntry<String> S3_SECRET_KEY =
+            ConfigOption.key("secret_key")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("S3 secret key");
-    public static final Option<String> S3_BUCKET =
-            Options.key("bucket").stringType().noDefaultValue().withDescription("S3 bucket");
-    public static final Option<String> FS_S3A_ENDPOINT =
-            Options.key("fs.s3a.endpoint")
+    public static final ConfigEntry<String> S3_BUCKET =
+            ConfigOption.key("bucket").stringType().noDefaultValue().withDescription("S3 bucket");
+    public static final ConfigEntry<String> FS_S3A_ENDPOINT =
+            ConfigOption.key("fs.s3a.endpoint")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("fs s3a endpoint");
 
-    public static final Option<S3aAwsCredentialsProvider> S3A_AWS_CREDENTIALS_PROVIDER =
-            Options.key("fs.s3a.aws.credentials.provider")
+    public static final ConfigEntry<S3aAwsCredentialsProvider> S3A_AWS_CREDENTIALS_PROVIDER =
+            ConfigOption.key("fs.s3a.aws.credentials.provider")
                     .enumType(S3aAwsCredentialsProvider.class)
                     .defaultValue(S3aAwsCredentialsProvider.InstanceProfileCredentialsProvider)
                     .withDescription("s3a aws credentials provider");
@@ -56,8 +56,8 @@ public class S3FileBaseOptions extends FileBaseSourceOptions {
      *
      * <p>such as: key = "fs.s3a.session.token" value = "SECRET-SESSION-TOKEN"
      */
-    public static final Option<Map<String, String>> S3_PROPERTIES =
-            Options.key("hadoop_s3_properties")
+    public static final ConfigEntry<Map<String, String>> S3_PROPERTIES =
+            ConfigOption.key("hadoop_s3_properties")
                     .mapType()
                     .noDefaultValue()
                     .withDescription("S3 properties");

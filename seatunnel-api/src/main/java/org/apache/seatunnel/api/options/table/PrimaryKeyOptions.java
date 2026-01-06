@@ -17,8 +17,8 @@
 
 package org.apache.seatunnel.api.options.table;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -27,20 +27,20 @@ import java.util.Map;
 
 public interface PrimaryKeyOptions {
 
-    Option<Map<String, Object>> PRIMARY_KEY =
-            Options.key("primaryKey")
+    ConfigEntry<Map<String, Object>> PRIMARY_KEY =
+            ConfigOption.key("primaryKey")
                     .type(new TypeReference<Map<String, Object>>() {})
                     .noDefaultValue()
                     .withDescription("SeaTunnel Schema Fields");
 
-    Option<String> PRIMARY_KEY_NAME =
-            Options.key("name")
+    ConfigEntry<String> PRIMARY_KEY_NAME =
+            ConfigOption.key("name")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("SeaTunnel Schema Primary Key Name");
 
-    Option<List<String>> PRIMARY_KEY_COLUMNS =
-            Options.key("columnNames")
+    ConfigEntry<List<String>> PRIMARY_KEY_COLUMNS =
+            ConfigOption.key("columnNames")
                     .listType()
                     .noDefaultValue()
                     .withDescription("SeaTunnel Schema Primary Key Columns");

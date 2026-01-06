@@ -18,8 +18,6 @@
 package org.apache.seatunnel.connectors.seatunnel.file.source.reader;
 
 import org.apache.seatunnel.api.common.SeaTunnelAPIErrorCode;
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.type.SeaTunnelDataType;
@@ -59,7 +57,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -263,9 +260,12 @@ public class XmlReadStrategy extends AbstractReadStrategy {
 
     /** Performs pre-checks and initialization of the configuration for reading XML files. */
     private void preCheckAndInitializeConfiguration() {
-        ReadonlyConfig readonlyConfig = ReadonlyConfig.fromConfig(pluginConfig);
-        this.tableRowName = readonlyConfig.get(FileBaseSourceOptions.XML_ROW_TAG);
-        this.useAttrFormat = readonlyConfig.get(FileBaseSourceOptions.XML_USE_ATTR_FORMAT);
+        if (pluginConfig.getOptional(FileBaseSourceOptions.XML_ROW_TAG).isPresent()) {
+            this.tableRowName = pluginConfig.get(FileBaseSourceOptions.XML_ROW_TAG);
+        }
+        if (pluginConfig.getOptional(FileBaseSourceOptions.XML_USE_ATTR_FORMAT).isPresent()) {
+            this.useAttrFormat = pluginConfig.get(FileBaseSourceOptions.XML_USE_ATTR_FORMAT);
+        }
 
         // Check mandatory configurations
         if (StringUtils.isEmpty(tableRowName) || useAttrFormat == null) {
@@ -277,37 +277,21 @@ public class XmlReadStrategy extends AbstractReadStrategy {
                             FileBaseSourceOptions.XML_USE_ATTR_FORMAT.key()));
         }
 
-        this.delimiter = readonlyConfig.get(FileBaseSourceOptions.FIELD_DELIMITER);
+        this.delimiter =
+                pluginConfig.getOptional(FileBaseSourceOptions.FIELD_DELIMITER).orElse(null);
 
-        this.dateFormat =
-                getComplexDateConfigValue(
-                        FileBaseSourceOptions.DATE_FORMAT_LEGACY, DateUtils.Formatter::parse);
-        this.timeFormat =
-                getComplexDateConfigValue(
-                        FileBaseSourceOptions.TIME_FORMAT_LEGACY, TimeUtils.Formatter::parse);
-        this.datetimeFormat =
-                getComplexDateConfigValue(
-                        FileBaseSourceOptions.DATETIME_FORMAT_LEGACY,
-                        DateTimeUtils.Formatter::parse);
+        if (pluginConfig.getOptional(FileBaseSourceOptions.DATE_FORMAT_LEGACY).isPresent()) {
+            this.dateFormat = pluginConfig.get(FileBaseSourceOptions.DATE_FORMAT_LEGACY);
+        }
+        if (pluginConfig.getOptional(FileBaseSourceOptions.TIME_FORMAT_LEGACY).isPresent()) {
+            this.timeFormat = pluginConfig.get(FileBaseSourceOptions.TIME_FORMAT_LEGACY);
+        }
+        if (pluginConfig.getOptional(FileBaseSourceOptions.DATETIME_FORMAT_LEGACY).isPresent()) {
+            this.datetimeFormat = pluginConfig.get(FileBaseSourceOptions.DATETIME_FORMAT_LEGACY);
+        }
         this.encoding =
-                ReadonlyConfig.fromConfig(pluginConfig)
+                pluginConfig
                         .getOptional(FileBaseSourceOptions.ENCODING)
                         .orElse(StandardCharsets.UTF_8.name());
-    }
-
-    /**
-     * Retrieves the complex date configuration value for the given option.
-     *
-     * @param option The configuration option to retrieve.
-     * @param parser The function used to parse the configuration value.
-     * @param <T> The type of the configuration value.
-     * @return The parsed configuration value or the default value if not found.
-     */
-    @SuppressWarnings("unchecked")
-    private <T> T getComplexDateConfigValue(Option<?> option, Function<String, T> parser) {
-        if (!pluginConfig.hasPath(option.key())) {
-            return (T) option.defaultValue();
-        }
-        return parser.apply(pluginConfig.getString(option.key()));
     }
 }

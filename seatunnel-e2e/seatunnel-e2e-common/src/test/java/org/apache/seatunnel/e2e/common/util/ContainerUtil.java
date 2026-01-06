@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.e2e.common.util;
 
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.table.factory.FactoryException;
 import org.apache.seatunnel.common.constants.PluginType;
 import org.apache.seatunnel.e2e.common.container.EngineType;
@@ -34,8 +34,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
-import com.typesafe.config.ConfigResolveOptions;
 import groovy.lang.Tuple2;
 import lombok.extern.slf4j.Slf4j;
 
@@ -347,11 +345,7 @@ public final class ContainerUtil {
     }
 
     private static Config getConfig(File file) {
-        return ConfigBuilder.of(file.toPath())
-                .resolve(ConfigResolveOptions.defaults().setAllowUnresolved(true))
-                .resolveWith(
-                        ConfigFactory.systemProperties(),
-                        ConfigResolveOptions.defaults().setAllowUnresolved(true));
+        return ConfigBuilder.of(file.toPath());
     }
 
     public static void checkPathExist(String path) {

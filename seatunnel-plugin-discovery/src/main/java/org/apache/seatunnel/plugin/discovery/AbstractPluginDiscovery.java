@@ -19,8 +19,8 @@ package org.apache.seatunnel.plugin.discovery;
 
 import org.apache.seatunnel.api.common.PluginIdentifier;
 import org.apache.seatunnel.api.common.PluginIdentifierInterface;
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.util.OptionRule;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.util.OptionRule;
 import org.apache.seatunnel.api.table.factory.Factory;
 import org.apache.seatunnel.api.table.factory.FactoryUtil;
 import org.apache.seatunnel.api.table.factory.TableSinkFactory;
@@ -271,8 +271,8 @@ public abstract class AbstractPluginDiscovery<T> implements PluginDiscovery<T> {
     }
 
     @Override
-    public ImmutableTriple<PluginIdentifier, List<Option<?>>, List<Option<?>>> getOptionRules(
-            String pluginIdentifier) {
+    public ImmutableTriple<PluginIdentifier, List<ConfigEntry<?>>, List<ConfigEntry<?>>>
+            getOptionRules(String pluginIdentifier) {
         Optional<Map.Entry<PluginIdentifier, OptionRule>> pluginEntry =
                 getPlugins().entrySet().stream()
                         .filter(
@@ -283,11 +283,11 @@ public abstract class AbstractPluginDiscovery<T> implements PluginDiscovery<T> {
                         .findFirst();
         if (pluginEntry.isPresent()) {
             Map.Entry<PluginIdentifier, OptionRule> entry = pluginEntry.get();
-            List<Option<?>> requiredOptions =
+            List<ConfigEntry<?>> requiredOptions =
                     entry.getValue().getRequiredOptions().stream()
                             .flatMap(requiredOption -> requiredOption.getOptions().stream())
                             .collect(Collectors.toList());
-            List<Option<?>> optionalOptions = entry.getValue().getOptionalOptions();
+            List<ConfigEntry<?>> optionalOptions = entry.getValue().getOptionalOptions();
             return ImmutableTriple.of(entry.getKey(), requiredOptions, optionalOptions);
         }
         return ImmutableTriple.of(null, new ArrayList<>(), new ArrayList<>());

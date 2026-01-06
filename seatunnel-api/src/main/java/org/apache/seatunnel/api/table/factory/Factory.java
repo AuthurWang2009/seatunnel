@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.api.table.factory;
 
-import org.apache.seatunnel.api.configuration.util.OptionRule;
+import org.apache.seatunnel.api.config.util.OptionRule;
 
 /** todo: use PluginIdentifier. This is the SPI interface. */
 public interface Factory {

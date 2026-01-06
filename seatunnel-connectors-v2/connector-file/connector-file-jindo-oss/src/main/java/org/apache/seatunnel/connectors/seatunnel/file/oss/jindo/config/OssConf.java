@@ -17,9 +17,8 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.oss.jindo.config;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
-
-import com.typesafe.config.Config;
 
 import java.util.HashMap;
 

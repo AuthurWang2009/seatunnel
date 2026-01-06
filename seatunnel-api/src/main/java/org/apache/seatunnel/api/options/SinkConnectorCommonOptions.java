@@ -18,14 +18,14 @@
 package org.apache.seatunnel.api.options;
 
 import org.apache.seatunnel.api.annotation.Experimental;
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 
 public class SinkConnectorCommonOptions extends ConnectorCommonOptions {
 
     @Experimental
-    public static Option<Integer> MULTI_TABLE_SINK_REPLICA =
-            Options.key("multi_table_sink_replica")
+    public static ConfigEntry<Integer> MULTI_TABLE_SINK_REPLICA =
+            ConfigOption.key("multi_table_sink_replica")
                     .intType()
                     .defaultValue(1)
                     .withDescription("The replica number of multi table sink writer");

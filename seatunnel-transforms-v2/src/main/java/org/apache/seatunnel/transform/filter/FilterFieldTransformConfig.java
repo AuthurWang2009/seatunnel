@@ -17,8 +17,8 @@
 
 package org.apache.seatunnel.transform.filter;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -30,15 +30,15 @@ import java.util.List;
 @Setter
 public class FilterFieldTransformConfig implements Serializable {
 
-    public static final Option<List<String>> INCLUDE_FIELDS =
-            Options.key("include_fields")
+    public static final ConfigEntry<List<String>> INCLUDE_FIELDS =
+            ConfigOption.key("include_fields")
                     .listType()
                     .noDefaultValue()
                     .withDescription("The list of fields that need to be kept.")
                     .withFallbackKeys("fields");
 
-    public static final Option<List<String>> EXCLUDE_FIELDS =
-            Options.key("exclude_fields")
+    public static final ConfigEntry<List<String>> EXCLUDE_FIELDS =
+            ConfigOption.key("exclude_fields")
                     .listType()
                     .noDefaultValue()
                     .withDescription("The list of fields that need to be deleted");

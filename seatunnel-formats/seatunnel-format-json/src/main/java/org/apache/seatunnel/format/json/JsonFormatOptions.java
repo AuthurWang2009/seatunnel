@@ -18,21 +18,21 @@
 
 package org.apache.seatunnel.format.json;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 
 import java.util.Map;
 
 public class JsonFormatOptions {
-    public static final Option<Boolean> FAIL_ON_MISSING_FIELD =
-            Options.key("fail-on-missing-field")
+    public static final ConfigEntry<Boolean> FAIL_ON_MISSING_FIELD =
+            ConfigOption.key("fail-on-missing-field")
                     .booleanType()
                     .defaultValue(false)
                     .withDescription(
                             "Optional flag to specify whether to fail if a field is missing or not, false by default.");
 
-    public static final Option<Boolean> IGNORE_PARSE_ERRORS =
-            Options.key("ignore-parse-errors")
+    public static final ConfigEntry<Boolean> IGNORE_PARSE_ERRORS =
+            ConfigOption.key("ignore-parse-errors")
                     .booleanType()
                     .defaultValue(false)
                     .withDescription(

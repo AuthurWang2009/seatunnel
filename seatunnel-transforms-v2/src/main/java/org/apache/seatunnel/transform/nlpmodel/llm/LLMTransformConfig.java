@@ -17,41 +17,41 @@
 
 package org.apache.seatunnel.transform.nlpmodel.llm;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 import org.apache.seatunnel.transform.nlpmodel.ModelTransformConfig;
 
 import java.util.List;
 
 public class LLMTransformConfig extends ModelTransformConfig {
 
-    public static final Option<String> PROMPT =
-            Options.key("prompt")
+    public static final ConfigEntry<String> PROMPT =
+            ConfigOption.key("prompt")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("The prompt of LLM");
 
-    public static final Option<List<String>> INFERENCE_COLUMNS =
-            Options.key("inference_columns")
+    public static final ConfigEntry<List<String>> INFERENCE_COLUMNS =
+            ConfigOption.key("inference_columns")
                     .listType()
                     .noDefaultValue()
                     .withDescription("The row projection field of each inference");
 
-    public static final Option<String> OUTPUT_COLUMN_NAME =
-            Options.key("output_column_name")
+    public static final ConfigEntry<String> OUTPUT_COLUMN_NAME =
+            ConfigOption.key("output_column_name")
                     .stringType()
                     .defaultValue("llm_output")
                     .withDescription("custom field name for the llm output data");
 
-    public static final Option<Integer> INFERENCE_BATCH_SIZE =
-            Options.key("inference_batch_size")
+    public static final ConfigEntry<Integer> INFERENCE_BATCH_SIZE =
+            ConfigOption.key("inference_batch_size")
                     .intType()
                     .defaultValue(100)
                     .withDescription("The row batch size of each inference");
 
     // OPENAI specific options
-    public static final Option<String> OPENAI_API_PATH =
-            Options.key("openai.api_path")
+    public static final ConfigEntry<String> OPENAI_API_PATH =
+            ConfigOption.key("openai.api_path")
                     .stringType()
                     .defaultValue("https://api.openai.com/v1/chat/completions")
                     .withDescription("The API path of OpenAI LLM");

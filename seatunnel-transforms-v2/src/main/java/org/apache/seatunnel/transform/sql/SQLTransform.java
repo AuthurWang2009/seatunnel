@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.sql;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.options.ConnectorCommonOptions;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.Column;
@@ -47,11 +47,14 @@ import static org.apache.seatunnel.transform.sql.SQLEngineFactory.EngineType.ZET
 public class SQLTransform extends AbstractCatalogSupportFlatMapTransform {
     public static final String PLUGIN_NAME = "Sql";
 
-    public static final Option<String> KEY_QUERY =
-            Options.key("query").stringType().noDefaultValue().withDescription("The query SQL");
+    public static final ConfigEntry<String> KEY_QUERY =
+            ConfigOption.key("query")
+                    .stringType()
+                    .noDefaultValue()
+                    .withDescription("The query SQL");
 
-    public static final Option<String> KEY_ENGINE =
-            Options.key("engine")
+    public static final ConfigEntry<String> KEY_ENGINE =
+            ConfigOption.key("engine")
                     .stringType()
                     .defaultValue(ZETA.name())
                     .withDescription("The SQL engine type");

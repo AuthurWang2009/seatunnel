@@ -17,6 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.writer;
 
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtil;
@@ -150,7 +151,7 @@ public class ParquetReadStrategyTest {
         ParquetReadStrategy parquetReadStrategy = new ParquetReadStrategy();
         LocalConf localConf = new LocalConf(FS_DEFAULT_NAME_DEFAULT);
         parquetReadStrategy.init(localConf);
-        parquetReadStrategy.setPluginConfig(pluginConfig);
+        parquetReadStrategy.setPluginConfig(ReadonlyConfig.fromConfig(pluginConfig));
         SeaTunnelRowType seaTunnelRowTypeInfo = parquetReadStrategy.getSeaTunnelRowTypeInfo(path);
         Assertions.assertNotNull(seaTunnelRowTypeInfo);
         log.info(seaTunnelRowTypeInfo.toString());
@@ -179,7 +180,7 @@ public class ParquetReadStrategyTest {
         ParquetReadStrategy parquetReadStrategy = new ParquetReadStrategy();
         LocalConf localConf = new LocalConf(FS_DEFAULT_NAME_DEFAULT);
         parquetReadStrategy.init(localConf);
-        parquetReadStrategy.setPluginConfig(pluginConfig);
+        parquetReadStrategy.setPluginConfig(ReadonlyConfig.fromConfig(pluginConfig));
         SeaTunnelRowType seaTunnelRowTypeInfo = parquetReadStrategy.getSeaTunnelRowTypeInfo(path);
         Assertions.assertNotNull(seaTunnelRowTypeInfo);
         log.info(seaTunnelRowTypeInfo.toString());

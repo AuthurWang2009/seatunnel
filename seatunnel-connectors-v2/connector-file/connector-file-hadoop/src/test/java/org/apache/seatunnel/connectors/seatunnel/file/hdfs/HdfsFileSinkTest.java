@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.hdfs;
 
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.options.SinkConnectorCommonOptions;
 import org.apache.seatunnel.api.sink.SeaTunnelSink;
 import org.apache.seatunnel.api.sink.multitablesink.MultiTableSinkFactory;

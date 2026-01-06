@@ -96,17 +96,17 @@ public class ExcelReadStrategy extends AbstractReadStrategy {
                     "Skip the number of rows exceeds the maximum or minimum limit of Sheet");
         }
 
-        if (pluginConfig.hasPath(FileBaseSourceOptions.DATE_FORMAT_LEGACY.key())) {
+        if (pluginConfig.getOptional(FileBaseSourceOptions.DATE_FORMAT_LEGACY).isPresent()) {
             dateFormatterPattern =
-                    pluginConfig.getString(FileBaseSourceOptions.DATE_FORMAT_LEGACY.key());
+                    pluginConfig.get(FileBaseSourceOptions.DATE_FORMAT_LEGACY).getValue();
         }
-        if (pluginConfig.hasPath(FileBaseSourceOptions.DATETIME_FORMAT_LEGACY.key())) {
+        if (pluginConfig.getOptional(FileBaseSourceOptions.DATETIME_FORMAT_LEGACY).isPresent()) {
             dateTimeFormatterPattern =
-                    pluginConfig.getString(FileBaseSourceOptions.DATETIME_FORMAT_LEGACY.key());
+                    pluginConfig.get(FileBaseSourceOptions.DATETIME_FORMAT_LEGACY).getValue();
         }
-        if (pluginConfig.hasPath(FileBaseSourceOptions.TIME_FORMAT_LEGACY.key())) {
+        if (pluginConfig.getOptional(FileBaseSourceOptions.TIME_FORMAT_LEGACY).isPresent()) {
             timeFormatterPattern =
-                    pluginConfig.getString(FileBaseSourceOptions.TIME_FORMAT_LEGACY.key());
+                    pluginConfig.get(FileBaseSourceOptions.TIME_FORMAT_LEGACY).getValue();
         }
 
         ExcelCellUtils excelCellUtils =
@@ -116,10 +116,7 @@ public class ExcelReadStrategy extends AbstractReadStrategy {
                         dateTimeFormatterPattern,
                         timeFormatterPattern);
 
-        if (pluginConfig.hasPath(FileBaseSourceOptions.EXCEL_ENGINE.key())
-                && pluginConfig
-                        .getString(FileBaseSourceOptions.EXCEL_ENGINE.key())
-                        .equals(ExcelEngine.EASY_EXCEL.getExcelEngineName())) {
+        if (ExcelEngine.EASY_EXCEL.equals(pluginConfig.get(FileBaseSourceOptions.EXCEL_ENGINE))) {
             log.info("Parsing Excel with EasyExcel");
 
             ExcelReaderBuilder read =
@@ -127,8 +124,8 @@ public class ExcelReadStrategy extends AbstractReadStrategy {
                             inputStream,
                             new ExcelReaderListener(
                                     tableId, output, excelCellUtils, seaTunnelRowType));
-            if (pluginConfig.hasPath(FileBaseSourceOptions.SHEET_NAME.key())) {
-                read.sheet(pluginConfig.getString(FileBaseSourceOptions.SHEET_NAME.key()))
+            if (pluginConfig.getOptional(FileBaseSourceOptions.SHEET_NAME).isPresent()) {
+                read.sheet(pluginConfig.get(FileBaseSourceOptions.SHEET_NAME))
                         .headRowNumber((int) skipHeaderNumber)
                         .doReadSync();
             } else {
@@ -152,9 +149,8 @@ public class ExcelReadStrategy extends AbstractReadStrategy {
             }
             DataFormatter formatter = new DataFormatter();
             Sheet sheet =
-                    pluginConfig.hasPath(FileBaseSourceOptions.SHEET_NAME.key())
-                            ? workbook.getSheet(
-                                    pluginConfig.getString(FileBaseSourceOptions.SHEET_NAME.key()))
+                    pluginConfig.getOptional(FileBaseSourceOptions.SHEET_NAME).isPresent()
+                            ? workbook.getSheet(pluginConfig.get(FileBaseSourceOptions.SHEET_NAME))
                             : workbook.getSheetAt(0);
             cellCount = seaTunnelRowType.getTotalFields();
             cellCount = partitionsMap.isEmpty() ? cellCount : cellCount + partitionsMap.size();

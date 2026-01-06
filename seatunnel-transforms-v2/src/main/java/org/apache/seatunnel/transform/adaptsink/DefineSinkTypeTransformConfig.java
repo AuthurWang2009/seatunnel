@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.adaptsink;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -40,15 +40,15 @@ public class DefineSinkTypeTransformConfig implements Serializable {
 
     public static final String PLUGIN_NAME = "DefineSinkType";
 
-    public static final Option<List<DefineColumnType>> COLUMNS =
-            Options.key("columns")
+    public static final ConfigEntry<List<DefineColumnType>> COLUMNS =
+            ConfigOption.key("columns")
                     .type(new TypeReference<List<DefineColumnType>>() {})
                     .noDefaultValue()
                     .withDescription(
                             "The columns to be defined, the name and type of the column must be set");
 
-    public static final Option<List<TableTransforms>> MULTI_TABLES =
-            Options.key("table_transform")
+    public static final ConfigEntry<List<TableTransforms>> MULTI_TABLES =
+            ConfigOption.key("table_transform")
                     .listType(TableTransforms.class)
                     .noDefaultValue()
                     .withDescription("The table transform config");

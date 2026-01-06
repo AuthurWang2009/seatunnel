@@ -17,7 +17,8 @@
 
 package org.apache.seatunnel.api.table.catalog;
 
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.options.ConnectorCommonOptions;
 import org.apache.seatunnel.api.table.catalog.schema.ReadonlyConfigParser;
 import org.apache.seatunnel.api.table.factory.FactoryUtil;
@@ -30,7 +31,6 @@ import org.apache.seatunnel.common.utils.SeaTunnelException;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
@@ -51,7 +51,6 @@ public class CatalogTableUtil implements Serializable {
             new SeaTunnelRowType(
                     new String[] {"content"}, new SeaTunnelDataType<?>[] {BasicType.STRING_TYPE});
 
-    @Deprecated
     public static CatalogTable getCatalogTable(String tableName, SeaTunnelRowType rowType) {
         return getCatalogTable("schema", "default", null, tableName, rowType);
     }
@@ -87,7 +86,6 @@ public class CatalogTableUtil implements Serializable {
      *     href="https://cwiki.apache.org/confluence/display/SEATUNNEL/STIP5-Refactor+Catalog+and+CatalogTable">check
      *     </a>
      */
-    @Deprecated
     public static List<CatalogTable> getCatalogTables(
             ReadonlyConfig readonlyConfig, ClassLoader classLoader) {
 
@@ -97,7 +95,6 @@ public class CatalogTableUtil implements Serializable {
         return getCatalogTables(factoryId, readonlyConfig, classLoader);
     }
 
-    @Deprecated
     public static List<CatalogTable> getCatalogTables(
             String factoryId, ReadonlyConfig readonlyConfig, ClassLoader classLoader) {
         // Highest priority: specified schema
@@ -142,11 +139,6 @@ public class CatalogTableUtil implements Serializable {
                                                 factoryId)));
     }
 
-    public static CatalogTable buildWithConfig(Config config) {
-        ReadonlyConfig readonlyConfig = ReadonlyConfig.fromConfig(config);
-        return buildWithConfig(readonlyConfig);
-    }
-
     public static SeaTunnelDataType<SeaTunnelRow> convertToDataType(
             List<CatalogTable> catalogTables) {
         if (catalogTables.size() == 1) {
@@ -156,7 +148,6 @@ public class CatalogTableUtil implements Serializable {
         }
     }
 
-    @Deprecated
     private static MultipleRowType convertToMultipleRowType(List<CatalogTable> catalogTables) {
         Map<String, SeaTunnelRowType> rowTypeMap = new HashMap<>();
         for (CatalogTable catalogTable : catalogTables) {
@@ -168,7 +159,6 @@ public class CatalogTableUtil implements Serializable {
 
     // We need to use buildWithConfig(String catalogName, ReadonlyConfig readonlyConfig);
     // Since this method will not inject the correct catalogName into CatalogTable
-    @Deprecated
     public static List<CatalogTable> convertDataTypeToCatalogTables(
             SeaTunnelDataType<?> seaTunnelDataType, String tableId) {
         List<CatalogTable> catalogTables;
@@ -188,16 +178,16 @@ public class CatalogTableUtil implements Serializable {
         return catalogTables;
     }
 
-    public static CatalogTable buildWithConfig(ReadonlyConfig readonlyConfig) {
+    public static CatalogTable buildWithConfig(Config readonlyConfig) {
         return buildWithConfig("", readonlyConfig);
     }
 
-    public static CatalogTable buildWithConfig(String catalogName, ReadonlyConfig readonlyConfig) {
+    public static CatalogTable buildWithConfig(String catalogName, Config readonlyConfig) {
         if (readonlyConfig.get(ConnectorCommonOptions.SCHEMA) == null) {
             throw new RuntimeException(
                     "Schema config need option [schema], please correct your config first");
         }
-        TableSchema tableSchema = new ReadonlyConfigParser().parse(readonlyConfig);
+        TableSchema tableSchema = new ReadonlyConfigParser().parse((ReadonlyConfig) readonlyConfig);
 
         ReadonlyConfig schemaConfig =
                 readonlyConfig

@@ -17,8 +17,8 @@
 
 package org.apache.seatunnel.api.options.table;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -28,8 +28,8 @@ import java.util.Map;
 @Deprecated
 public interface FieldOptions {
 
-    Option<Map<String, Object>> FIELDS =
-            Options.key("schema.fields")
+    ConfigEntry<Map<String, Object>> FIELDS =
+            ConfigOption.key("schema.fields")
                     .type(new TypeReference<Map<String, Object>>() {})
                     .noDefaultValue()
                     .withDescription("SeaTunnel Schema Fields");

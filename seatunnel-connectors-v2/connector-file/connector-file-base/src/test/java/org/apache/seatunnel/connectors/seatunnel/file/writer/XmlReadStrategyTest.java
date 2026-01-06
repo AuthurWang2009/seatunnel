@@ -17,6 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.writer;
 
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtil;
@@ -62,7 +63,7 @@ public class XmlReadStrategyTest {
         Config pluginConfig = ConfigFactory.parseFile(new File(confPath));
         XmlReadStrategy xmlReadStrategy = new XmlReadStrategy();
         LocalConf localConf = new LocalConf(FS_DEFAULT_NAME_DEFAULT);
-        xmlReadStrategy.setPluginConfig(pluginConfig);
+        xmlReadStrategy.setPluginConfig(ReadonlyConfig.fromConfig(pluginConfig));
         xmlReadStrategy.init(localConf);
         List<String> fileNamesByPath = xmlReadStrategy.getFileNamesByPath(xmlFilePath);
         CatalogTable catalogTable = CatalogTableUtil.buildWithConfig(pluginConfig);

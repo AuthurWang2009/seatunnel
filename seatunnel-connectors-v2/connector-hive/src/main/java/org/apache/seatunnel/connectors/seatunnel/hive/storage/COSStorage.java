@@ -17,16 +17,14 @@
 
 package org.apache.seatunnel.connectors.seatunnel.hive.storage;
 
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 import org.apache.seatunnel.connectors.seatunnel.file.cos.config.CosConf;
 import org.apache.seatunnel.connectors.seatunnel.file.cos.config.CosFileBaseOptions;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.conf.Configuration;
-
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigValueFactory;
 
 import java.util.Map;
 
@@ -38,18 +36,15 @@ public class COSStorage extends AbstractStorage {
         config =
                 config.withValue(
                         CosFileBaseOptions.SECRET_ID.key(),
-                        ConfigValueFactory.fromAnyRef(
-                                configuration.get(CosFileBaseOptions.SECRET_ID.key())));
+                        configuration.get(CosFileBaseOptions.SECRET_ID.key()));
         config =
                 config.withValue(
                         CosFileBaseOptions.SECRET_KEY.key(),
-                        ConfigValueFactory.fromAnyRef(
-                                configuration.get(CosFileBaseOptions.SECRET_KEY.key())));
+                        configuration.get(CosFileBaseOptions.SECRET_KEY.key()));
         config =
                 config.withValue(
                         CosFileBaseOptions.REGION.key(),
-                        ConfigValueFactory.fromAnyRef(
-                                configuration.get(CosFileBaseOptions.REGION.key())));
+                        configuration.get(CosFileBaseOptions.REGION.key()));
         HadoopConf hadoopConf = CosConf.buildWithConfig(config);
         Map<String, String> propsInConfiguration =
                 configuration.getPropsWithPrefix(StringUtils.EMPTY);

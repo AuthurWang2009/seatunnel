@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.core.starter.utils;
 
-import org.apache.seatunnel.api.configuration.ConfigShade;
+import org.apache.seatunnel.api.config.ConfigShade;
 import org.apache.seatunnel.common.Constants;
 import org.apache.seatunnel.common.config.TypesafeConfigUtils;
 import org.apache.seatunnel.common.utils.JsonUtils;
@@ -96,6 +96,7 @@ public final class ConfigShadeUtils {
         return configShade.decrypt(content);
     }
 
+    @Deprecated
     public static Config decryptConfig(Config config) {
         String identifier =
                 TypesafeConfigUtils.getConfig(
@@ -114,6 +115,7 @@ public final class ConfigShadeUtils {
         return decryptConfig(identifier, config, props);
     }
 
+    @Deprecated
     public static Config encryptConfig(Config config) {
         String identifier =
                 TypesafeConfigUtils.getConfig(
@@ -197,6 +199,7 @@ public final class ConfigShadeUtils {
         return ConfigFactory.parseMap(configMap);
     }
 
+    @Deprecated
     public static Set<String> getSensitiveOptions(Config config) {
         Set<String> sensitiveOptions =
                 new HashSet<>(

@@ -17,7 +17,9 @@
 
 package org.apache.seatunnel.e2e.common.util;
 
-import org.apache.seatunnel.api.configuration.ConfigAdapter;
+import org.apache.seatunnel.api.config.ConfigAdapter;
+import org.apache.seatunnel.api.config.ConfigLoader;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.common.utils.ParserException;
 
 import com.typesafe.config.Config;
@@ -44,7 +46,9 @@ public class ConfigBuilder {
     }
 
     private static Config ofInner(@NonNull Path filePath) {
-        return ConfigFactory.parseFile(filePath.toFile())
+        org.apache.seatunnel.api.config.Config stConfig = ConfigLoader.load(filePath);
+        return ((ReadonlyConfig) stConfig)
+                .toConfig()
                 .resolve(ConfigResolveOptions.defaults().setAllowUnresolved(true))
                 .resolveWith(
                         ConfigFactory.systemProperties(),

@@ -18,8 +18,8 @@
 package org.apache.seatunnel.plugin.discovery.seatunnel;
 
 import org.apache.seatunnel.api.common.PluginIdentifier;
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.util.OptionRule;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.util.OptionRule;
 import org.apache.seatunnel.api.sink.SeaTunnelSink;
 import org.apache.seatunnel.api.table.factory.FactoryUtil;
 import org.apache.seatunnel.api.table.factory.TableSinkFactory;
@@ -42,8 +42,8 @@ public class SeaTunnelSinkPluginDiscovery extends AbstractPluginDiscovery<SeaTun
     }
 
     @Override
-    public ImmutableTriple<PluginIdentifier, List<Option<?>>, List<Option<?>>> getOptionRules(
-            String pluginIdentifier) {
+    public ImmutableTriple<PluginIdentifier, List<ConfigEntry<?>>, List<ConfigEntry<?>>>
+            getOptionRules(String pluginIdentifier) {
         return super.getOptionRules(pluginIdentifier);
     }
 

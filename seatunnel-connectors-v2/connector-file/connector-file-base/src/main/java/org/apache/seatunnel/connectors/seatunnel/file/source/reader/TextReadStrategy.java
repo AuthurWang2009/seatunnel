@@ -18,7 +18,6 @@
 package org.apache.seatunnel.connectors.seatunnel.file.source.reader;
 
 import org.apache.seatunnel.api.common.SeaTunnelAPIErrorCode;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
 import org.apache.seatunnel.api.serialization.DeserializationSchema;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
@@ -35,9 +34,10 @@ import org.apache.seatunnel.connectors.seatunnel.file.config.FileFormat;
 import org.apache.seatunnel.connectors.seatunnel.file.exception.FileConnectorErrorCode;
 import org.apache.seatunnel.connectors.seatunnel.file.exception.FileConnectorException;
 import org.apache.seatunnel.format.text.TextDeserializationSchema;
-import org.apache.seatunnel.format.text.constant.TextFormatConstant;
 import org.apache.seatunnel.format.text.splitor.DefaultTextLineSplitor;
 import org.apache.seatunnel.format.text.splitor.TextLineSplitor;
+
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import io.airlift.compress.lzo.LzopCodec;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +48,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.Optional;
 
 @Slf4j
 public class TextReadStrategy extends AbstractReadStrategy {
@@ -65,6 +64,7 @@ public class TextReadStrategy extends AbstractReadStrategy {
     private TextLineSplitor textLineSplitor;
     private int[] indexes;
     private String encoding = FileBaseSourceOptions.ENCODING.defaultValue();
+    private CatalogTable inputCatalogTable;
 
     /** Custom stream divider for splitting text streams by specified delimiters */
     public static class StreamLineSplitter {
@@ -267,13 +267,17 @@ public class TextReadStrategy extends AbstractReadStrategy {
                     "When reading text files, if user has not specified schema information, "
                             + "SeaTunnel will not support column projection");
         }
-        ReadonlyConfig readonlyConfig = ReadonlyConfig.fromConfig(pluginConfig);
         TextDeserializationSchema.Builder builder =
                 TextDeserializationSchema.builder()
-                        .delimiter(TextFormatConstant.PLACEHOLDER)
-                        .textLineSplitor(textLineSplitor)
+                        .delimiter(
+                                StringEscapeUtils.unescapeJava(
+                                        pluginConfig
+                                                .getOptional(FileBaseSourceOptions.FIELD_DELIMITER)
+                                                .orElse(
+                                                        FileBaseSourceOptions.FIELD_DELIMITER
+                                                                .defaultValue())))
                         .nullFormat(
-                                readonlyConfig
+                                pluginConfig
                                         .getOptional(FileBaseSourceOptions.NULL_FORMAT)
                                         .orElse(null));
         if (isMergePartition) {
@@ -288,28 +292,30 @@ public class TextReadStrategy extends AbstractReadStrategy {
     @Override
     public void setCatalogTable(CatalogTable catalogTable) {
         SeaTunnelRowType rowType = catalogTable.getSeaTunnelRowType();
+        this.inputCatalogTable = catalogTable;
         SeaTunnelRowType userDefinedRowTypeWithPartition =
                 mergePartitionTypes(fileNames.get(0), rowType);
-        ReadonlyConfig readonlyConfig = ReadonlyConfig.fromConfig(pluginConfig);
-        Optional<String> fieldDelimiterOptional =
-                readonlyConfig.getOptional(FileBaseSourceOptions.FIELD_DELIMITER);
-        Optional<String> rowDelimiterOptional =
-                readonlyConfig.getOptional(FileBaseSourceOptions.ROW_DELIMITER);
         encoding =
-                readonlyConfig
+                pluginConfig
                         .getOptional(FileBaseSourceOptions.ENCODING)
                         .orElse(StandardCharsets.UTF_8.name());
-        fieldDelimiterOptional.ifPresent(s -> fieldDelimiter = s);
-        rowDelimiterOptional.ifPresent(s -> rowDelimiter = s);
         initFormatter();
         TextDeserializationSchema.Builder builder =
                 TextDeserializationSchema.builder()
-                        .delimiter(fieldDelimiter)
-                        .textLineSplitor(textLineSplitor)
+                        .delimiter(
+                                StringEscapeUtils.unescapeJava(
+                                        pluginConfig
+                                                .getOptional(FileBaseSourceOptions.FIELD_DELIMITER)
+                                                .orElse(
+                                                        FileBaseSourceOptions.FIELD_DELIMITER
+                                                                .defaultValue())))
                         .nullFormat(
-                                readonlyConfig
+                                pluginConfig
                                         .getOptional(FileBaseSourceOptions.NULL_FORMAT)
                                         .orElse(null));
+        if (pluginConfig.getOptional(FileBaseSourceOptions.SKIP_HEADER_ROW_NUMBER).isPresent()) {
+            skipHeaderNumber = pluginConfig.get(FileBaseSourceOptions.SKIP_HEADER_ROW_NUMBER);
+        }
         if (isMergePartition) {
             deserializationSchema =
                     builder.seaTunnelRowType(userDefinedRowTypeWithPartition).build();
@@ -337,26 +343,17 @@ public class TextReadStrategy extends AbstractReadStrategy {
     }
 
     private void initFormatter() {
-        if (pluginConfig.hasPath(FileBaseSourceOptions.DATE_FORMAT_LEGACY.key())) {
-            dateFormat =
-                    DateUtils.Formatter.parse(
-                            pluginConfig.getString(FileBaseSourceOptions.DATE_FORMAT_LEGACY.key()));
+        if (pluginConfig.getOptional(FileBaseSourceOptions.DATE_FORMAT_LEGACY).isPresent()) {
+            dateFormat = pluginConfig.get(FileBaseSourceOptions.DATE_FORMAT_LEGACY);
         }
-        if (pluginConfig.hasPath(FileBaseSourceOptions.DATETIME_FORMAT_LEGACY.key())) {
-            datetimeFormat =
-                    DateTimeUtils.Formatter.parse(
-                            pluginConfig.getString(
-                                    FileBaseSourceOptions.DATETIME_FORMAT_LEGACY.key()));
+        if (pluginConfig.getOptional(FileBaseSourceOptions.DATETIME_FORMAT_LEGACY).isPresent()) {
+            datetimeFormat = pluginConfig.get(FileBaseSourceOptions.DATETIME_FORMAT_LEGACY);
         }
-        if (pluginConfig.hasPath(FileBaseSourceOptions.TIME_FORMAT_LEGACY.key())) {
-            timeFormat =
-                    TimeUtils.Formatter.parse(
-                            pluginConfig.getString(FileBaseSourceOptions.TIME_FORMAT_LEGACY.key()));
+        if (pluginConfig.getOptional(FileBaseSourceOptions.TIME_FORMAT_LEGACY).isPresent()) {
+            timeFormat = pluginConfig.get(FileBaseSourceOptions.TIME_FORMAT_LEGACY);
         }
-        if (pluginConfig.hasPath(FileBaseSourceOptions.COMPRESS_CODEC.key())) {
-            String compressCodec =
-                    pluginConfig.getString(FileBaseSourceOptions.COMPRESS_CODEC.key());
-            compressFormat = CompressFormat.valueOf(compressCodec.toUpperCase());
+        if (pluginConfig.getOptional(FileBaseSourceOptions.COMPRESS_CODEC).isPresent()) {
+            compressFormat = pluginConfig.get(FileBaseSourceOptions.COMPRESS_CODEC);
         }
         textLineSplitor = new DefaultTextLineSplitor();
     }

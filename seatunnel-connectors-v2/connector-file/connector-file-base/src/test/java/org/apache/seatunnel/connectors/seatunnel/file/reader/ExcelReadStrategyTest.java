@@ -17,6 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.reader;
 
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtil;
@@ -62,7 +63,7 @@ public class ExcelReadStrategyTest {
         Config pluginConfig = ConfigFactory.parseFile(new File(confPath));
         ExcelReadStrategy excelReadStrategy = new ExcelReadStrategy();
         LocalConf localConf = new LocalConf(FS_DEFAULT_NAME_DEFAULT);
-        excelReadStrategy.setPluginConfig(pluginConfig);
+        excelReadStrategy.setPluginConfig(ReadonlyConfig.fromConfig(pluginConfig));
         excelReadStrategy.init(localConf);
 
         List<String> fileNamesByPath = excelReadStrategy.getFileNamesByPath(excelFilePath);
@@ -168,7 +169,7 @@ public class ExcelReadStrategyTest {
         Config pluginConfig = ConfigFactory.parseFile(new File(confPath));
         ExcelReadStrategy excelReadStrategy = new ExcelReadStrategy();
         LocalConf localConf = new LocalConf(FS_DEFAULT_NAME_DEFAULT);
-        excelReadStrategy.setPluginConfig(pluginConfig);
+        excelReadStrategy.setPluginConfig(ReadonlyConfig.fromConfig(pluginConfig));
         excelReadStrategy.init(localConf);
 
         List<String> fileNamesByPath = excelReadStrategy.getFileNamesByPath(excelFilePath);
@@ -248,7 +249,7 @@ public class ExcelReadStrategyTest {
         Config pluginConfig = ConfigFactory.parseFile(new File(confPath));
         ExcelReadStrategy excelReadStrategy = new ExcelReadStrategy();
         LocalConf localConf = new LocalConf(FS_DEFAULT_NAME_DEFAULT);
-        excelReadStrategy.setPluginConfig(pluginConfig);
+        excelReadStrategy.setPluginConfig(ReadonlyConfig.fromConfig(pluginConfig));
         excelReadStrategy.init(localConf);
 
         List<String> fileNamesByPath = excelReadStrategy.getFileNamesByPath(excelFilePath);
@@ -272,7 +273,7 @@ public class ExcelReadStrategyTest {
         Config pluginConfig = ConfigFactory.parseFile(new File(confPath));
         ExcelReadStrategy excelReadStrategy = new ExcelReadStrategy();
         LocalConf localConf = new LocalConf(FS_DEFAULT_NAME_DEFAULT);
-        excelReadStrategy.setPluginConfig(pluginConfig);
+        excelReadStrategy.setPluginConfig(ReadonlyConfig.fromConfig(pluginConfig));
         excelReadStrategy.init(localConf);
 
         List<String> fileNamesByPath = excelReadStrategy.getFileNamesByPath(excelFilePath);
@@ -341,7 +342,7 @@ public class ExcelReadStrategyTest {
         Config pluginConfig = ConfigFactory.parseFile(new File(confPath));
         ExcelReadStrategy excelReadStrategy = new ExcelReadStrategy();
         LocalConf localConf = new LocalConf(FS_DEFAULT_NAME_DEFAULT);
-        excelReadStrategy.setPluginConfig(pluginConfig);
+        excelReadStrategy.setPluginConfig(ReadonlyConfig.fromConfig(pluginConfig));
         excelReadStrategy.init(localConf);
 
         List<String> fileNamesByPath = excelReadStrategy.getFileNamesByPath(excelFilePath);

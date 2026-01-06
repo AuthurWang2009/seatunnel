@@ -17,43 +17,43 @@
 
 package org.apache.seatunnel.api.options.table;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 
 public interface TableIdentifierOptions {
 
-    Option<Boolean> SCHEMA_FIRST =
-            Options.key("schema_first")
+    ConfigEntry<Boolean> SCHEMA_FIRST =
+            ConfigOption.key("schema_first")
                     .booleanType()
                     .defaultValue(false)
                     .withDescription("Parse Schema First from table");
 
-    Option<String> TABLE =
-            Options.key("table")
+    ConfigEntry<String> TABLE =
+            ConfigOption.key("table")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("SeaTunnel Schema Full Table Name");
 
-    Option<String> TABLE_COMMENT =
-            Options.key("comment")
+    ConfigEntry<String> TABLE_COMMENT =
+            ConfigOption.key("comment")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("SeaTunnel Schema Table Comment");
 
-    Option<String> DATABASE_NAME =
-            Options.key("database_name")
+    ConfigEntry<String> DATABASE_NAME =
+            ConfigOption.key("database_name")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("SeaTunnel Schema Database Name");
 
-    Option<String> SCHEMA_NAME =
-            Options.key("schema_name")
+    ConfigEntry<String> SCHEMA_NAME =
+            ConfigOption.key("schema_name")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("SeaTunnel Schema Table Name");
 
-    Option<String> TABLE_NAME =
-            Options.key("table_name")
+    ConfigEntry<String> TABLE_NAME =
+            ConfigOption.key("table_name")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("SeaTunnel Schema Table Name");

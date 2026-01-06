@@ -17,8 +17,8 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.config;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 import org.apache.seatunnel.format.text.constant.TextFormatConstant;
 
 import java.util.List;
@@ -26,102 +26,102 @@ import java.util.List;
 public class FileBaseSourceOptions extends FileBaseOptions {
     public static final String DEFAULT_ROW_DELIMITER = "\n";
 
-    public static final Option<FileFormat> FILE_FORMAT_TYPE =
-            Options.key("file_format_type")
+    public static final ConfigEntry<FileFormat> FILE_FORMAT_TYPE =
+            ConfigOption.key("file_format_type")
                     .objectType(FileFormat.class)
                     .noDefaultValue()
                     .withDescription(
                             "File format type, e.g. json, csv, text, parquet, orc, avro....");
 
-    public static final Option<String> FIELD_DELIMITER =
-            Options.key("field_delimiter")
+    public static final ConfigEntry<String> FIELD_DELIMITER =
+            ConfigOption.key("field_delimiter")
                     .stringType()
                     .defaultValue(TextFormatConstant.SEPARATOR[0])
                     .withFallbackKeys("delimiter")
                     .withDescription(
                             "The separator between columns in a row of data. Only needed by `text` file format");
 
-    public static final Option<String> ROW_DELIMITER =
-            Options.key("row_delimiter")
+    public static final ConfigEntry<String> ROW_DELIMITER =
+            ConfigOption.key("row_delimiter")
                     .stringType()
                     .defaultValue(DEFAULT_ROW_DELIMITER)
                     .withDescription(
                             "The separator between rows in a file. Only needed by `text` file format");
 
-    public static final Option<String> NULL_FORMAT =
-            Options.key("null_format")
+    public static final ConfigEntry<String> NULL_FORMAT =
+            ConfigOption.key("null_format")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("The string that represents a null value");
 
-    public static final Option<Boolean> PARSE_PARTITION_FROM_PATH =
-            Options.key("parse_partition_from_path")
+    public static final ConfigEntry<Boolean> PARSE_PARTITION_FROM_PATH =
+            ConfigOption.key("parse_partition_from_path")
                     .booleanType()
                     .defaultValue(true)
                     .withDescription("Whether parse partition fields from file path");
 
-    public static final Option<Long> SKIP_HEADER_ROW_NUMBER =
-            Options.key("skip_header_row_number")
+    public static final ConfigEntry<Long> SKIP_HEADER_ROW_NUMBER =
+            ConfigOption.key("skip_header_row_number")
                     .longType()
                     .defaultValue(0L)
                     .withDescription("The number of rows to skip");
 
-    public static final Option<List<String>> READ_PARTITIONS =
-            Options.key("read_partitions")
+    public static final ConfigEntry<List<String>> READ_PARTITIONS =
+            ConfigOption.key("read_partitions")
                     .listType()
                     .noDefaultValue()
                     .withDescription("The partitions that the user want to read");
 
-    public static final Option<List<String>> READ_COLUMNS =
-            Options.key("read_columns")
+    public static final ConfigEntry<List<String>> READ_COLUMNS =
+            ConfigOption.key("read_columns")
                     .listType()
                     .noDefaultValue()
                     .withDescription("The columns list that the user want to read");
 
-    public static final Option<ExcelEngine> EXCEL_ENGINE =
-            Options.key("excel_engine")
+    public static final ConfigEntry<ExcelEngine> EXCEL_ENGINE =
+            ConfigOption.key("excel_engine")
                     .enumType(ExcelEngine.class)
                     .defaultValue(ExcelEngine.POI)
                     .withDescription("To switch excel read engine,  e.g. POI , EasyExcel");
 
-    public static final Option<String> XML_ROW_TAG =
-            Options.key("xml_row_tag")
+    public static final ConfigEntry<String> XML_ROW_TAG =
+            ConfigOption.key("xml_row_tag")
                     .stringType()
                     .noDefaultValue()
                     .withDescription(
                             "Specifies the tag name of the data rows within the XML file, only valid for XML files.");
 
-    public static final Option<String> FILE_FILTER_PATTERN =
-            Options.key("file_filter_pattern")
+    public static final ConfigEntry<String> FILE_FILTER_PATTERN =
+            ConfigOption.key("file_filter_pattern")
                     .stringType()
                     .noDefaultValue()
                     .withDescription(
                             "File pattern. The connector will filter some files base on the pattern.");
 
-    public static final Option<String> FILE_FILTER_MODIFIED_START =
-            Options.key("file_filter_modified_start")
+    public static final ConfigEntry<String> FILE_FILTER_MODIFIED_START =
+            ConfigOption.key("file_filter_modified_start")
                     .stringType()
                     .noDefaultValue()
                     .withDescription(
                             "File modification time filter. The connector will filter some files base on the last modification start time (include start time). the default data format is yyyy-MM-dd HH:mm:ss");
 
-    public static final Option<String> FILE_FILTER_MODIFIED_END =
-            Options.key("file_filter_modified_end")
+    public static final ConfigEntry<String> FILE_FILTER_MODIFIED_END =
+            ConfigOption.key("file_filter_modified_end")
                     .stringType()
                     .noDefaultValue()
                     .withDescription(
                             "File modification time filter. The connector will filter some files base on the last modification end time (not include end time). the default data format is yyyy-MM-dd HH:mm:ss");
 
-    public static final Option<Integer> BINARY_CHUNK_SIZE =
-            Options.key("binary_chunk_size")
+    public static final ConfigEntry<Integer> BINARY_CHUNK_SIZE =
+            ConfigOption.key("binary_chunk_size")
                     .intType()
                     .defaultValue(1024)
                     .withDescription(
                             "The chunk size (in bytes) for reading binary files. Default is 1024 bytes. "
                                     + "Larger values may improve performance for large files but use more memory.Only valid when file_format_type is binary.");
 
-    public static final Option<Boolean> BINARY_COMPLETE_FILE_MODE =
-            Options.key("binary_complete_file_mode")
+    public static final ConfigEntry<Boolean> BINARY_COMPLETE_FILE_MODE =
+            ConfigOption.key("binary_complete_file_mode")
                     .booleanType()
                     .defaultValue(false)
                     .withDescription(

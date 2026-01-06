@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.fieldmapper;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,8 +31,8 @@ import java.util.Map;
 @Getter
 @Setter
 public class FieldMapperTransformConfig implements Serializable {
-    public static final Option<Map<String, String>> FIELD_MAPPER =
-            Options.key("field_mapper")
+    public static final ConfigEntry<Map<String, String>> FIELD_MAPPER =
+            ConfigOption.key("field_mapper")
                     .mapType()
                     .noDefaultValue()
                     .withDescription(

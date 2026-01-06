@@ -17,10 +17,11 @@
 
 package org.apache.seatunnel.config.sql;
 
-import org.apache.seatunnel.api.configuration.ConfigAdapter;
+import org.apache.seatunnel.api.config.Config;
+import org.apache.seatunnel.api.config.ConfigAdapter;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 
 import com.google.auto.service.AutoService;
-import com.typesafe.config.Config;
 
 import java.nio.file.Path;
 import java.util.Map;
@@ -37,6 +38,6 @@ public class SqlConfigAdapter implements ConfigAdapter {
     @Override
     public Map<String, Object> loadConfig(Path configFilePath) {
         Config config = SqlConfigBuilder.of(configFilePath);
-        return config.root().unwrapped();
+        return ((ReadonlyConfig) config).getSourceMap();
     }
 }

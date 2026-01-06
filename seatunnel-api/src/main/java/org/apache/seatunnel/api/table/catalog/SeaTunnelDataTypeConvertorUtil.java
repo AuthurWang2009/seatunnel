@@ -33,6 +33,9 @@ import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import com.typesafe.config.ConfigObject;
 import com.typesafe.config.ConfigValue;
+import com.typesafe.config.ConfigValueType;
+
+import java.util.List;
 
 public class SeaTunnelDataTypeConvertorUtil {
 
@@ -138,7 +141,40 @@ public class SeaTunnelDataTypeConvertorUtil {
         if (column.trim().startsWith("{")) {
             return parseRowType(columnStr);
         }
+        if (column.trim().startsWith("[")) {
+            return parseRowTypeFromList(columnStr);
+        }
         throw CommonError.unsupportedDataType("SeaTunnel", columnStr, field);
+    }
+
+    private static SeaTunnelDataType<?> parseRowTypeFromList(String columnStr) {
+        String confPayload = "{conf = " + columnStr + "}";
+        Config conf;
+        try {
+            conf = ConfigFactory.parseString(confPayload);
+        } catch (RuntimeException e) {
+            throw new IllegalArgumentException(
+                    String.format("HOCON Config parse from %s failed.", confPayload), e);
+        }
+        return parseRowTypeFromList(conf.getList("conf"));
+    }
+
+    private static SeaTunnelDataType<?> parseRowTypeFromList(List<? extends ConfigValue> conf) {
+        String[] fieldNames = new String[conf.size()];
+        SeaTunnelDataType<?>[] fieldTypes = new SeaTunnelDataType[conf.size()];
+        for (int i = 0; i < conf.size(); i++) {
+            ConfigValue configValue = conf.get(i);
+            if (configValue.valueType() != ConfigValueType.OBJECT) {
+                throw new IllegalArgumentException(
+                        "Unsupported parse SeaTunnel Type from " + configValue.toString());
+            }
+            Config config = ((ConfigObject) configValue).toConfig();
+            String name = config.getString("name");
+            String type = config.getString("type");
+            fieldNames[i] = name;
+            fieldTypes[i] = deserializeSeaTunnelDataType(name, type);
+        }
+        return new SeaTunnelRowType(fieldNames, fieldTypes);
     }
 
     private static SeaTunnelDataType<?> parseRowType(String columnStr) {

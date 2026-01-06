@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.core.starter.utils;
 
-import org.apache.seatunnel.api.configuration.ConfigShade;
+import org.apache.seatunnel.api.config.ConfigShade;
 import org.apache.seatunnel.common.utils.JsonUtils;
 import org.apache.seatunnel.core.starter.exception.ConfigCheckException;
 

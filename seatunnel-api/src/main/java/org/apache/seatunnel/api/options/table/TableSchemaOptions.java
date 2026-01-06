@@ -17,8 +17,8 @@
 
 package org.apache.seatunnel.api.options.table;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -27,14 +27,14 @@ import java.util.Map;
 
 public interface TableSchemaOptions {
 
-    Option<Map<String, Object>> SCHEMA =
-            Options.key("schema")
+    ConfigEntry<Map<String, Object>> SCHEMA =
+            ConfigOption.key("schema")
                     .type(new TypeReference<Map<String, Object>>() {})
                     .noDefaultValue()
                     .withDescription("SeaTunnel Schema");
 
-    Option<List<Map<String, Object>>> TABLE_CONFIGS =
-            Options.key("tables_configs")
+    ConfigEntry<List<Map<String, Object>>> TABLE_CONFIGS =
+            ConfigOption.key("tables_configs")
                     .type(new TypeReference<List<Map<String, Object>>>() {})
                     .noDefaultValue()
                     .withDescription(

@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.api.table.catalog.schema;
 
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtilTest;
 
 import com.typesafe.config.Config;

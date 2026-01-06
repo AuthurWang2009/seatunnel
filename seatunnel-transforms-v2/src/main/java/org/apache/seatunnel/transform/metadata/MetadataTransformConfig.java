@@ -17,8 +17,8 @@
 
 package org.apache.seatunnel.transform.metadata;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -27,8 +27,8 @@ public class MetadataTransformConfig implements Serializable {
 
     public static final String PLUGIN_NAME = "Metadata";
 
-    public static final Option<Map<String, String>> METADATA_FIELDS =
-            Options.key("metadata_fields")
+    public static final ConfigEntry<Map<String, String>> METADATA_FIELDS =
+            ConfigOption.key("metadata_fields")
                     .mapType()
                     .noDefaultValue()
                     .withDescription(

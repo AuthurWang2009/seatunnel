@@ -18,7 +18,7 @@
 package org.apache.seatunnel.connectors.seatunnel.file.s3.sink;
 
 import org.apache.seatunnel.api.common.SeaTunnelAPIErrorCode;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.sink.DataSaveMode;
 import org.apache.seatunnel.api.sink.DefaultSaveModeHandler;
 import org.apache.seatunnel.api.sink.SaveModeHandler;
@@ -27,7 +27,7 @@ import org.apache.seatunnel.api.sink.SupportSaveMode;
 import org.apache.seatunnel.api.table.catalog.Catalog;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.factory.CatalogFactory;
-import org.apache.seatunnel.common.config.CheckConfigUtil;
+import org.apache.seatunnel.api.util.CheckConfigUtil;
 import org.apache.seatunnel.common.config.CheckResult;
 import org.apache.seatunnel.common.constants.PluginType;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseSinkOptions;
@@ -36,8 +36,6 @@ import org.apache.seatunnel.connectors.seatunnel.file.exception.FileConnectorExc
 import org.apache.seatunnel.connectors.seatunnel.file.s3.config.S3FileSinkOptions;
 import org.apache.seatunnel.connectors.seatunnel.file.s3.config.S3HadoopConf;
 import org.apache.seatunnel.connectors.seatunnel.file.sink.BaseMultipleTableFileSink;
-
-import com.typesafe.config.Config;
 
 import java.util.Optional;
 
@@ -59,10 +57,9 @@ public class S3FileSink extends BaseMultipleTableFileSink implements SupportSave
         super(S3HadoopConf.buildWithReadOnlyConfig(readonlyConfig), readonlyConfig, catalogTable);
         this.catalogTable = catalogTable;
         this.readonlyConfig = readonlyConfig;
-        Config pluginConfig = readonlyConfig.toConfig();
         CheckResult result =
                 CheckConfigUtil.checkAllExists(
-                        pluginConfig,
+                        readonlyConfig,
                         S3FileSinkOptions.FILE_PATH.key(),
                         S3FileSinkOptions.S3_BUCKET.key());
         if (!result.isSuccess()) {

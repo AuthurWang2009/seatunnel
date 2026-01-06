@@ -17,8 +17,8 @@
 
 package org.apache.seatunnel.api.options;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 import org.apache.seatunnel.api.options.table.CatalogOptions;
 import org.apache.seatunnel.api.options.table.ColumnOptions;
 import org.apache.seatunnel.api.options.table.ConstraintKeyOptions;
@@ -42,14 +42,14 @@ public class ConnectorCommonOptions
                 FormatOptions,
                 Serializable {
 
-    public static Option<String> PLUGIN_NAME =
-            Options.key("plugin_name")
+    public static ConfigEntry<String> PLUGIN_NAME =
+            ConfigOption.key("plugin_name")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("Name of the SPI plugin class.");
 
-    public static Option<String> PLUGIN_OUTPUT =
-            Options.key("plugin_output")
+    public static ConfigEntry<String> PLUGIN_OUTPUT =
+            ConfigOption.key("plugin_output")
                     .stringType()
                     .noDefaultValue()
                     .withFallbackKeys("result_table_name")
@@ -63,8 +63,8 @@ public class ConnectorCommonOptions
                                     + "The data set (dataStream/dataset) registered here can be directly accessed by other plugins "
                                     + "by specifying plugin_input .");
 
-    public static Option<List<String>> PLUGIN_INPUT =
-            Options.key("plugin_input")
+    public static ConfigEntry<List<String>> PLUGIN_INPUT =
+            ConfigOption.key("plugin_input")
                     .listType()
                     .noDefaultValue()
                     .withFallbackKeys("source_table_name")

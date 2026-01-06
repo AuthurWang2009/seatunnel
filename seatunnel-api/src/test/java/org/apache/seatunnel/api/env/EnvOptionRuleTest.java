@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.api.env;
 
-import org.apache.seatunnel.api.configuration.util.OptionRule;
+import org.apache.seatunnel.api.config.util.OptionRule;
 import org.apache.seatunnel.api.options.EnvOptionRule;
 
 import org.junit.jupiter.api.Assertions;

@@ -18,7 +18,8 @@
 package org.apache.seatunnel.connectors.seatunnel.hive.sink;
 
 import org.apache.seatunnel.api.common.JobContext;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.serialization.DefaultSerializer;
 import org.apache.seatunnel.api.serialization.Serializer;
 import org.apache.seatunnel.api.sink.SeaTunnelSink;
@@ -46,9 +47,6 @@ import org.apache.seatunnel.connectors.seatunnel.hive.utils.HiveTableUtils;
 
 import org.apache.hadoop.hive.metastore.api.FieldSchema;
 import org.apache.hadoop.hive.metastore.api.Table;
-
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigValueFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -91,7 +89,11 @@ public class HiveSink
     private FileSinkConfig generateFileSinkConfig(
             ReadonlyConfig readonlyConfig, CatalogTable catalogTable) {
         Table tableInformation = getTableInformation();
-        Config pluginConfig = readonlyConfig.toConfig();
+        // Since ReadonlyConfig implements Config, we can use it directly.
+        // But we want to create a derived config, and ReadonlyConfig is immutable,
+        // so withValue returns a new instance which is what we want.
+        Config pluginConfig = readonlyConfig;
+
         List<String> sinkFields =
                 tableInformation.getSd().getCols().stream()
                         .map(FieldSchema::getName)
@@ -109,29 +111,18 @@ public class HiveSink
                         tableInformation.getSd().getSerdeInfo().getParameters();
                 pluginConfig =
                         pluginConfig
-                                .withValue(
-                                        FILE_FORMAT_TYPE.key(),
-                                        ConfigValueFactory.fromAnyRef(FileFormat.TEXT.toString()))
-                                .withValue(
-                                        FIELD_DELIMITER.key(),
-                                        ConfigValueFactory.fromAnyRef(
-                                                parameters.get("field.delim")))
-                                .withValue(
-                                        ROW_DELIMITER.key(),
-                                        ConfigValueFactory.fromAnyRef(
-                                                parameters.get("line.delim")));
+                                .withValue(FILE_FORMAT_TYPE.key(), FileFormat.TEXT.toString())
+                                .withValue(FIELD_DELIMITER.key(), parameters.get("field.delim"))
+                                .withValue(ROW_DELIMITER.key(), parameters.get("line.delim"));
                 break;
             case PARQUET:
                 pluginConfig =
                         pluginConfig.withValue(
-                                FILE_FORMAT_TYPE.key(),
-                                ConfigValueFactory.fromAnyRef(FileFormat.PARQUET.toString()));
+                                FILE_FORMAT_TYPE.key(), FileFormat.PARQUET.toString());
                 break;
             case ORC:
                 pluginConfig =
-                        pluginConfig.withValue(
-                                FILE_FORMAT_TYPE.key(),
-                                ConfigValueFactory.fromAnyRef(FileFormat.ORC.toString()));
+                        pluginConfig.withValue(FILE_FORMAT_TYPE.key(), FileFormat.ORC.toString());
                 break;
             default:
                 throw new HiveConnectorException(
@@ -140,19 +131,11 @@ public class HiveSink
         }
         pluginConfig =
                 pluginConfig
-                        .withValue(
-                                IS_PARTITION_FIELD_WRITE_IN_FILE.key(),
-                                ConfigValueFactory.fromAnyRef(false))
-                        .withValue(
-                                FILE_NAME_EXPRESSION.key(),
-                                ConfigValueFactory.fromAnyRef("${transactionId}"))
-                        .withValue(
-                                FILE_PATH.key(),
-                                ConfigValueFactory.fromAnyRef(
-                                        tableInformation.getSd().getLocation()))
-                        .withValue(SINK_COLUMNS.key(), ConfigValueFactory.fromAnyRef(sinkFields))
-                        .withValue(
-                                PARTITION_BY.key(), ConfigValueFactory.fromAnyRef(partitionKeys));
+                        .withValue(IS_PARTITION_FIELD_WRITE_IN_FILE.key(), false)
+                        .withValue(FILE_NAME_EXPRESSION.key(), "${transactionId}")
+                        .withValue(FILE_PATH.key(), tableInformation.getSd().getLocation())
+                        .withValue(SINK_COLUMNS.key(), sinkFields)
+                        .withValue(PARTITION_BY.key(), partitionKeys);
 
         return new FileSinkConfig(pluginConfig, catalogTable.getSeaTunnelRowType());
     }

@@ -17,14 +17,14 @@
 
 package org.apache.seatunnel.core.starter.command;
 
+import org.apache.seatunnel.api.config.ConfigLoader;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.core.starter.exception.CommandExecuteException;
 import org.apache.seatunnel.core.starter.exception.ConfigCheckException;
 import org.apache.seatunnel.core.starter.utils.ConfigShadeUtils;
 
 import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 import com.typesafe.config.ConfigRenderOptions;
-import com.typesafe.config.ConfigResolveOptions;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.file.Path;
@@ -46,12 +46,7 @@ public class ConfDecryptCommand implements Command<AbstractCommandArgs> {
         String decryptConfigFile = abstractCommandArgs.getConfigFile();
         Path configPath = Paths.get(decryptConfigFile);
         checkConfigExist(configPath);
-        Config config =
-                ConfigFactory.parseFile(configPath.toFile())
-                        .resolve(ConfigResolveOptions.defaults().setAllowUnresolved(true))
-                        .resolveWith(
-                                ConfigFactory.systemProperties(),
-                                ConfigResolveOptions.defaults().setAllowUnresolved(true));
+        Config config = ((ReadonlyConfig) ConfigLoader.load(configPath)).toConfig();
         Config decryptConfig = ConfigShadeUtils.decryptConfig(config);
         log.info(
                 "Decrypt config: \n{}",

@@ -17,9 +17,10 @@
 
 package org.apache.seatunnel.connectors.seatunnel.hive.storage;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.common.utils.ExceptionUtils;
 import org.apache.seatunnel.connectors.seatunnel.file.hdfs.source.config.HdfsSourceConfigOptions;
 import org.apache.seatunnel.connectors.seatunnel.hive.config.HiveConfig;
@@ -30,8 +31,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 
 import com.google.common.collect.ImmutableList;
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigValueFactory;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -44,18 +43,19 @@ import java.util.Optional;
 
 @Slf4j
 public abstract class AbstractStorage implements Storage {
-    private static final Option BUCKET_OPTION = Options.key("bucket").stringType().noDefaultValue();
+    private static final ConfigEntry BUCKET_OPTION =
+            ConfigOption.key("bucket").stringType().noDefaultValue();
     private static final List<String> HADOOP_CONF_FILES =
             ImmutableList.of("core-site.xml", "hdfs-site.xml", "hive-site.xml");
 
     protected Config fillBucket(ReadonlyConfig readonlyConfig, Configuration configuration) {
-        Config config = readonlyConfig.toConfig();
+        Config config = readonlyConfig;
         String bucketValue = configuration.get(BUCKET_OPTION.key());
         if (StringUtils.isBlank(bucketValue)) {
             throw new RuntimeException(
                     "There is no bucket property in conf which load from [hadoop_conf_path,hadoop_conf].");
         }
-        config = config.withValue(BUCKET_OPTION.key(), ConfigValueFactory.fromAnyRef(bucketValue));
+        config = config.withValue(BUCKET_OPTION.key(), bucketValue);
         return config;
     }
 

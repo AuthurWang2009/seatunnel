@@ -17,23 +17,26 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.obs.config;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseOptions;
 
 public class ObsFileBaseOptions extends FileBaseOptions {
-    public static final Option<String> ACCESS_KEY =
-            Options.key("access_key")
+    public static final ConfigEntry<String> ACCESS_KEY =
+            ConfigOption.key("access_key")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("OBS bucket access key");
-    public static final Option<String> ACCESS_SECRET =
-            Options.key("access_secret")
+    public static final ConfigEntry<String> ACCESS_SECRET =
+            ConfigOption.key("access_secret")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("OBS bucket access secret");
-    public static final Option<String> ENDPOINT =
-            Options.key("endpoint").stringType().noDefaultValue().withDescription("OBS endpoint");
-    public static final Option<String> BUCKET =
-            Options.key("bucket").stringType().noDefaultValue().withDescription("OBS bucket");
+    public static final ConfigEntry<String> ENDPOINT =
+            ConfigOption.key("endpoint")
+                    .stringType()
+                    .noDefaultValue()
+                    .withDescription("OBS endpoint");
+    public static final ConfigEntry<String> BUCKET =
+            ConfigOption.key("bucket").stringType().noDefaultValue().withDescription("OBS bucket");
 }

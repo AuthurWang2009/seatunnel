@@ -17,8 +17,8 @@
 
 package org.apache.seatunnel.transform.nlpmodel;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 import org.apache.seatunnel.api.table.type.SqlType;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -28,90 +28,93 @@ import java.util.Map;
 
 public class ModelTransformConfig implements Serializable {
 
-    public static final Option<ModelProvider> MODEL_PROVIDER =
-            Options.key("model_provider")
+    public static final ConfigEntry<ModelProvider> MODEL_PROVIDER =
+            ConfigOption.key("model_provider")
                     .enumType(ModelProvider.class)
                     .noDefaultValue()
                     .withDescription("The model provider of LLM/Embedding");
 
-    public static final Option<SqlType> OUTPUT_DATA_TYPE =
-            Options.key("output_data_type")
+    public static final ConfigEntry<SqlType> OUTPUT_DATA_TYPE =
+            ConfigOption.key("output_data_type")
                     .enumType(SqlType.class)
                     .defaultValue(SqlType.STRING)
                     .withDescription("The output data type of LLM");
 
-    public static final Option<String> MODEL =
-            Options.key("model")
+    public static final ConfigEntry<String> MODEL =
+            ConfigOption.key("model")
                     .stringType()
                     .noDefaultValue()
                     .withDescription(
                             "The model of LLM/Embedding, eg: if the model provider is OpenAI LLM, the model should be gpt-3.5-turbo/gpt-4o-mini, etc.");
 
-    public static final Option<String> AWS_REGION =
-            Options.key("aws_region")
+    public static final ConfigEntry<String> AWS_REGION =
+            ConfigOption.key("aws_region")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("The AWS region for Amazon Bedrock service.");
 
-    public static final Option<String> API_KEY =
-            Options.key("api_key")
+    public static final ConfigEntry<String> API_KEY =
+            ConfigOption.key("api_key")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("The API key of LLM/Embedding");
 
-    public static final Option<String> SECRET_KEY =
-            Options.key("secret_key")
+    public static final ConfigEntry<String> SECRET_KEY =
+            ConfigOption.key("secret_key")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("The Secret key of LLM/Embedding");
 
-    public static final Option<String> API_PATH =
-            Options.key("api_path")
+    public static final ConfigEntry<String> API_PATH =
+            ConfigOption.key("api_path")
                     .stringType()
                     .noDefaultValue()
                     .withFallbackKeys("openai.api_path")
                     .withDescription("The API of LLM/Embedding");
 
-    public static final Option<String> OAUTH_PATH =
-            Options.key("oauth_path")
+    public static final ConfigEntry<String> OAUTH_PATH =
+            ConfigOption.key("oauth_path")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("The Oauth path of LLM/Embedding");
 
-    public static final Option<Integer> PROCESS_BATCH_SIZE =
-            Options.key("process_batch_size")
+    public static final ConfigEntry<Integer> PROCESS_BATCH_SIZE =
+            ConfigOption.key("process_batch_size")
                     .intType()
                     .defaultValue(100)
                     .withFallbackKeys("inference_batch_size")
                     .withDescription("The row batch size of each process");
 
-    public static final Option<Integer> DIMENSION =
-            Options.key("dimension").intType().defaultValue(2048).withDescription("dimension");
+    public static final ConfigEntry<Integer> DIMENSION =
+            ConfigOption.key("dimension")
+                    .intType()
+                    .defaultValue(2048)
+                    .withDescription("dimension");
 
     public static class CustomRequestConfig {
 
         // Custom response parsing
-        public static final Option<Map<String, Object>> CUSTOM_CONFIG =
-                Options.key("custom_config")
+        public static final ConfigEntry<Map<String, Object>> CUSTOM_CONFIG =
+                ConfigOption.key("custom_config")
                         .type(new TypeReference<Map<String, Object>>() {})
                         .noDefaultValue()
                         .withDescription("The custom config of the custom model.");
 
-        public static final Option<String> CUSTOM_RESPONSE_PARSE =
-                Options.key("custom_response_parse")
+        public static final ConfigEntry<String> CUSTOM_RESPONSE_PARSE =
+                ConfigOption.key("custom_response_parse")
                         .stringType()
                         .noDefaultValue()
                         .withDescription(
                                 "The response parse of the custom model. You can use Jsonpath to parse the return object you want to parse. eg: $.choices[*].message.content");
 
-        public static final Option<Map<String, String>> CUSTOM_REQUEST_HEADERS =
-                Options.key("custom_request_headers")
+        public static final ConfigEntry<Map<String, String>> CUSTOM_REQUEST_HEADERS =
+                ConfigOption.key("custom_request_headers")
                         .mapType()
                         .noDefaultValue()
                         .withDescription("The custom request headers of the custom model.");
 
-        public static final Option<Map<String, Object>> CUSTOM_REQUEST_BODY =
-                Options.key("custom_request_body")
+        public static final ConfigEntry<Map<String, Object>> CUSTOM_REQUEST_BODY =
+                ConfigOption.key("custom_request_body")
                         .type(new TypeReference<Map<String, Object>>() {})
                         .noDefaultValue()
                         .withDescription(

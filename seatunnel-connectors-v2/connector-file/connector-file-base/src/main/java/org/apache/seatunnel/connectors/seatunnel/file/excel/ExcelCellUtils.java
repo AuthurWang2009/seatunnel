@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.excel;
 
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.type.SeaTunnelDataType;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
 import org.apache.seatunnel.api.table.type.SeaTunnelRowType;
@@ -31,7 +31,6 @@ import com.alibaba.excel.metadata.Cell;
 import com.alibaba.excel.metadata.data.ReadCellData;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.typesafe.config.Config;
 import lombok.SneakyThrows;
 
 import javax.annotation.Nullable;
@@ -170,8 +169,7 @@ public class ExcelCellUtils implements Serializable {
     }
 
     private Object parseRow(String fieldValue, SeaTunnelDataType<?> fieldType) {
-        String delimiter =
-                ReadonlyConfig.fromConfig(pluginConfig).get(FileBaseSourceOptions.FIELD_DELIMITER);
+        String delimiter = pluginConfig.get(FileBaseSourceOptions.FIELD_DELIMITER);
         String[] context = fieldValue.split(delimiter);
         SeaTunnelRowType ft = (SeaTunnelRowType) fieldType;
         int length = context.length;

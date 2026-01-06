@@ -16,9 +16,9 @@
  */
 package org.apache.seatunnel.transform.jsonpath;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.Column;
 import org.apache.seatunnel.api.table.catalog.PhysicalColumn;
@@ -47,34 +47,34 @@ import static org.apache.seatunnel.transform.exception.JsonPathTransformErrorCod
 
 public class JsonPathTransformConfig implements Serializable {
 
-    public static final Option<Object> PATH =
-            Options.key("path")
+    public static final ConfigEntry<Object> PATH =
+            ConfigOption.key("path")
                     .objectType(Object.class)
                     .noDefaultValue()
                     .withDescription(
                             "JSONPath for Selecting Field from JSON. Can be a string or array of strings.");
 
-    public static final Option<String> SRC_FIELD =
-            Options.key("src_field")
+    public static final ConfigEntry<String> SRC_FIELD =
+            ConfigOption.key("src_field")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("JSON source field.");
 
-    public static final Option<Object> DEST_FIELD =
-            Options.key("dest_field")
+    public static final ConfigEntry<Object> DEST_FIELD =
+            ConfigOption.key("dest_field")
                     .objectType(Object.class)
                     .noDefaultValue()
                     .withDescription("Output field. Can be a string or array of strings.");
 
-    public static final Option<Object> DEST_TYPE =
-            Options.key("dest_type")
+    public static final ConfigEntry<Object> DEST_TYPE =
+            ConfigOption.key("dest_type")
                     .objectType(Object.class)
                     .defaultValue("string")
                     .withDescription(
                             "Output field type. Can be a string or array of strings, default string");
 
-    public static final Option<List<Map<String, Object>>> COLUMNS =
-            Options.key("columns")
+    public static final ConfigEntry<List<Map<String, Object>>> COLUMNS =
+            ConfigOption.key("columns")
                     .type(new TypeReference<List<Map<String, Object>>>() {})
                     .noDefaultValue()
                     .withDescription("columns");

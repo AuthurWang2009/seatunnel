@@ -17,6 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.writer;
 
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
 import org.apache.seatunnel.api.table.type.SeaTunnelRowType;
@@ -87,7 +88,7 @@ public class OrcReadStrategyTest {
         LocalConf localConf = new LocalConf(FS_DEFAULT_NAME_DEFAULT);
         Config pluginConfig = ConfigFactory.parseFile(new File(confPath));
         orcReadStrategy.init(localConf);
-        orcReadStrategy.setPluginConfig(pluginConfig);
+        orcReadStrategy.setPluginConfig(ReadonlyConfig.fromConfig(pluginConfig));
         TestCollector testCollector = new TestCollector();
         SeaTunnelRowType seaTunnelRowTypeInfo =
                 orcReadStrategy.getSeaTunnelRowTypeInfo(orcFilePath);

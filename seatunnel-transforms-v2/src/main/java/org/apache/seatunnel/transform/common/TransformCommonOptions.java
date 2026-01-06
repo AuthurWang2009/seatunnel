@@ -17,8 +17,8 @@
 
 package org.apache.seatunnel.transform.common;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -29,26 +29,26 @@ import java.util.Map;
 
 public class TransformCommonOptions {
 
-    public static final Option<List<Map<String, Object>>> MULTI_TABLES =
-            Options.key("table_transform")
+    public static final ConfigEntry<List<Map<String, Object>>> MULTI_TABLES =
+            ConfigOption.key("table_transform")
                     .type(new TypeReference<List<Map<String, Object>>>() {})
                     .defaultValue(Collections.emptyList())
                     .withDescription("The table transform config");
 
-    public static final Option<String> TABLE_PATH =
-            Options.key("table_path")
+    public static final ConfigEntry<String> TABLE_PATH =
+            ConfigOption.key("table_path")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("The table path of catalog table");
 
-    public static final Option<String> TABLE_MATCH_REGEX =
-            Options.key("table_match_regex")
+    public static final ConfigEntry<String> TABLE_MATCH_REGEX =
+            ConfigOption.key("table_match_regex")
                     .stringType()
                     .defaultValue(".*")
                     .withDescription("The regex to match the table path");
 
-    public static final Option<ErrorHandleWay> ROW_ERROR_HANDLE_WAY_OPTION =
-            Options.key("row_error_handle_way")
+    public static final ConfigEntry<ErrorHandleWay> ROW_ERROR_HANDLE_WAY_OPTION =
+            ConfigOption.key("row_error_handle_way")
                     .singleChoice(
                             ErrorHandleWay.class,
                             Arrays.asList(
@@ -60,8 +60,8 @@ public class TransformCommonOptions {
                             "The processing method of data format error. The default value is fail, and the optional value is (fail, skip). "
                                     + "When fail is selected, data format error will block and an exception will be thrown. "
                                     + "When skip is selected, data format error will skip this line data.");
-    public static final Option<ErrorHandleWay> COLUMN_ERROR_HANDLE_WAY_OPTION =
-            Options.key("column_error_handle_way")
+    public static final ConfigEntry<ErrorHandleWay> COLUMN_ERROR_HANDLE_WAY_OPTION =
+            ConfigOption.key("column_error_handle_way")
                     .enumType(ErrorHandleWay.class)
                     .noDefaultValue()
                     .withDescription(
@@ -70,8 +70,8 @@ public class TransformCommonOptions {
                                     + "When skip is selected, data format error will skip this column data."
                                     + "When skip_row is selected, data format error will skip this line data.");
 
-    public static final Option<String> ERROR_TABLE_OPTION =
-            Options.key("row_error_handle_way.error_table")
+    public static final ConfigEntry<String> ERROR_TABLE_OPTION =
+            ConfigOption.key("row_error_handle_way.error_table")
                     .stringType()
                     .noDefaultValue()
                     .withDescription(

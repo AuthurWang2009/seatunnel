@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.api.common;
 
-import com.typesafe.config.Config;
+import org.apache.seatunnel.api.config.Config;
 
 /**
  * This interface is the life cycle of a plugin, after a plugin created, will execute prepare method
@@ -38,7 +38,6 @@ public interface SeaTunnelPluginLifeCycle {
      * @deprecated SeaTunnel will not invoke prepare when init plugin, instead by {@link
      *     org.apache.seatunnel.api.table.factory.Factory}
      */
-    @Deprecated
     default void prepare(Config pluginConfig) throws PrepareFailException {
         throw new UnsupportedOperationException("prepare method is not supported");
     }

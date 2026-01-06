@@ -18,8 +18,8 @@
 
 package org.apache.seatunnel.format.json.maxwell;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 import org.apache.seatunnel.format.json.JsonFormatOptions;
 
 import java.util.Map;
@@ -27,18 +27,19 @@ import java.util.Map;
 /** Option utils for MaxWell_json format. */
 public class MaxWellJsonFormatOptions {
 
-    public static final Option<Boolean> IGNORE_PARSE_ERRORS = JsonFormatOptions.IGNORE_PARSE_ERRORS;
+    public static final ConfigEntry<Boolean> IGNORE_PARSE_ERRORS =
+            JsonFormatOptions.IGNORE_PARSE_ERRORS;
 
-    public static final Option<String> DATABASE_INCLUDE =
-            Options.key("database.include")
+    public static final ConfigEntry<String> DATABASE_INCLUDE =
+            ConfigOption.key("database.include")
                     .stringType()
                     .noDefaultValue()
                     .withDescription(
                             "An optional regular expression to only read the specific databases changelog rows by regular matching the \"database\" meta field in the MaxWell record."
                                     + "The pattern string is compatible with Java's Pattern.");
 
-    public static final Option<String> TABLE_INCLUDE =
-            Options.key("table.include")
+    public static final ConfigEntry<String> TABLE_INCLUDE =
+            ConfigOption.key("table.include")
                     .stringType()
                     .noDefaultValue()
                     .withDescription(

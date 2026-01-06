@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.rename;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.AllArgsConstructor;
@@ -37,32 +37,32 @@ import java.util.List;
 @Accessors(chain = true)
 public class FieldRenameConfig implements Serializable {
 
-    public static final Option<ConvertCase> CONVERT_CASE =
-            Options.key("convert_case")
+    public static final ConfigEntry<ConvertCase> CONVERT_CASE =
+            ConfigOption.key("convert_case")
                     .enumType(ConvertCase.class)
                     .noDefaultValue()
                     .withDescription("Convert to uppercase or lowercase");
 
-    public static final Option<String> PREFIX =
-            Options.key("prefix")
+    public static final ConfigEntry<String> PREFIX =
+            ConfigOption.key("prefix")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("Add prefix for field name");
 
-    public static final Option<String> SUFFIX =
-            Options.key("suffix")
+    public static final ConfigEntry<String> SUFFIX =
+            ConfigOption.key("suffix")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("Add suffix for field name");
 
-    public static final Option<List<ReplacementsWithRegex>> REPLACEMENTS_WITH_REGEX =
-            Options.key("replacements_with_regex")
+    public static final ConfigEntry<List<ReplacementsWithRegex>> REPLACEMENTS_WITH_REGEX =
+            ConfigOption.key("replacements_with_regex")
                     .listType(ReplacementsWithRegex.class)
                     .noDefaultValue()
                     .withDescription("The regex of replace fields name to ");
 
-    public static final Option<List<SpecificModify>> SPECIFIC =
-            Options.key("specific")
+    public static final ConfigEntry<List<SpecificModify>> SPECIFIC =
+            ConfigOption.key("specific")
                     .listType(SpecificModify.class)
                     .noDefaultValue()
                     .withDescription("The specific modify field name");

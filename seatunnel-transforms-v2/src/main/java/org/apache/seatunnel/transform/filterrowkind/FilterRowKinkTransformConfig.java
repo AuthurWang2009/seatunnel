@@ -17,8 +17,8 @@
 
 package org.apache.seatunnel.transform.filterrowkind;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 import org.apache.seatunnel.api.table.type.RowKind;
 
 import lombok.Getter;
@@ -31,13 +31,13 @@ import java.util.List;
 @Setter
 public class FilterRowKinkTransformConfig implements Serializable {
 
-    public static final Option<List<RowKind>> INCLUDE_KINDS =
-            Options.key("include_kinds")
+    public static final ConfigEntry<List<RowKind>> INCLUDE_KINDS =
+            ConfigOption.key("include_kinds")
                     .listType(RowKind.class)
                     .noDefaultValue()
                     .withDescription("the row kinds to include");
-    public static final Option<List<RowKind>> EXCLUDE_KINDS =
-            Options.key("exclude_kinds")
+    public static final ConfigEntry<List<RowKind>> EXCLUDE_KINDS =
+            ConfigOption.key("exclude_kinds")
                     .listType(RowKind.class)
                     .noDefaultValue()
                     .withDescription("the row kinds to exclude");

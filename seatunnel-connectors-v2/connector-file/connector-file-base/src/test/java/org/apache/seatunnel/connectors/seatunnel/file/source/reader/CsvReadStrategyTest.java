@@ -17,6 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.source.reader;
 
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtil;
 import org.apache.seatunnel.api.table.type.BasicType;
@@ -49,7 +50,7 @@ public class CsvReadStrategyTest {
         LocalConf localConf = new LocalConf(FS_DEFAULT_NAME_DEFAULT);
         csvReadStrategy.init(localConf);
         csvReadStrategy.getFileNamesByPath(path);
-        csvReadStrategy.setPluginConfig(ConfigFactory.empty());
+        csvReadStrategy.setPluginConfig(ReadonlyConfig.fromConfig(ConfigFactory.empty()));
         csvReadStrategy.setCatalogTable(
                 CatalogTableUtil.getCatalogTable(
                         "test",
@@ -79,7 +80,8 @@ public class CsvReadStrategyTest {
         csvReadStrategy.init(localConf);
         csvReadStrategy.getFileNamesByPath(path);
         System.setProperty("field_delimiter", ";");
-        csvReadStrategy.setPluginConfig(ConfigFactory.systemProperties());
+        csvReadStrategy.setPluginConfig(
+                ReadonlyConfig.fromConfig(ConfigFactory.systemProperties()));
         csvReadStrategy.setCatalogTable(
                 CatalogTableUtil.getCatalogTable(
                         "test",

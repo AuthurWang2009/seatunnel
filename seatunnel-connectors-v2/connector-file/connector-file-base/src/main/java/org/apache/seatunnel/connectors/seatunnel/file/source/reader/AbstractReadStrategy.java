@@ -17,6 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.source.reader;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.type.BasicType;
@@ -36,7 +37,6 @@ import org.apache.commons.compress.compressors.gzip.GzipParameters;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.fs.FileStatus;
 
-import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayInputStream;
@@ -191,49 +191,47 @@ public abstract class AbstractReadStrategy implements ReadStrategy {
     @Override
     public void setPluginConfig(Config pluginConfig) {
         this.pluginConfig = pluginConfig;
-        // Determine whether it is a compressed file
-        if (pluginConfig.hasPath(FileBaseSourceOptions.ARCHIVE_COMPRESS_CODEC.key())) {
-            String archiveCompressCodec =
-                    pluginConfig.getString(FileBaseSourceOptions.ARCHIVE_COMPRESS_CODEC.key());
-            archiveCompressFormat =
-                    ArchiveCompressFormat.valueOf(archiveCompressCodec.toUpperCase());
+        if (pluginConfig.getOptional(FileBaseSourceOptions.ARCHIVE_COMPRESS_CODEC).isPresent()) {
+            archiveCompressFormat = pluginConfig.get(FileBaseSourceOptions.ARCHIVE_COMPRESS_CODEC);
         }
-        if (pluginConfig.hasPath(FileBaseSourceOptions.PARSE_PARTITION_FROM_PATH.key())) {
-            isMergePartition =
-                    pluginConfig.getBoolean(FileBaseSourceOptions.PARSE_PARTITION_FROM_PATH.key());
+
+        if (pluginConfig.getOptional(FileBaseSourceOptions.PARSE_PARTITION_FROM_PATH).isPresent()) {
+            isMergePartition = pluginConfig.get(FileBaseSourceOptions.PARSE_PARTITION_FROM_PATH);
         }
-        if (pluginConfig.hasPath(FileBaseSourceOptions.SKIP_HEADER_ROW_NUMBER.key())) {
-            skipHeaderNumber =
-                    pluginConfig.getLong(FileBaseSourceOptions.SKIP_HEADER_ROW_NUMBER.key());
+
+        if (pluginConfig.getOptional(FileBaseSourceOptions.SKIP_HEADER_ROW_NUMBER).isPresent()) {
+            skipHeaderNumber = pluginConfig.get(FileBaseSourceOptions.SKIP_HEADER_ROW_NUMBER);
         }
-        if (pluginConfig.hasPath(FileBaseSourceOptions.FILENAME_EXTENSION.key())) {
-            filenameExtension =
-                    pluginConfig.getString(FileBaseSourceOptions.FILENAME_EXTENSION.key());
+
+        if (pluginConfig.getOptional(FileBaseSourceOptions.FILENAME_EXTENSION).isPresent()) {
+            filenameExtension = pluginConfig.get(FileBaseSourceOptions.FILENAME_EXTENSION);
         }
-        if (pluginConfig.hasPath(FileBaseSourceOptions.READ_PARTITIONS.key())) {
-            readPartitions.addAll(
-                    pluginConfig.getStringList(FileBaseSourceOptions.READ_PARTITIONS.key()));
+
+        if (pluginConfig.getOptional(FileBaseSourceOptions.READ_PARTITIONS).isPresent()) {
+            readPartitions.addAll(pluginConfig.get(FileBaseSourceOptions.READ_PARTITIONS));
         }
-        if (pluginConfig.hasPath(FileBaseSourceOptions.READ_COLUMNS.key())) {
-            readColumns.addAll(
-                    pluginConfig.getStringList(FileBaseSourceOptions.READ_COLUMNS.key()));
+
+        if (pluginConfig.getOptional(FileBaseSourceOptions.READ_COLUMNS).isPresent()) {
+            readColumns.addAll(pluginConfig.get(FileBaseSourceOptions.READ_COLUMNS));
         }
-        if (pluginConfig.hasPath(FileBaseSourceOptions.FILE_FILTER_PATTERN.key())) {
-            String filterPattern =
-                    pluginConfig.getString(FileBaseSourceOptions.FILE_FILTER_PATTERN.key());
+
+        if (pluginConfig.getOptional(FileBaseSourceOptions.FILE_FILTER_PATTERN).isPresent()) {
+            String filterPattern = pluginConfig.get(FileBaseSourceOptions.FILE_FILTER_PATTERN);
             this.pattern = Pattern.compile(filterPattern);
         }
-        if (pluginConfig.hasPath(FileBaseSourceOptions.FILE_FILTER_MODIFIED_START.key())) {
+
+        if (pluginConfig
+                .getOptional(FileBaseSourceOptions.FILE_FILTER_MODIFIED_START)
+                .isPresent()) {
             fileModifiedStartDate =
                     getFileModifiedDate(
-                            pluginConfig.getString(
-                                    FileBaseSourceOptions.FILE_FILTER_MODIFIED_START.key()));
+                            pluginConfig.get(FileBaseSourceOptions.FILE_FILTER_MODIFIED_START));
         }
-        if (pluginConfig.hasPath(FileBaseSourceOptions.FILE_FILTER_MODIFIED_END.key())) {
+
+        if (pluginConfig.getOptional(FileBaseSourceOptions.FILE_FILTER_MODIFIED_END).isPresent()) {
             fileModifiedEndDate =
                     getFileModifiedDate(
-                            pluginConfig.getString(
-                                    FileBaseSourceOptions.FILE_FILTER_MODIFIED_END.key()));
+                            pluginConfig.get(FileBaseSourceOptions.FILE_FILTER_MODIFIED_END));
         }
     }
 

@@ -17,20 +17,20 @@
 
 package org.apache.seatunnel.api.table.catalog;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 
 public class InMemoryCatalogOptionRule {
 
-    public static final Option<String> username =
-            Options.key("username").stringType().noDefaultValue().withDescription("username");
+    public static final ConfigEntry<String> username =
+            ConfigOption.key("username").stringType().noDefaultValue().withDescription("username");
 
-    public static final Option<String> password =
-            Options.key("password").stringType().noDefaultValue().withDescription("password");
+    public static final ConfigEntry<String> password =
+            ConfigOption.key("password").stringType().noDefaultValue().withDescription("password");
 
-    public static final Option<String> host =
-            Options.key("host").stringType().defaultValue("localhost").withDescription("host");
+    public static final ConfigEntry<String> host =
+            ConfigOption.key("host").stringType().defaultValue("localhost").withDescription("host");
 
-    public static final Option<Integer> port =
-            Options.key("port").intType().defaultValue(5081).withDescription("port");
+    public static final ConfigEntry<Integer> port =
+            ConfigOption.key("port").intType().defaultValue(5081).withDescription("port");
 }

@@ -17,23 +17,23 @@
 
 package org.apache.seatunnel.transform.nlpmodel.embedding;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 import org.apache.seatunnel.transform.nlpmodel.ModelTransformConfig;
 
 import java.util.Map;
 
 public class EmbeddingTransformConfig extends ModelTransformConfig {
 
-    public static final Option<Integer> SINGLE_VECTORIZED_INPUT_NUMBER =
-            Options.key("single_vectorized_input_number")
+    public static final ConfigEntry<Integer> SINGLE_VECTORIZED_INPUT_NUMBER =
+            ConfigOption.key("single_vectorized_input_number")
                     .intType()
                     .defaultValue(1)
                     .withDescription(
                             "The number of single vectorized inputs, default is 1 , which means 1 inputs will be vectorized in one request , eg: qianfan only allows a maximum of 16 simultaneous messages, depending on your own settings, etc");
 
-    public static final Option<Map<String, String>> VECTORIZATION_FIELDS =
-            Options.key("vectorization_fields")
+    public static final ConfigEntry<Map<String, String>> VECTORIZATION_FIELDS =
+            ConfigOption.key("vectorization_fields")
                     .mapType()
                     .noDefaultValue()
                     .withDescription(

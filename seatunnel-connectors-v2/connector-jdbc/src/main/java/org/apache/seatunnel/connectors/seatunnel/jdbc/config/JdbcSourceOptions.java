@@ -17,8 +17,8 @@
 
 package org.apache.seatunnel.connectors.seatunnel.jdbc.config;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.source.StringSplitMode;
 
 import java.util.List;
@@ -26,34 +26,34 @@ import java.util.List;
 @SuppressWarnings("checkstyle:MagicNumber")
 public class JdbcSourceOptions extends JdbcCommonOptions {
 
-    public static final Option<String> TABLE_PATH =
-            Options.key("table_path")
+    public static final ConfigEntry<String> TABLE_PATH =
+            ConfigOption.key("table_path")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("table full path");
 
-    public static final Option<String> WHERE_CONDITION =
-            Options.key("where_condition")
+    public static final ConfigEntry<String> WHERE_CONDITION =
+            ConfigOption.key("where_condition")
                     .stringType()
                     .noDefaultValue()
                     .withDescription(
                             "Common row filter conditions for all tables/queries, must start with `where`. for example `where id > 100`");
 
-    public static final Option<List<JdbcSourceTableConfig>> TABLE_LIST =
-            Options.key("table_list")
+    public static final ConfigEntry<List<JdbcSourceTableConfig>> TABLE_LIST =
+            ConfigOption.key("table_list")
                     .listType(JdbcSourceTableConfig.class)
                     .noDefaultValue()
                     .withDescription("table list config");
 
-    public static final Option<Integer> SPLIT_SIZE =
-            Options.key("split.size")
+    public static final ConfigEntry<Integer> SPLIT_SIZE =
+            ConfigOption.key("split.size")
                     .intType()
                     .defaultValue(8096)
                     .withDescription(
                             "The split size (number of rows) of table snapshot, captured tables are split into multiple splits when read     of table.");
 
-    public static final Option<Double> SPLIT_EVEN_DISTRIBUTION_FACTOR_UPPER_BOUND =
-            Options.key("split.even-distribution.factor.upper-bound")
+    public static final ConfigEntry<Double> SPLIT_EVEN_DISTRIBUTION_FACTOR_UPPER_BOUND =
+            ConfigOption.key("split.even-distribution.factor.upper-bound")
                     .doubleType()
                     .defaultValue(100.0d)
                     .withDescription(
@@ -63,8 +63,8 @@ public class JdbcSourceOptions extends JdbcCommonOptions {
                                     + " and the query for splitting would happen when it is uneven."
                                     + " The distribution factor could be calculated by (MAX(id) - MIN(id) + 1) / rowCount.");
 
-    public static final Option<Double> SPLIT_EVEN_DISTRIBUTION_FACTOR_LOWER_BOUND =
-            Options.key("split.even-distribution.factor.lower-bound")
+    public static final ConfigEntry<Double> SPLIT_EVEN_DISTRIBUTION_FACTOR_LOWER_BOUND =
+            ConfigOption.key("split.even-distribution.factor.lower-bound")
                     .doubleType()
                     .defaultValue(0.05d)
                     .withDescription(
@@ -74,8 +74,8 @@ public class JdbcSourceOptions extends JdbcCommonOptions {
                                     + " and the query for splitting would happen when it is uneven."
                                     + " The distribution factor could be calculated by (MAX(id) - MIN(id) + 1) / rowCount.");
 
-    public static final Option<Integer> SPLIT_SAMPLE_SHARDING_THRESHOLD =
-            Options.key("split.sample-sharding.threshold")
+    public static final ConfigEntry<Integer> SPLIT_SAMPLE_SHARDING_THRESHOLD =
+            ConfigOption.key("split.sample-sharding.threshold")
                     .intType()
                     .defaultValue(1000) // 1000 shards
                     .withDescription(
@@ -86,8 +86,8 @@ public class JdbcSourceOptions extends JdbcCommonOptions {
                                     + "This strategy can help to handle large datasets more efficiently. "
                                     + "The default value is 1000 shards.");
 
-    public static final Option<Integer> SPLIT_INVERSE_SAMPLING_RATE =
-            Options.key("split.inverse-sampling.rate")
+    public static final ConfigEntry<Integer> SPLIT_INVERSE_SAMPLING_RATE =
+            ConfigOption.key("split.inverse-sampling.rate")
                     .intType()
                     .defaultValue(1000) // 1/1000 sampling rate
                     .withDescription(
@@ -96,65 +96,65 @@ public class JdbcSourceOptions extends JdbcCommonOptions {
                                     + "For example, a value of 1000 means a sampling rate of 1/1000. "
                                     + "This parameter is used when the sample sharding strategy is triggered.");
 
-    public static final Option<Boolean> USE_SELECT_COUNT =
-            Options.key("use_select_count")
+    public static final ConfigEntry<Boolean> USE_SELECT_COUNT =
+            ConfigOption.key("use_select_count")
                     .booleanType()
                     .defaultValue(false)
                     .withDescription("Use select count for table count");
 
-    public static final Option<Boolean> SKIP_ANALYZE =
-            Options.key("skip_analyze")
+    public static final ConfigEntry<Boolean> SKIP_ANALYZE =
+            ConfigOption.key("skip_analyze")
                     .booleanType()
                     .defaultValue(false)
                     .withDescription("Skip the analysis of table count");
 
-    public static final Option<Boolean> USE_REGEX =
-            Options.key("use_regex")
+    public static final ConfigEntry<Boolean> USE_REGEX =
+            ConfigOption.key("use_regex")
                     .booleanType()
                     .defaultValue(false)
                     .withDescription("Use regular expression for table path matching");
 
-    public static final Option<Integer> FETCH_SIZE =
-            Options.key("fetch_size")
+    public static final ConfigEntry<Integer> FETCH_SIZE =
+            ConfigOption.key("fetch_size")
                     .intType()
                     .defaultValue(0)
                     .withDescription(
                             "For queries that return a large number of objects, "
                                     + "you can configure the row fetch size used in the query to improve performance by reducing the number database hits required to satisfy the selection criteria. Zero means use jdbc default value.");
 
-    public static final Option<String> PARTITION_COLUMN =
-            Options.key("partition_column")
+    public static final ConfigEntry<String> PARTITION_COLUMN =
+            ConfigOption.key("partition_column")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("partition column");
 
-    public static final Option<String> PARTITION_UPPER_BOUND =
-            Options.key("partition_upper_bound")
+    public static final ConfigEntry<String> PARTITION_UPPER_BOUND =
+            ConfigOption.key("partition_upper_bound")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("partition upper bound");
 
-    public static final Option<String> PARTITION_LOWER_BOUND =
-            Options.key("partition_lower_bound")
+    public static final ConfigEntry<String> PARTITION_LOWER_BOUND =
+            ConfigOption.key("partition_lower_bound")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("partition lower bound");
 
-    public static final Option<Integer> PARTITION_NUM =
-            Options.key("partition_num")
+    public static final ConfigEntry<Integer> PARTITION_NUM =
+            ConfigOption.key("partition_num")
                     .intType()
                     .noDefaultValue()
                     .withDescription("partition num");
 
-    public static final Option<StringSplitMode> STRING_SPLIT_MODE =
-            Options.key("split.string_split_mode")
+    public static final ConfigEntry<StringSplitMode> STRING_SPLIT_MODE =
+            ConfigOption.key("split.string_split_mode")
                     .enumType(StringSplitMode.class)
                     .defaultValue(StringSplitMode.SAMPLE)
                     .withDescription(
                             "Supports different string splitting algorithms. By default, `sample` is used to determine the split by sampling the string value. You can switch to `charset_based` to enable charset-based string splitting algorithm. When set to `charset_based`, the algorithm assumes characters of partition_column are within ASCII range 32-126, which covers most character-based splitting scenarios.");
 
-    public static final Option<String> STRING_SPLIT_MODE_COLLATE =
-            Options.key("split.string_split_mode_collate")
+    public static final ConfigEntry<String> STRING_SPLIT_MODE_COLLATE =
+            ConfigOption.key("split.string_split_mode_collate")
                     .stringType()
                     .noDefaultValue()
                     .withDescription(

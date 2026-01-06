@@ -17,7 +17,9 @@
 
 package org.apache.seatunnel.core.starter.utils;
 
-import org.apache.seatunnel.api.configuration.ConfigAdapter;
+import org.apache.seatunnel.api.config.ConfigAdapter;
+import org.apache.seatunnel.api.config.ConfigLoader;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.sink.TablePlaceholder;
 import org.apache.seatunnel.common.utils.JsonUtils;
 import org.apache.seatunnel.common.utils.ParserException;
@@ -62,26 +64,32 @@ public class ConfigBuilder {
     }
 
     private static Config ofInner(@NonNull Path filePath, List<String> variables) {
+        org.apache.seatunnel.api.config.Config stConfig = ConfigLoader.load(filePath);
         Config config =
-                ConfigFactory.parseFile(filePath.toFile())
+                ((ReadonlyConfig) stConfig)
+                        .toConfig()
                         .resolve(ConfigResolveOptions.defaults().setAllowUnresolved(true));
         return ConfigShadeUtils.decryptConfig(backfillUserVariables(config, variables));
     }
 
+    @Deprecated
     public static Config of(@NonNull String filePath) {
         Path path = Paths.get(filePath);
         return of(path);
     }
 
+    @Deprecated
     public static Config of(@NonNull String filePath, List<String> variables) {
         Path path = Paths.get(filePath);
         return of(path, variables);
     }
 
+    @Deprecated
     public static Config of(@NonNull Path filePath) {
         return of(filePath, null);
     }
 
+    @Deprecated
     public static Config of(@NonNull Path filePath, List<String> variables) {
         log.info("Loading config file from path: {}", filePath);
         Optional<ConfigAdapter> adapterSupplier = ConfigAdapterUtils.selectAdapter(filePath);
@@ -98,10 +106,12 @@ public class ConfigBuilder {
         return config;
     }
 
+    @Deprecated
     public static Config of(@NonNull Map<String, Object> objectMap) {
         return of(objectMap, false);
     }
 
+    @Deprecated
     public static Config of(@NonNull Map<String, Object> objectMap, boolean isEncrypt) {
         log.info("Loading config file from objectMap");
         Config config =
@@ -172,6 +182,7 @@ public class ConfigBuilder {
                         LinkedHashMap::putAll);
     }
 
+    @Deprecated
     public static Config of(
             @NonNull ConfigAdapter configAdapter, @NonNull Path filePath, List<String> variables) {
         log.info("With config adapter spi {}", configAdapter.getClass().getName());

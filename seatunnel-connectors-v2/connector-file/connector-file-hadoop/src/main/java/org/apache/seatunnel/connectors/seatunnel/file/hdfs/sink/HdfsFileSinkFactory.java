@@ -18,15 +18,15 @@
 package org.apache.seatunnel.connectors.seatunnel.file.hdfs.sink;
 
 import org.apache.seatunnel.api.common.SeaTunnelAPIErrorCode;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
-import org.apache.seatunnel.api.configuration.util.OptionRule;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.util.OptionRule;
 import org.apache.seatunnel.api.options.SinkConnectorCommonOptions;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.connector.TableSink;
 import org.apache.seatunnel.api.table.factory.Factory;
 import org.apache.seatunnel.api.table.factory.TableSinkFactoryContext;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
-import org.apache.seatunnel.common.config.CheckConfigUtil;
+import org.apache.seatunnel.api.util.CheckConfigUtil;
 import org.apache.seatunnel.common.config.CheckResult;
 import org.apache.seatunnel.common.constants.PluginType;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseSinkOptions;
@@ -142,8 +142,7 @@ public class HdfsFileSinkFactory extends BaseMultipleTableFileSinkFactory {
 
     public HadoopConf initHadoopConf(ReadonlyConfig readonlyConfig) {
         Config pluginConfig = readonlyConfig.toConfig();
-        CheckResult result =
-                CheckConfigUtil.checkAllExists(readonlyConfig.toConfig(), FS_DEFAULT_NAME_KEY);
+        CheckResult result = CheckConfigUtil.checkAllExists(readonlyConfig, FS_DEFAULT_NAME_KEY);
         if (!result.isSuccess()) {
             throw new FileConnectorException(
                     SeaTunnelAPIErrorCode.CONFIG_VALIDATION_FAILED,

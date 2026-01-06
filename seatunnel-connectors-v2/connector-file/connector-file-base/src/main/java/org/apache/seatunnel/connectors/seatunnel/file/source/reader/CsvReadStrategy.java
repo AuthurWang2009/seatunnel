@@ -18,7 +18,6 @@
 package org.apache.seatunnel.connectors.seatunnel.file.source.reader;
 
 import org.apache.seatunnel.api.common.SeaTunnelAPIErrorCode;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtil;
@@ -199,13 +198,12 @@ public class CsvReadStrategy extends AbstractReadStrategy {
                     "When reading csv files, if user has not specified schema information, "
                             + "SeaTunnel will not support column projection");
         }
-        ReadonlyConfig readonlyConfig = ReadonlyConfig.fromConfig(pluginConfig);
         CsvDeserializationSchema.Builder builder =
                 CsvDeserializationSchema.builder()
                         .delimiter(getDelimiter())
                         .csvLineProcessor(processor)
                         .nullFormat(
-                                readonlyConfig
+                                pluginConfig
                                         .getOptional(FileBaseSourceOptions.NULL_FORMAT)
                                         .orElse(null));
         if (isMergePartition) {
@@ -218,8 +216,7 @@ public class CsvReadStrategy extends AbstractReadStrategy {
     }
 
     private String getDelimiter() {
-        ReadonlyConfig readonlyConfig = ReadonlyConfig.fromConfig(pluginConfig);
-        return readonlyConfig.getOptional(FileBaseSourceOptions.FIELD_DELIMITER).orElse(",");
+        return pluginConfig.getOptional(FileBaseSourceOptions.FIELD_DELIMITER).orElse(",");
     }
 
     @Override
@@ -228,9 +225,8 @@ public class CsvReadStrategy extends AbstractReadStrategy {
         this.inputCatalogTable = catalogTable;
         SeaTunnelRowType userDefinedRowTypeWithPartition =
                 mergePartitionTypes(fileNames.get(0), rowType);
-        ReadonlyConfig readonlyConfig = ReadonlyConfig.fromConfig(pluginConfig);
         encoding =
-                readonlyConfig
+                pluginConfig
                         .getOptional(FileBaseSourceOptions.ENCODING)
                         .orElse(StandardCharsets.UTF_8.name());
         initFormatter();
@@ -239,7 +235,7 @@ public class CsvReadStrategy extends AbstractReadStrategy {
                         .delimiter(getDelimiter())
                         .csvLineProcessor(processor)
                         .nullFormat(
-                                readonlyConfig
+                                pluginConfig
                                         .getOptional(FileBaseSourceOptions.NULL_FORMAT)
                                         .orElse(null));
         if (pluginConfig.hasPath(FileBaseSourceOptions.CSV_USE_HEADER_LINE.key())) {

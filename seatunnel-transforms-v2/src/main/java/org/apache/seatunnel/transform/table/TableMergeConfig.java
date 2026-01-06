@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.table;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.table.catalog.TablePath;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
@@ -34,20 +34,20 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class TableMergeConfig implements Serializable {
 
-    public static final Option<String> DATABASE =
-            Options.key("database")
+    public static final ConfigEntry<String> DATABASE =
+            ConfigOption.key("database")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("Specify new database name");
 
-    public static final Option<String> SCHEMA =
-            Options.key("schema")
+    public static final ConfigEntry<String> SCHEMA =
+            ConfigOption.key("schema")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("Specify new schema name");
 
-    public static final Option<String> TABLE =
-            Options.key("table")
+    public static final ConfigEntry<String> TABLE =
+            ConfigOption.key("table")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("Specify new table name");

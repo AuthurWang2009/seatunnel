@@ -17,7 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.source.reader;
 
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.type.ArrayType;
 import org.apache.seatunnel.api.table.type.BasicType;
@@ -438,10 +437,11 @@ public class OrcReadStrategy extends AbstractReadStrategy {
         Charset charset = StandardCharsets.UTF_8;
         if (pluginConfig != null) {
             charset =
-                    ReadonlyConfig.fromConfig(pluginConfig)
-                            .getOptional(FileBaseSourceOptions.ENCODING)
-                            .map(Charset::forName)
-                            .orElse(StandardCharsets.UTF_8);
+                    charset =
+                            pluginConfig
+                                    .getOptional(FileBaseSourceOptions.ENCODING)
+                                    .map(Charset::forName)
+                                    .orElse(StandardCharsets.UTF_8);
         }
 
         Object bytesObj = null;

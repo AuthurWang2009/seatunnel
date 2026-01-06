@@ -17,8 +17,8 @@
 
 package org.apache.seatunnel.transform.dynamiccompile;
 
-import org.apache.seatunnel.api.configuration.Option;
-import org.apache.seatunnel.api.configuration.Options;
+import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigOption;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,26 +28,26 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class DynamicCompileTransformConfig implements Serializable {
-    public static final Option<String> SOURCE_CODE =
-            Options.key("source_code")
+    public static final ConfigEntry<String> SOURCE_CODE =
+            ConfigOption.key("source_code")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("source_code to compile");
 
-    public static final Option<CompileLanguage> COMPILE_LANGUAGE =
-            Options.key("compile_language")
+    public static final ConfigEntry<CompileLanguage> COMPILE_LANGUAGE =
+            ConfigOption.key("compile_language")
                     .enumType(CompileLanguage.class)
                     .noDefaultValue()
                     .withDescription("compile language");
 
-    public static final Option<String> ABSOLUTE_PATH =
-            Options.key("absolute_path")
+    public static final ConfigEntry<String> ABSOLUTE_PATH =
+            ConfigOption.key("absolute_path")
                     .stringType()
                     .noDefaultValue()
                     .withDescription("absolute_path");
 
-    public static final Option<CompilePattern> COMPILE_PATTERN =
-            Options.key("compile_pattern")
+    public static final ConfigEntry<CompilePattern> COMPILE_PATTERN =
+            ConfigOption.key("compile_pattern")
                     .enumType(CompilePattern.class)
                     .defaultValue(CompilePattern.SOURCE_CODE)
                     .withDescription("compile_pattern");

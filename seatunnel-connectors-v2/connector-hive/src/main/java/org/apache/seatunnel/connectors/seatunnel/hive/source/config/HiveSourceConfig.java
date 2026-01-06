@@ -18,7 +18,8 @@
 package org.apache.seatunnel.connectors.seatunnel.hive.source.config;
 
 import org.apache.seatunnel.api.common.SeaTunnelAPIErrorCode;
-import org.apache.seatunnel.api.configuration.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
+import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.options.ConnectorCommonOptions;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtil;
@@ -47,8 +48,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.hive.metastore.api.FieldSchema;
 import org.apache.hadoop.hive.metastore.api.Table;
 
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigValueFactory;
 import lombok.Getter;
 import lombok.SneakyThrows;
 
@@ -117,7 +116,7 @@ public class HiveSourceConfig implements Serializable {
             HadoopConf hadoopConf) {
 
         ReadStrategy readStrategy = ReadStrategyFactory.of(fileFormat.name());
-        Config config = readonlyConfig.toConfig();
+        Config config = readonlyConfig;
 
         switch (fileFormat) {
             case TEXT:
@@ -132,33 +131,18 @@ public class HiveSourceConfig implements Serializable {
                     if (StringUtils.isEmpty(nullFormat)) {
                         nullFormat = "\\N";
                     }
-                    config =
-                            config.withValue(
-                                    NULL_FORMAT.key(), ConfigValueFactory.fromAnyRef(nullFormat));
+                    config = config.withValue(NULL_FORMAT.key(), nullFormat);
                 }
                 config =
-                        config.withValue(
-                                        FIELD_DELIMITER.key(),
-                                        ConfigValueFactory.fromAnyRef(
-                                                parameters.get("field.delim")))
-                                .withValue(
-                                        ROW_DELIMITER.key(),
-                                        ConfigValueFactory.fromAnyRef(parameters.get("line.delim")))
-                                .withValue(
-                                        FILE_FORMAT_TYPE.key(),
-                                        ConfigValueFactory.fromAnyRef(FileFormat.TEXT.name()));
+                        config.withValue(FIELD_DELIMITER.key(), parameters.get("field.delim"))
+                                .withValue(ROW_DELIMITER.key(), parameters.get("line.delim"))
+                                .withValue(FILE_FORMAT_TYPE.key(), FileFormat.TEXT.name());
                 break;
             case ORC:
-                config =
-                        config.withValue(
-                                FILE_FORMAT_TYPE.key(),
-                                ConfigValueFactory.fromAnyRef(FileFormat.ORC.name()));
+                config = config.withValue(FILE_FORMAT_TYPE.key(), FileFormat.ORC.name());
                 break;
             case PARQUET:
-                config =
-                        config.withValue(
-                                FILE_FORMAT_TYPE.key(),
-                                ConfigValueFactory.fromAnyRef(FileFormat.PARQUET.name()));
+                config = config.withValue(FILE_FORMAT_TYPE.key(), FileFormat.PARQUET.name());
                 break;
             default:
         }
