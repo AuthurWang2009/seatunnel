@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.jdbc.utils;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.options.ConnectorCommonOptions;
 import org.apache.seatunnel.api.table.catalog.Catalog;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
@@ -486,7 +486,7 @@ public class JdbcCatalogUtilsTest {
         Map<String, Object> configMap = new HashMap<>();
         configMap.put(ConnectorCommonOptions.DATABASE_PATTERN.key(), databasePattern);
         configMap.put(ConnectorCommonOptions.TABLE_PATTERN.key(), tablePattern);
-        ReadonlyConfig config = ReadonlyConfig.fromMap(configMap);
+        Config config = Config.of(configMap);
         List<CatalogTable> tables = catalog.getTables(config);
 
         List<String> actualTablePaths =
@@ -670,7 +670,7 @@ public class JdbcCatalogUtilsTest {
         Map<String, Object> configMap = new HashMap<>();
         configMap.put(ConnectorCommonOptions.DATABASE_PATTERN.key(), databasePattern);
         configMap.put(ConnectorCommonOptions.TABLE_PATTERN.key(), tablePattern);
-        ReadonlyConfig config = ReadonlyConfig.fromMap(configMap);
+        Config config = Config.of(configMap);
 
         List<CatalogTable> tables = catalog.getTables(config);
 

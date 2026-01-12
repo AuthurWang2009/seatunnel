@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.jdbc.utils;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.options.ConnectorCommonOptions;
 import org.apache.seatunnel.api.table.catalog.Catalog;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
@@ -431,7 +431,7 @@ public class JdbcCatalogUtils {
     }
 
     public static Optional<Catalog> findCatalog(JdbcConnectionConfig config, JdbcDialect dialect) {
-        ReadonlyConfig catalogConfig = extractCatalogConfig(config);
+        Config catalogConfig = extractCatalogConfig(config);
         return FactoryUtil.createOptionalCatalog(
                 dialect.dialectName(),
                 catalogConfig,
@@ -439,7 +439,7 @@ public class JdbcCatalogUtils {
                 dialect.dialectName());
     }
 
-    private static ReadonlyConfig extractCatalogConfig(JdbcConnectionConfig config) {
+    private static Config extractCatalogConfig(JdbcConnectionConfig config) {
         Map<String, Object> catalogConfig = new HashMap<>();
         catalogConfig.put(JdbcCommonOptions.URL.key(), config.getUrl());
         config.getUsername()
@@ -453,7 +453,7 @@ public class JdbcCatalogUtils {
         catalogConfig.put(JdbcCommonOptions.INT_TYPE_NARROWING.key(), config.isIntTypeNarrowing());
         catalogConfig.put(
                 JdbcCommonOptions.HANDLE_BLOB_AS_STRING.key(), config.isHandleBlobAsString());
-        return ReadonlyConfig.fromMap(catalogConfig);
+        return Config.of(catalogConfig);
     }
 
     private static void processRegexTablePath(
@@ -504,7 +504,7 @@ public class JdbcCatalogUtils {
         configMap.put(ConnectorCommonOptions.DATABASE_PATTERN.key(), databasePattern);
         configMap.put(ConnectorCommonOptions.TABLE_PATTERN.key(), fullTablePattern);
 
-        ReadonlyConfig config = ReadonlyConfig.fromMap(configMap);
+        Config config = Config.of(configMap);
 
         try {
             List<CatalogTable> catalogTables = jdbcCatalog.getTables(config);

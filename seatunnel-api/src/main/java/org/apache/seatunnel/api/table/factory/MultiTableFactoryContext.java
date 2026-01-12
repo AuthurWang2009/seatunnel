@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.api.table.factory;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.sink.SeaTunnelSink;
 import org.apache.seatunnel.api.table.catalog.TablePath;
 
@@ -31,7 +31,7 @@ public class MultiTableFactoryContext extends TableSinkFactoryContext {
     private final Map<TablePath, SeaTunnelSink> sinks;
 
     public MultiTableFactoryContext(
-            ReadonlyConfig options, ClassLoader classLoader, Map<TablePath, SeaTunnelSink> sinks) {
+            Config options, ClassLoader classLoader, Map<TablePath, SeaTunnelSink> sinks) {
         super(null, options, classLoader);
         this.sinks = sinks;
     }

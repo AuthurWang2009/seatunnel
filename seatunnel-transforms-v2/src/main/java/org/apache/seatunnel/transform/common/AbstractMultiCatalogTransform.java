@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.common;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.TableIdentifier;
 import org.apache.seatunnel.api.table.catalog.TableSchema;
@@ -44,15 +44,14 @@ public abstract class AbstractMultiCatalogTransform implements SeaTunnelTransfor
 
     protected Map<String, SeaTunnelTransform<SeaTunnelRow>> transformMap;
 
-    public AbstractMultiCatalogTransform(
-            List<CatalogTable> inputCatalogTables, ReadonlyConfig config) {
+    public AbstractMultiCatalogTransform(List<CatalogTable> inputCatalogTables, Config config) {
         this.inputCatalogTables = inputCatalogTables;
         this.transformMap = new HashMap<>();
         Pattern tableMatchRegex =
                 Pattern.compile(config.get(TransformCommonOptions.TABLE_MATCH_REGEX));
-        Map<String, ReadonlyConfig> singleTableConfig =
+        Map<String, Config> singleTableConfig =
                 config.get(TransformCommonOptions.MULTI_TABLES).stream()
-                        .map(ReadonlyConfig::fromMap)
+                        .map(Config::of)
                         .filter(c -> c.get(TransformCommonOptions.TABLE_PATH) != null)
                         .collect(
                                 Collectors.toMap(
@@ -62,7 +61,7 @@ public abstract class AbstractMultiCatalogTransform implements SeaTunnelTransfor
         inputCatalogTables.forEach(
                 inputCatalogTable -> {
                     String tableId = inputCatalogTable.getTableId().toTablePath().toString();
-                    ReadonlyConfig tableConfig;
+                    Config tableConfig;
                     if (singleTableConfig.containsKey(tableId)) {
                         tableConfig = singleTableConfig.get(tableId);
                     } else if (tableMatchRegex.matcher(tableId).matches()) {
@@ -89,7 +88,7 @@ public abstract class AbstractMultiCatalogTransform implements SeaTunnelTransfor
     }
 
     protected abstract SeaTunnelTransform<SeaTunnelRow> buildTransform(
-            CatalogTable inputCatalogTable, ReadonlyConfig config);
+            CatalogTable inputCatalogTable, Config config);
 
     @Override
     public List<CatalogTable> getProducedCatalogTables() {

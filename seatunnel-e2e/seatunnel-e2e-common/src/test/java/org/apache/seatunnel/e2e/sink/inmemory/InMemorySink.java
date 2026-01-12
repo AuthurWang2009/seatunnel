@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.e2e.sink.inmemory;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.serialization.DefaultSerializer;
 import org.apache.seatunnel.api.serialization.Serializer;
 import org.apache.seatunnel.api.sink.SaveModeHandler;
@@ -41,10 +41,10 @@ public class InMemorySink
                 SupportMultiTableSink,
                 SupportSaveMode {
 
-    private ReadonlyConfig config;
+    private Config config;
     private CatalogTable catalogTable;
 
-    public InMemorySink(CatalogTable catalogTable, ReadonlyConfig config) {
+    public InMemorySink(CatalogTable catalogTable, Config config) {
         this.catalogTable = catalogTable;
         this.config = config;
     }

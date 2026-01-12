@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.hive.config;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 import org.apache.seatunnel.connectors.seatunnel.file.s3.config.S3FileBaseOptions;
 import org.apache.seatunnel.connectors.seatunnel.file.s3.config.S3HadoopConf;
@@ -42,7 +42,7 @@ public class HiveOnS3Conf extends S3HadoopConf {
         return getSchema().equals(S3_SCHEMA) ? HDFS_S3_IMPL : super.switchHdfsImpl();
     }
 
-    public static HadoopConf buildWithReadOnlyConfig(ReadonlyConfig readonlyConfig) {
+    public static HadoopConf buildWithReadOnlyConfig(Config readonlyConfig) {
         S3HadoopConf s3Conf = (S3HadoopConf) S3HadoopConf.buildWithReadOnlyConfig(readonlyConfig);
         String bucketName = readonlyConfig.get(S3FileBaseOptions.S3_BUCKET);
         if (bucketName.startsWith(DEFAULT_SCHEMA)) {

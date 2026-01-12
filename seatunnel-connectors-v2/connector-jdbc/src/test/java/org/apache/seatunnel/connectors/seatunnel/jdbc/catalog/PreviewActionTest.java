@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.jdbc.catalog;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.Catalog;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.PhysicalColumn;
@@ -63,7 +63,7 @@ public class PreviewActionTest {
         Catalog catalog =
                 factory.createCatalog(
                         "test",
-                        ReadonlyConfig.fromMap(
+                        Config.of(
                                 new HashMap<String, Object>() {
                                     {
                                         put("url", "jdbc:mysql://localhost:3306/test");
@@ -106,7 +106,7 @@ public class PreviewActionTest {
         Catalog catalog =
                 factory.createCatalog(
                         "test",
-                        ReadonlyConfig.fromMap(
+                        Config.of(
                                 new HashMap<String, Object>() {
                                     {
                                         put("url", "jdbc:mysql://localhost:3306/test");
@@ -150,7 +150,7 @@ public class PreviewActionTest {
         Catalog catalog2 =
                 factory.createCatalog(
                         "test",
-                        ReadonlyConfig.fromMap(
+                        Config.of(
                                 new HashMap<String, Object>() {
                                     {
                                         put("url", "jdbc:mysql://localhost:3306/test");
@@ -194,7 +194,7 @@ public class PreviewActionTest {
         Catalog catalog =
                 factory.createCatalog(
                         "test",
-                        ReadonlyConfig.fromMap(
+                        Config.of(
                                 new HashMap<String, Object>() {
                                     {
                                         put("url", "jdbc:mysql://localhost:3306/test");

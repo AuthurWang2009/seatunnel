@@ -18,7 +18,6 @@
 package org.apache.seatunnel.connectors.seatunnel.hive.storage;
 
 import org.apache.seatunnel.api.config.Config;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 import org.apache.seatunnel.connectors.seatunnel.file.s3.config.S3FileBaseOptions;
 import org.apache.seatunnel.connectors.seatunnel.hive.config.HiveOnS3Conf;
@@ -31,7 +30,7 @@ import java.util.Map;
 public class S3Storage extends AbstractStorage {
 
     @Override
-    public HadoopConf buildHadoopConfWithReadOnlyConfig(ReadonlyConfig readonlyConfig) {
+    public HadoopConf buildHadoopConfWithReadOnlyConfig(Config readonlyConfig) {
         Configuration configuration = loadHiveBaseHadoopConfig(readonlyConfig);
         Config config = fillBucket(readonlyConfig, configuration);
         config =
@@ -42,7 +41,7 @@ public class S3Storage extends AbstractStorage {
                 config.withValue(
                         S3FileBaseOptions.FS_S3A_ENDPOINT.key(),
                         configuration.get(S3FileBaseOptions.FS_S3A_ENDPOINT.key()));
-        HadoopConf hadoopConf = HiveOnS3Conf.buildWithReadOnlyConfig((ReadonlyConfig) config);
+        HadoopConf hadoopConf = HiveOnS3Conf.buildWithReadOnlyConfig(config);
         Map<String, String> propsWithPrefix = configuration.getPropsWithPrefix(StringUtils.EMPTY);
         hadoopConf.setExtraOptions(propsWithPrefix);
         return hadoopConf;

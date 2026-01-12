@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.table;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
 import org.apache.seatunnel.api.transform.SeaTunnelTransform;
@@ -34,8 +34,7 @@ import static org.apache.seatunnel.transform.table.TableFilterConfig.PLUGIN_NAME
 @Slf4j
 public class TableFilterMultiCatalogTransform extends AbstractMultiCatalogMapTransform {
 
-    public TableFilterMultiCatalogTransform(
-            List<CatalogTable> inputCatalogTables, ReadonlyConfig config) {
+    public TableFilterMultiCatalogTransform(List<CatalogTable> inputCatalogTables, Config config) {
         super(inputCatalogTables, config);
     }
 
@@ -45,8 +44,7 @@ public class TableFilterMultiCatalogTransform extends AbstractMultiCatalogMapTra
     }
 
     @Override
-    protected SeaTunnelTransform<SeaTunnelRow> buildTransform(
-            CatalogTable table, ReadonlyConfig config) {
+    protected SeaTunnelTransform<SeaTunnelRow> buildTransform(CatalogTable table, Config config) {
         TableFilterConfig tableFilterConfig = TableFilterConfig.of(config);
         boolean include;
         if (tableFilterConfig.getDatabasePattern() == null

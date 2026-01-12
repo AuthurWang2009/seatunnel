@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.oss.sink;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileSystemType;
 import org.apache.seatunnel.connectors.seatunnel.file.oss.config.OssHadoopConf;
@@ -29,7 +29,7 @@ public class OssFileSink extends BaseMultipleTableFileSink {
 
     private final CatalogTable catalogTable;
 
-    public OssFileSink(ReadonlyConfig readonlyConfig, CatalogTable catalogTable) {
+    public OssFileSink(Config readonlyConfig, CatalogTable catalogTable) {
         super(OssHadoopConf.buildWithConfig(readonlyConfig), readonlyConfig, catalogTable);
         this.catalogTable = catalogTable;
     }

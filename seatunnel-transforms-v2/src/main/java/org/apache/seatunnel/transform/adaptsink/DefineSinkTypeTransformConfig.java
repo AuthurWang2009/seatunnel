@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.adaptsink;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.ConfigEntry;
 import org.apache.seatunnel.api.config.ConfigOption;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -79,7 +79,7 @@ public class DefineSinkTypeTransformConfig implements Serializable {
         private List<DefineColumnType> columns;
     }
 
-    public static DefineSinkTypeTransformConfig of(ReadonlyConfig config) {
+    public static DefineSinkTypeTransformConfig of(Config config) {
         List<DefineColumnType> columns = config.get(COLUMNS);
 
         checkArgument(columns != null && !columns.isEmpty(), "The columns must be set");

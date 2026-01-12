@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.writer;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtil;
 import org.apache.seatunnel.api.table.type.BasicType;
@@ -34,7 +34,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 
-import com.typesafe.config.ConfigFactory;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -62,10 +61,7 @@ public class CsvWriteStrategyTest {
                         new SeaTunnelDataType[] {
                             BasicType.INT_TYPE, BasicType.STRING_TYPE, BasicType.INT_TYPE
                         });
-        FileSinkConfig writeSinkConfig =
-                new FileSinkConfig(
-                        ReadonlyConfig.fromConfig(ConfigFactory.parseMap(writeConfig)),
-                        writeRowType);
+        FileSinkConfig writeSinkConfig = new FileSinkConfig(Config.of(writeConfig), writeRowType);
         CsvWriteStrategy writeStrategy = new CsvWriteStrategy(writeSinkConfig);
         ParquetReadStrategyTest.LocalConf hadoopConf =
                 new ParquetReadStrategyTest.LocalConf(FS_DEFAULT_NAME_DEFAULT);
@@ -80,7 +76,7 @@ public class CsvWriteStrategyTest {
         CsvReadStrategy readStrategy = new CsvReadStrategy();
         readStrategy.init(hadoopConf);
         List<String> readFiles = readStrategy.getFileNamesByPath(TMP_PATH);
-        readStrategy.setPluginConfig(ReadonlyConfig.fromConfig(ConfigFactory.empty()));
+        readStrategy.setPluginConfig(Config.of(new HashMap<>()));
         readStrategy.setCatalogTable(
                 CatalogTableUtil.getCatalogTable(
                         "test",
@@ -127,10 +123,7 @@ public class CsvWriteStrategyTest {
                         new SeaTunnelDataType[] {
                             BasicType.INT_TYPE, BasicType.STRING_TYPE, BasicType.INT_TYPE
                         });
-        FileSinkConfig writeSinkConfig =
-                new FileSinkConfig(
-                        ReadonlyConfig.fromConfig(ConfigFactory.parseMap(writeConfig)),
-                        writeRowType);
+        FileSinkConfig writeSinkConfig = new FileSinkConfig(Config.of(writeConfig), writeRowType);
         CsvWriteStrategy writeStrategy = new CsvWriteStrategy(writeSinkConfig);
         ParquetReadStrategyTest.LocalConf hadoopConf =
                 new ParquetReadStrategyTest.LocalConf(FS_DEFAULT_NAME_DEFAULT);
@@ -145,7 +138,7 @@ public class CsvWriteStrategyTest {
         CsvReadStrategy readStrategy = new CsvReadStrategy();
         readStrategy.init(hadoopConf);
         List<String> readFiles = readStrategy.getFileNamesByPath(TMP_PATH);
-        readStrategy.setPluginConfig(ReadonlyConfig.fromConfig(ConfigFactory.empty()));
+        readStrategy.setPluginConfig(Config.of(new HashMap<>()));
         readStrategy.setCatalogTable(
                 CatalogTableUtil.getCatalogTable(
                         "test",

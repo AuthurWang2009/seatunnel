@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.replace;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.Column;
 import org.apache.seatunnel.api.table.type.SeaTunnelRowAccessor;
@@ -33,11 +33,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ReplaceTransform extends SingleFieldOutputTransform {
-    private final ReadonlyConfig config;
+    private final Config config;
     private int inputFieldIndex;
 
-    public ReplaceTransform(
-            @NonNull ReadonlyConfig config, @NonNull CatalogTable inputCatalogTable) {
+    public ReplaceTransform(@NonNull Config config, @NonNull CatalogTable inputCatalogTable) {
         super(inputCatalogTable);
         this.config = config;
         initOutputFields(

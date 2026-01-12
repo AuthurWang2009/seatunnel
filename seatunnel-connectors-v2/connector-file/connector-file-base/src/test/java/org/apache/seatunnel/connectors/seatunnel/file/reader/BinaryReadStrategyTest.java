@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.reader;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
@@ -28,8 +28,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 import lombok.Getter;
 
 import java.io.File;
@@ -62,7 +60,7 @@ public class BinaryReadStrategyTest {
         File testFile = createTestFile("test_binary_default.bin", 2048);
 
         Config config = createConfig(testFile.getParent(), null, null);
-        binaryReadStrategy.setPluginConfig(ReadonlyConfig.fromConfig(config));
+        binaryReadStrategy.setPluginConfig(config);
         binaryReadStrategy.init(localConf);
 
         TestCollector collector = new TestCollector();
@@ -94,7 +92,7 @@ public class BinaryReadStrategyTest {
         File testFile = createTestFile("test_binary_custom.bin", 1500);
 
         Config config = createConfig(testFile.getParent(), 512, null);
-        binaryReadStrategy.setPluginConfig(ReadonlyConfig.fromConfig(config));
+        binaryReadStrategy.setPluginConfig(config);
         binaryReadStrategy.init(localConf);
 
         TestCollector collector = new TestCollector();
@@ -121,7 +119,7 @@ public class BinaryReadStrategyTest {
         File testFile = createTestFile("test_binary_complete.bin", 2048);
 
         Config config = createConfig(testFile.getParent(), null, true);
-        binaryReadStrategy.setPluginConfig(ReadonlyConfig.fromConfig(config));
+        binaryReadStrategy.setPluginConfig(config);
         binaryReadStrategy.init(localConf);
 
         TestCollector collector = new TestCollector();
@@ -171,7 +169,7 @@ public class BinaryReadStrategyTest {
             configMap.put("binary_complete_file_mode", completeFileMode);
         }
 
-        return ConfigFactory.parseMap(configMap);
+        return Config.of(configMap);
     }
 
     @Getter

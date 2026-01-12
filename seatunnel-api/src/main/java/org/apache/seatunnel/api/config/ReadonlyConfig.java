@@ -18,22 +18,19 @@
 package org.apache.seatunnel.api.config;
 
 import org.apache.seatunnel.api.config.util.ConfigUtil;
+import org.apache.seatunnel.common.constants.JobMode;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.typesafe.config.ConfigFactory;
-import com.typesafe.config.ConfigRenderOptions;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
-public class ReadonlyConfig extends AbstractConfig implements Serializable {
+public class ReadonlyConfig extends AbstractConfig {
     private static final long serialVersionUID = 1L;
     private static final ObjectMapper JACKSON_MAPPER = new ObjectMapper();
 
@@ -48,53 +45,27 @@ public class ReadonlyConfig extends AbstractConfig implements Serializable {
         return new ReadonlyConfig(map);
     }
 
-    /** @deprecated Please use {@link ReadonlyConfig#fromMap(Map)} instead. */
-    @Deprecated
-    public static ReadonlyConfig fromConfig(com.typesafe.config.Config config) {
-        try {
-            return fromMap(
-                    JACKSON_MAPPER.readValue(
-                            config.root().render(ConfigRenderOptions.concise()),
-                            new TypeReference<LinkedHashMap<String, Object>>() {}));
-        } catch (JsonProcessingException e) {
-            throw new IllegalArgumentException("Json parsing exception.", e);
-        }
-    }
-
     @Override
     public <T> T get(ConfigEntry<T> option) {
         return getOptional(option).orElseGet(option::defaultValue);
     }
 
-    /**
-     * Transform to Config todo: This method should be removed after we remove Config
-     *
-     * @return Config
-     * @deprecated Please use ReadonlyConfig directly
-     */
-    @Deprecated
-    public com.typesafe.config.Config toConfig() {
-        return ConfigFactory.parseMap(confData);
-    }
-
     @Override
-    public Map<String, String> toMap() {
+    public Map<String, Object> toMap() {
         if (confData.isEmpty()) {
             return Collections.emptyMap();
         }
 
-        Map<String, String> result = new LinkedHashMap<>();
+        Map<String, Object> result = new LinkedHashMap<>();
         toMap(result);
         return result;
     }
 
-    public void toMap(Map<String, String> result) {
+    public void toMap(Map<String, Object> result) {
         if (confData.isEmpty()) {
             return;
         }
-        for (Map.Entry<String, Object> entry : confData.entrySet()) {
-            result.put(entry.getKey(), ConfigUtil.convertToJsonString(entry.getValue()));
-        }
+        result.putAll(confData);
     }
 
     public Map<String, Object> getSourceMap() {
@@ -131,6 +102,7 @@ public class ReadonlyConfig extends AbstractConfig implements Serializable {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Config getConfig(String key) {
         Object value = internalGet(key);
         if (value instanceof Map) {
@@ -175,6 +147,35 @@ public class ReadonlyConfig extends AbstractConfig implements Serializable {
         return new ReadonlyConfig(newMap);
     }
 
+    @Override
+    public JobMode getEnum(Class<JobMode> jobModeClass, String key) {
+        return ConfigUtil.convertToEnum(getValue(key), jobModeClass);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Config> getConfigList(String key) {
+        Object value = internalGet(key);
+        if (value instanceof List) {
+            return ((List<Object>) value)
+                    .stream()
+                            .map(
+                                    item -> {
+                                        if (item instanceof Map) {
+                                            return new ReadonlyConfig((Map<String, Object>) item);
+                                        }
+                                        throw new IllegalArgumentException(
+                                                "List item is not a Map/Config: "
+                                                        + (item == null
+                                                                ? "null"
+                                                                : item.getClass().getName()));
+                                    })
+                            .collect(java.util.stream.Collectors.toList());
+        }
+        return Collections.emptyList();
+    }
+
+    @SuppressWarnings("unchecked")
     public Object getValue(String key) {
         if (this.confData.containsKey(key)) {
             return this.confData.get(key);

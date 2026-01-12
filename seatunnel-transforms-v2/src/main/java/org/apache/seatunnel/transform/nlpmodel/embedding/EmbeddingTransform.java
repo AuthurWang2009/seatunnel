@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.nlpmodel.embedding;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.Column;
 import org.apache.seatunnel.api.table.catalog.PhysicalColumn;
@@ -50,14 +50,13 @@ import java.util.Map;
 
 public class EmbeddingTransform extends MultipleFieldOutputTransform {
 
-    private final ReadonlyConfig config;
+    private final Config config;
     private List<String> fieldNames;
     private List<Integer> fieldOriginalIndexes;
     private transient Model model;
     private Integer dimension;
 
-    public EmbeddingTransform(
-            @NonNull ReadonlyConfig config, @NonNull CatalogTable inputCatalogTable) {
+    public EmbeddingTransform(@NonNull Config config, @NonNull CatalogTable inputCatalogTable) {
         super(inputCatalogTable);
         this.config = config;
         initOutputFields(
@@ -79,10 +78,10 @@ public class EmbeddingTransform extends MultipleFieldOutputTransform {
             switch (provider) {
                 case CUSTOM:
                     // load custom_config from the configuration
-                    ReadonlyConfig customConfig =
+                    Config customConfig =
                             config.getOptional(
                                             ModelTransformConfig.CustomRequestConfig.CUSTOM_CONFIG)
-                                    .map(ReadonlyConfig::fromMap)
+                                    .map(Config::of)
                                     .orElseThrow(
                                             () ->
                                                     new IllegalArgumentException(

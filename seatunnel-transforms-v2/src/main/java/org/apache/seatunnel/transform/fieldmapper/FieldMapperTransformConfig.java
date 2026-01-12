@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.fieldmapper;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.ConfigEntry;
 import org.apache.seatunnel.api.config.ConfigOption;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -40,7 +40,7 @@ public class FieldMapperTransformConfig implements Serializable {
 
     private Map<String, String> fieldMapper = new LinkedHashMap<>();
 
-    public static FieldMapperTransformConfig of(ReadonlyConfig config) {
+    public static FieldMapperTransformConfig of(Config config) {
         FieldMapperTransformConfig fieldMapperTransformConfig = new FieldMapperTransformConfig();
         fieldMapperTransformConfig.setFieldMapper(config.get(FIELD_MAPPER));
         return fieldMapperTransformConfig;

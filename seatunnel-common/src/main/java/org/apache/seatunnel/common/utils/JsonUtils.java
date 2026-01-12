@@ -106,6 +106,14 @@ public class JsonUtils {
         }
     }
 
+    public static String toPrettyJsonString(Object object) {
+        try {
+            return OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(object);
+        } catch (Exception e) {
+            throw new RuntimeException("Object to json exception!", e);
+        }
+    }
+
     /**
      * This method deserializes the specified Json into an object of the specified class. It is not
      * suitable to use if the specified class is a generic type since it will not have the generic

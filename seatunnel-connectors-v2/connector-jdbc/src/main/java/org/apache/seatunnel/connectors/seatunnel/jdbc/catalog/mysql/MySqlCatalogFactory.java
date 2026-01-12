@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.jdbc.catalog.mysql;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.util.OptionRule;
 import org.apache.seatunnel.api.table.catalog.Catalog;
 import org.apache.seatunnel.api.table.factory.CatalogFactory;
@@ -40,7 +40,7 @@ public class MySqlCatalogFactory implements CatalogFactory {
     }
 
     @Override
-    public Catalog createCatalog(String catalogName, ReadonlyConfig options) {
+    public Catalog createCatalog(String catalogName, Config options) {
         String urlWithDatabase = options.get(JdbcCommonOptions.URL);
         Preconditions.checkArgument(
                 StringUtils.isNoneBlank(urlWithDatabase),

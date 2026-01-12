@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.metadata;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.Column;
 import org.apache.seatunnel.api.table.catalog.MetadataColumn;
@@ -153,8 +153,7 @@ public class MetadataTransformTest {
         metadataMapping.put("Delay", "delay");
         Map<String, Object> config = new HashMap<>();
         config.put("metadata_fields", metadataMapping);
-        MetadataTransform transform =
-                new MetadataTransform(ReadonlyConfig.fromMap(config), catalogTable);
+        MetadataTransform transform = new MetadataTransform(Config.of(config), catalogTable);
         transform.initRowContainerGenerator();
 
         Column[] columns = transform.getOutputColumns();

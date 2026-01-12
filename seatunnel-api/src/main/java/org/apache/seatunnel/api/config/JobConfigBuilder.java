@@ -39,7 +39,7 @@ public class JobConfigBuilder {
     }
 
     public JobConfigBuilder env(Config envConfig) {
-        this.envConfigBuilder.config(envConfig);
+        this.envConfigBuilder.from(envConfig);
         return this;
     }
 

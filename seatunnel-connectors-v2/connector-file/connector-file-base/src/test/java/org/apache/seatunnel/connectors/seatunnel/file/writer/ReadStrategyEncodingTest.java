@@ -17,11 +17,13 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.writer;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
+import org.apache.seatunnel.api.config.ConfigLoader;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtil;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
+import org.apache.seatunnel.api.table.type.SeaTunnelRowType;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 import org.apache.seatunnel.connectors.seatunnel.file.source.reader.AbstractReadStrategy;
 import org.apache.seatunnel.connectors.seatunnel.file.source.reader.JsonReadStrategy;
@@ -34,8 +36,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -116,8 +116,8 @@ public class ReadStrategyEncodingTest {
         String confPath = Paths.get(conf.toURI()).toString();
         TestCollector testCollector;
         LocalConf localConf = new LocalConf(FS_DEFAULT_NAME_DEFAULT);
-        Config pluginConfig = ConfigFactory.parseFile(new File(confPath));
-        readStrategy.setPluginConfig(ReadonlyConfig.fromConfig(pluginConfig));
+        Config pluginConfig = ConfigLoader.load((new File(confPath)).toPath());
+        readStrategy.setPluginConfig(pluginConfig);
         readStrategy.init(localConf);
         readStrategy.getFileNamesByPath(sourceFilePath);
         testCollector = new TestCollector();
@@ -126,27 +126,30 @@ public class ReadStrategyEncodingTest {
         readStrategy.setCatalogTable(catalogTable);
         log.info(catalogTable.getSeaTunnelRowType().toString());
         readStrategy.read(sourceFilePath, "", testCollector);
-        assertRows(testCollector);
+        assertRows(testCollector, catalogTable.getSeaTunnelRowType());
     }
 
-    private static void assertRows(TestCollector testCollector) {
+    private static void assertRows(TestCollector testCollector, SeaTunnelRowType rowType) {
         for (SeaTunnelRow row : testCollector.getRows()) {
-            Assertions.assertEquals(row.getField(0), cMap);
-            Assertions.assertArrayEquals(((Integer[]) row.getField(1)), cArray);
-            Assertions.assertArrayEquals(((String[]) row.getField(2)), cArrayString);
-            Assertions.assertEquals(row.getField(3), cString);
-            Assertions.assertEquals(row.getField(4), cBoolean);
-            Assertions.assertEquals(row.getField(5), cTinyint);
-            Assertions.assertEquals(row.getField(6), cSmallint);
-            Assertions.assertEquals(row.getField(7), cInt);
-            Assertions.assertEquals(row.getField(8), cBigint);
-            Assertions.assertEquals(row.getField(9), cFloat);
-            Assertions.assertEquals(row.getField(10), cDouble);
-            Assertions.assertEquals(row.getField(11), cDecimal);
-            Assertions.assertTrue(StringUtils.isBlank((String) row.getField(12)));
-            Assertions.assertArrayEquals((byte[]) row.getField(13), cBytes);
-            Assertions.assertEquals(row.getField(14), cDate);
-            Assertions.assertEquals(row.getField(15), cTimestamp);
+            Assertions.assertEquals(row.getField(rowType.indexOf("c_map")), cMap);
+            Assertions.assertArrayEquals(
+                    ((Integer[]) row.getField(rowType.indexOf("c_array"))), cArray);
+            Assertions.assertArrayEquals(
+                    ((String[]) row.getField(rowType.indexOf("c_array_string"))), cArrayString);
+            Assertions.assertEquals(row.getField(rowType.indexOf("c_string")), cString);
+            Assertions.assertEquals(row.getField(rowType.indexOf("c_boolean")), cBoolean);
+            Assertions.assertEquals(row.getField(rowType.indexOf("c_tinyint")), cTinyint);
+            Assertions.assertEquals(row.getField(rowType.indexOf("c_smallint")), cSmallint);
+            Assertions.assertEquals(row.getField(rowType.indexOf("c_int")), cInt);
+            Assertions.assertEquals(row.getField(rowType.indexOf("c_bigint")), cBigint);
+            Assertions.assertEquals(row.getField(rowType.indexOf("c_float")), cFloat);
+            Assertions.assertEquals(row.getField(rowType.indexOf("c_double")), cDouble);
+            Assertions.assertEquals(row.getField(rowType.indexOf("c_decimal")), cDecimal);
+            Assertions.assertTrue(
+                    StringUtils.isBlank((String) row.getField(rowType.indexOf("c_null"))));
+            Assertions.assertArrayEquals((byte[]) row.getField(rowType.indexOf("c_bytes")), cBytes);
+            Assertions.assertEquals(row.getField(rowType.indexOf("c_date")), cDate);
+            Assertions.assertEquals(row.getField(rowType.indexOf("c_timestamp")), cTimestamp);
         }
     }
 

@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.hive.utils;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.TablePath;
 import org.apache.seatunnel.common.exception.CommonErrorCodeDeprecated;
 import org.apache.seatunnel.common.exception.SeaTunnelRuntimeException;
@@ -31,7 +31,7 @@ import org.apache.hadoop.hive.metastore.api.Table;
 
 public class HiveTableUtils {
 
-    public static Table getTableInfo(ReadonlyConfig readonlyConfig) {
+    public static Table getTableInfo(Config readonlyConfig) {
         String table = readonlyConfig.get(HiveOptions.TABLE_NAME);
         TablePath tablePath = TablePath.of(table);
         if (tablePath.getDatabaseName() == null || tablePath.getTableName() == null) {

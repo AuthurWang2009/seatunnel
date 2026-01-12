@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.api.table.catalog;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.options.ConnectorCommonOptions;
 import org.apache.seatunnel.api.table.catalog.exception.CatalogException;
 import org.apache.seatunnel.api.table.catalog.exception.DatabaseAlreadyExistException;
@@ -77,7 +77,7 @@ public interface Catalog extends AutoCloseable {
     /**
      * Get the name of the default database for this catalog. The default database will be the
      * current database for the catalog when user's session doesn't specify a current database. The
-     * value probably comes from configuration, will not change for the life time of the catalog
+     * value probably comes from configuration, will not change for the lifetime of the catalog
      * instance.
      *
      * @return the name of the current database
@@ -148,7 +148,7 @@ public interface Catalog extends AutoCloseable {
                 name(), "get table with tablePath " + tablePath + ", fieldNames: " + fieldNames);
     }
 
-    default List<CatalogTable> getTables(ReadonlyConfig config) throws CatalogException {
+    default List<CatalogTable> getTables(Config config) throws CatalogException {
         // Get the list of specified tables
         List<String> tableNames = config.get(ConnectorCommonOptions.TABLE_NAMES);
         if (tableNames != null && !tableNames.isEmpty()) {

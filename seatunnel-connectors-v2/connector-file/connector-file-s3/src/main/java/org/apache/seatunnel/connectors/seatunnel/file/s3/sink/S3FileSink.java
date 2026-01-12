@@ -18,7 +18,7 @@
 package org.apache.seatunnel.connectors.seatunnel.file.s3.sink;
 
 import org.apache.seatunnel.api.common.SeaTunnelAPIErrorCode;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.sink.DataSaveMode;
 import org.apache.seatunnel.api.sink.DefaultSaveModeHandler;
 import org.apache.seatunnel.api.sink.SaveModeHandler;
@@ -44,7 +44,7 @@ import static org.apache.seatunnel.api.table.factory.FactoryUtil.discoverFactory
 public class S3FileSink extends BaseMultipleTableFileSink implements SupportSaveMode {
 
     private final CatalogTable catalogTable;
-    private final ReadonlyConfig readonlyConfig;
+    private final Config readonlyConfig;
 
     private static final String S3 = "S3";
 
@@ -53,7 +53,7 @@ public class S3FileSink extends BaseMultipleTableFileSink implements SupportSave
         return FileSystemType.S3.getFileSystemPluginName();
     }
 
-    public S3FileSink(CatalogTable catalogTable, ReadonlyConfig readonlyConfig) {
+    public S3FileSink(CatalogTable catalogTable, Config readonlyConfig) {
         super(S3HadoopConf.buildWithReadOnlyConfig(readonlyConfig), readonlyConfig, catalogTable);
         this.catalogTable = catalogTable;
         this.readonlyConfig = readonlyConfig;

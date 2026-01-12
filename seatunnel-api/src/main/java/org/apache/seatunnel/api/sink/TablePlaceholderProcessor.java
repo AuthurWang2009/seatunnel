@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.api.sink;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.ConstraintKey;
 import org.apache.seatunnel.api.table.catalog.PrimaryKey;
@@ -139,14 +139,13 @@ public class TablePlaceholderProcessor {
                 String.join(FIELD_DELIMITER, schema.getFieldNames()));
     }
 
-    public static ReadonlyConfig replaceTablePlaceholder(
-            ReadonlyConfig config, CatalogTable table) {
+    public static Config replaceTablePlaceholder(Config config, CatalogTable table) {
         return replaceTablePlaceholder(config, table, Collections.emptyList());
     }
 
-    public static ReadonlyConfig replaceTablePlaceholder(
-            ReadonlyConfig config, CatalogTable table, Collection<String> excludeKeys) {
-        Map<String, Object> copyOnWriteData = ObjectUtils.clone(config.getSourceMap());
+    public static Config replaceTablePlaceholder(
+            Config config, CatalogTable table, Collection<String> excludeKeys) {
+        Map<String, Object> copyOnWriteData = ObjectUtils.clone(config.toMap());
         for (String key : copyOnWriteData.keySet()) {
             if (excludeKeys.contains(key)) {
                 continue;
@@ -196,6 +195,6 @@ public class TablePlaceholderProcessor {
                 }
             }
         }
-        return ReadonlyConfig.fromMap(copyOnWriteData);
+        return Config.of(copyOnWriteData);
     }
 }

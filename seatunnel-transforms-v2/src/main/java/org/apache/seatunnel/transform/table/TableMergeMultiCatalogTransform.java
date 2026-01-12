@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.table;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
 import org.apache.seatunnel.api.transform.SeaTunnelTransform;
@@ -35,8 +35,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class TableMergeMultiCatalogTransform extends AbstractMultiCatalogMapTransform {
 
-    public TableMergeMultiCatalogTransform(
-            List<CatalogTable> inputCatalogTables, ReadonlyConfig config) {
+    public TableMergeMultiCatalogTransform(List<CatalogTable> inputCatalogTables, Config config) {
         super(inputCatalogTables, config);
     }
 
@@ -46,8 +45,7 @@ public class TableMergeMultiCatalogTransform extends AbstractMultiCatalogMapTran
     }
 
     @Override
-    protected SeaTunnelTransform<SeaTunnelRow> buildTransform(
-            CatalogTable table, ReadonlyConfig config) {
+    protected SeaTunnelTransform<SeaTunnelRow> buildTransform(CatalogTable table, Config config) {
         return new TableMergeTransform(TableMergeConfig.of(config), table);
     }
 

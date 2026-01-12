@@ -18,7 +18,7 @@
 package org.apache.seatunnel.connectors.seatunnel.sink;
 
 import org.apache.seatunnel.api.common.JobContext;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.sink.DefaultSinkWriterContext;
 import org.apache.seatunnel.api.sink.MultiTableResourceManager;
 import org.apache.seatunnel.api.sink.SeaTunnelSink;
@@ -42,7 +42,7 @@ public class SinkFlowTestUtils {
 
     public static void runBatchWithCheckpointDisabled(
             CatalogTable catalogTable,
-            ReadonlyConfig options,
+            Config options,
             TableSinkFactory<SeaTunnelRow, ?, ?, ?> factory,
             List<SeaTunnelRow> rows)
             throws IOException {
@@ -54,7 +54,7 @@ public class SinkFlowTestUtils {
 
     public static void runBatchWithCheckpointEnabled(
             CatalogTable catalogTable,
-            ReadonlyConfig options,
+            Config options,
             TableSinkFactory<SeaTunnelRow, ?, ?, ?> factory,
             List<SeaTunnelRow> rows)
             throws IOException {
@@ -67,7 +67,7 @@ public class SinkFlowTestUtils {
 
     public static void runParallelSubtasksBatchWithCheckpointDisabled(
             CatalogTable catalogTable,
-            ReadonlyConfig options,
+            Config options,
             TableSinkFactory<SeaTunnelRow, ?, ?, ?> factory,
             List<SeaTunnelRow> rows,
             int parallelism)
@@ -93,7 +93,7 @@ public class SinkFlowTestUtils {
 
     private static void runWithContext(
             CatalogTable catalogTable,
-            ReadonlyConfig options,
+            Config options,
             TableSinkFactory<SeaTunnelRow, ?, ?, ?> factory,
             List<SeaTunnelRow> rows,
             JobContext context,

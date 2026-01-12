@@ -58,11 +58,12 @@ import java.util.stream.Collectors;
 public class CsvReadStrategy extends AbstractReadStrategy {
     private CsvDeserializationSchema deserializationSchema;
     private DateUtils.Formatter dateFormat =
-            FileBaseSourceOptions.DATE_FORMAT_LEGACY.defaultValue();
+            DateUtils.Formatter.parse(FileBaseSourceOptions.DATE_FORMAT_LEGACY.defaultValue());
     private DateTimeUtils.Formatter datetimeFormat =
-            FileBaseSourceOptions.DATETIME_FORMAT_LEGACY.defaultValue();
+            DateTimeUtils.Formatter.parse(
+                    FileBaseSourceOptions.DATETIME_FORMAT_LEGACY.defaultValue());
     private TimeUtils.Formatter timeFormat =
-            FileBaseSourceOptions.TIME_FORMAT_LEGACY.defaultValue();
+            TimeUtils.Formatter.parse(FileBaseSourceOptions.TIME_FORMAT_LEGACY.defaultValue());
     private CompressFormat compressFormat = FileBaseSourceOptions.COMPRESS_CODEC.defaultValue();
     private CsvLineProcessor processor;
     private int[] indexes;

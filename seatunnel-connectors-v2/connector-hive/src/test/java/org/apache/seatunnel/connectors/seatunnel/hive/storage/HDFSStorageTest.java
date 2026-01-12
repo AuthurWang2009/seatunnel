@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.hive.storage;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 
 import org.junit.jupiter.api.Assertions;
@@ -31,8 +31,7 @@ public class HDFSStorageTest {
     void fillbuildHadoopConfWithReadOnlyConfig() {
         HDFSStorage hdfsStorage = new HDFSStorage("hdfs://tmp/test");
         HadoopConf hadoopConf =
-                hdfsStorage.buildHadoopConfWithReadOnlyConfig(
-                        ReadonlyConfig.fromMap(new HashMap<>(0)));
+                hdfsStorage.buildHadoopConfWithReadOnlyConfig(Config.of(new HashMap<>(0)));
         Assertions.assertEquals(hadoopConf.getSchema(), "hdfs");
         Assertions.assertEquals(
                 hadoopConf.getFsHdfsImpl(), "org.apache.hadoop.hdfs.DistributedFileSystem");

@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.adaptsink;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
 import org.apache.seatunnel.api.transform.SeaTunnelTransform;
@@ -27,10 +27,10 @@ import java.util.List;
 
 public class DefineSinkTypeMultiCatalogTransform extends AbstractMultiCatalogMapTransform {
 
-    private final ReadonlyConfig config;
+    private final Config config;
 
     public DefineSinkTypeMultiCatalogTransform(
-            List<CatalogTable> inputCatalogTables, ReadonlyConfig config) {
+            List<CatalogTable> inputCatalogTables, Config config) {
         super(inputCatalogTables, config);
         this.config = config;
     }
@@ -41,8 +41,7 @@ public class DefineSinkTypeMultiCatalogTransform extends AbstractMultiCatalogMap
     }
 
     @Override
-    protected SeaTunnelTransform<SeaTunnelRow> buildTransform(
-            CatalogTable table, ReadonlyConfig config) {
+    protected SeaTunnelTransform<SeaTunnelRow> buildTransform(CatalogTable table, Config config) {
         return new DefineSinkTypeTransform(DefineSinkTypeTransformConfig.of(config), table);
     }
 }

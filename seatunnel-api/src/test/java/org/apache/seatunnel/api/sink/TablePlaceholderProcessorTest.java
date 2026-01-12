@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.api.sink;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.ConfigEntry;
 import org.apache.seatunnel.api.config.ConfigOption;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.ConstraintKey;
 import org.apache.seatunnel.api.table.catalog.PhysicalColumn;
@@ -59,9 +59,9 @@ public class TablePlaceholderProcessorTest {
 
     @Test
     public void testSinkOptions() {
-        ReadonlyConfig config = createConfig();
+        Config config = createConfig();
         CatalogTable table = createTestTable();
-        ReadonlyConfig newConfig = TablePlaceholderProcessor.replaceTablePlaceholder(config, table);
+        Config newConfig = TablePlaceholderProcessor.replaceTablePlaceholder(config, table);
 
         Assertions.assertEquals("xyz_my-database_test", newConfig.get(DATABASE));
         Assertions.assertEquals("xyz_my-schema_test", newConfig.get(SCHEMA));
@@ -77,9 +77,9 @@ public class TablePlaceholderProcessorTest {
 
     @Test
     public void testSinkOptionsWithNoTablePath() {
-        ReadonlyConfig config = createConfig();
+        Config config = createConfig();
         CatalogTable table = createTestTableWithNoDatabaseAndSchemaName();
-        ReadonlyConfig newConfig = TablePlaceholderProcessor.replaceTablePlaceholder(config, table);
+        Config newConfig = TablePlaceholderProcessor.replaceTablePlaceholder(config, table);
 
         Assertions.assertEquals("xyz_default_db_test", newConfig.get(DATABASE));
         Assertions.assertEquals("xyz_default_schema_test", newConfig.get(SCHEMA));
@@ -95,9 +95,9 @@ public class TablePlaceholderProcessorTest {
 
     @Test
     public void testSinkOptionsWithExcludeKeys() {
-        ReadonlyConfig config = createConfig();
+        Config config = createConfig();
         CatalogTable table = createTestTableWithNoDatabaseAndSchemaName();
-        ReadonlyConfig newConfig =
+        Config newConfig =
                 TablePlaceholderProcessor.replaceTablePlaceholder(
                         config, table, Arrays.asList(DATABASE.key()));
 
@@ -115,12 +115,12 @@ public class TablePlaceholderProcessorTest {
 
     @Test
     public void testSinkOptionsWithMultiTable() {
-        ReadonlyConfig config = createConfig();
+        Config config = createConfig();
         CatalogTable table1 = createTestTable();
         CatalogTable table2 = createTestTableWithNoDatabaseAndSchemaName();
-        ReadonlyConfig newConfig1 =
+        Config newConfig1 =
                 TablePlaceholderProcessor.replaceTablePlaceholder(config, table1, Arrays.asList());
-        ReadonlyConfig newConfig2 =
+        Config newConfig2 =
                 TablePlaceholderProcessor.replaceTablePlaceholder(config, table2, Arrays.asList());
 
         Assertions.assertEquals("xyz_my-database_test", newConfig1.get(DATABASE));
@@ -146,7 +146,7 @@ public class TablePlaceholderProcessorTest {
                 Arrays.asList("f1", "f2", "f3", "f4", "f5"), newConfig2.get(FIELD_NAMES_ARRAY));
     }
 
-    private static ReadonlyConfig createConfig() {
+    private static Config createConfig() {
         Map<String, Object> configMap = new HashMap<>();
         configMap.put(DATABASE.key(), "xyz_${database_name: default_db}_test");
         configMap.put(SCHEMA.key(), "xyz_${schema_name: default_schema}_test");
@@ -157,7 +157,7 @@ public class TablePlaceholderProcessorTest {
         configMap.put(PRIMARY_KEY_ARRAY.key(), Arrays.asList("${primary_key}"));
         configMap.put(UNIQUE_KEY_ARRAY.key(), Arrays.asList("${unique_key}"));
         configMap.put(FIELD_NAMES_ARRAY.key(), Arrays.asList("${field_names}"));
-        return ReadonlyConfig.fromMap(configMap);
+        return Config.of(configMap);
     }
 
     private static CatalogTable createTestTableWithNoDatabaseAndSchemaName() {

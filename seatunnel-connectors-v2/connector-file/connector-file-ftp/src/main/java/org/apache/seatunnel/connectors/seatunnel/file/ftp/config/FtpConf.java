@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.ftp.config;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 import org.apache.seatunnel.connectors.seatunnel.file.ftp.system.FtpConnectionMode;
 
@@ -43,7 +43,7 @@ public class FtpConf extends HadoopConf {
         return SCHEMA;
     }
 
-    public static HadoopConf buildWithConfig(ReadonlyConfig config) {
+    public static HadoopConf buildWithConfig(Config config) {
         String host = config.get(FtpFileBaseOptions.FTP_HOST);
         int port = config.get(FtpFileBaseOptions.FTP_PORT);
         String defaultFS = String.format("ftp://%s:%s", host, port);

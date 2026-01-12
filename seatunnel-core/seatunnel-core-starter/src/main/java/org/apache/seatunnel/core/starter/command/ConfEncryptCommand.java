@@ -17,14 +17,13 @@
 
 package org.apache.seatunnel.core.starter.command;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.ConfigLoader;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.util.ConfigShadeUtils;
+import org.apache.seatunnel.api.config.util.ConfigUtil;
 import org.apache.seatunnel.core.starter.exception.CommandExecuteException;
 import org.apache.seatunnel.core.starter.exception.ConfigCheckException;
-import org.apache.seatunnel.core.starter.utils.ConfigShadeUtils;
 
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigRenderOptions;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.file.Path;
@@ -58,12 +57,8 @@ public class ConfEncryptCommand implements Command<AbstractCommandArgs> {
                     .filter(pair -> pair.length == 2)
                     .forEach(pair -> System.setProperty(pair[0], pair[1]));
         }
-        Config config = ((ReadonlyConfig) ConfigLoader.load(configPath)).toConfig();
+        Config config = ConfigLoader.load(configPath);
         Config encryptConfig = ConfigShadeUtils.encryptConfig(config);
-        log.info(
-                "Encrypt config: \n{}",
-                encryptConfig
-                        .root()
-                        .render(ConfigRenderOptions.defaults().setOriginComments(false)));
+        log.info("Encrypt config: \n{}", ConfigUtil.convertToJsonString(encryptConfig));
     }
 }

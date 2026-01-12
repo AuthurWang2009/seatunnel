@@ -17,6 +17,7 @@
 
 package org.apache.seatunnel.core.starter.spark.execution;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.common.Constants;
 import org.apache.seatunnel.common.config.CheckResult;
 import org.apache.seatunnel.common.constants.JobMode;
@@ -28,7 +29,6 @@ import org.apache.spark.sql.SparkSession;
 import org.apache.spark.streaming.Seconds;
 import org.apache.spark.streaming.StreamingContext;
 
-import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.URL;
@@ -130,11 +130,7 @@ public class SparkRuntimeEnvironment implements RuntimeEnvironment {
         SparkConf sparkConf = new SparkConf();
         this.config
                 .entrySet()
-                .forEach(
-                        entry ->
-                                sparkConf.set(
-                                        entry.getKey(),
-                                        String.valueOf(entry.getValue().unwrapped())));
+                .forEach(entry -> sparkConf.set(entry.getKey(), String.valueOf(entry.getValue())));
         sparkConf.setAppName(jobName);
         return sparkConf;
     }

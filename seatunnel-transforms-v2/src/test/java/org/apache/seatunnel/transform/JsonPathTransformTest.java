@@ -16,7 +16,7 @@
  */
 package org.apache.seatunnel.transform;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtil;
 import org.apache.seatunnel.api.table.catalog.Column;
@@ -56,7 +56,7 @@ public class JsonPathTransformTest {
                                 JsonPathTransformConfig.SRC_FIELD.key(), "data",
                                 JsonPathTransformConfig.PATH.key(), "$.f1",
                                 JsonPathTransformConfig.DEST_FIELD.key(), "f1")));
-        ReadonlyConfig config = ReadonlyConfig.fromMap(configMap);
+        Config config = Config.of(configMap);
         CatalogTable table =
                 CatalogTableUtil.getCatalogTable(
                         "test",
@@ -82,7 +82,7 @@ public class JsonPathTransformTest {
                                 JsonPathTransformConfig.SRC_FIELD.key(), "data",
                                 JsonPathTransformConfig.PATH.key(), "$.f1",
                                 JsonPathTransformConfig.DEST_FIELD.key(), "f1")));
-        ReadonlyConfig config = ReadonlyConfig.fromMap(configMap);
+        Config config = Config.of(configMap);
         CatalogTable table =
                 CatalogTableUtil.getCatalogTable(
                         "test",
@@ -109,7 +109,7 @@ public class JsonPathTransformTest {
                                 "f1",
                                 TransformCommonOptions.COLUMN_ERROR_HANDLE_WAY_OPTION.key(),
                                 ErrorHandleWay.FAIL.name())));
-        config = ReadonlyConfig.fromMap(configMap);
+        config = Config.of(configMap);
         transform = new JsonPathTransform(JsonPathTransformConfig.of(config, table), table);
         outputTable = transform.getProducedCatalogTable();
         JsonPathTransform finalTransform1 = transform;
@@ -129,7 +129,7 @@ public class JsonPathTransformTest {
                                 "f1",
                                 TransformCommonOptions.COLUMN_ERROR_HANDLE_WAY_OPTION.key(),
                                 ErrorHandleWay.SKIP.name())));
-        config = ReadonlyConfig.fromMap(configMap);
+        config = Config.of(configMap);
         transform = new JsonPathTransform(JsonPathTransformConfig.of(config, table), table);
         outputTable = transform.getProducedCatalogTable();
         SeaTunnelRow outputRow = transform.map(new SeaTunnelRow(new Object[] {"{\"f2\": 1}"}));
@@ -148,7 +148,7 @@ public class JsonPathTransformTest {
                                 "f1",
                                 TransformCommonOptions.COLUMN_ERROR_HANDLE_WAY_OPTION.key(),
                                 ErrorHandleWay.SKIP_ROW.name())));
-        config = ReadonlyConfig.fromMap(configMap);
+        config = Config.of(configMap);
         transform = new JsonPathTransform(JsonPathTransformConfig.of(config, table), table);
         outputTable = transform.getProducedCatalogTable();
         outputRow = transform.map(new SeaTunnelRow(new Object[] {"{\"f2\": 1}"}));
@@ -164,7 +164,7 @@ public class JsonPathTransformTest {
                                 JsonPathTransformConfig.SRC_FIELD.key(), "data",
                                 JsonPathTransformConfig.PATH.key(), "$.f1",
                                 JsonPathTransformConfig.DEST_FIELD.key(), "f1")));
-        config = ReadonlyConfig.fromMap(configMap);
+        config = Config.of(configMap);
         transform = new JsonPathTransform(JsonPathTransformConfig.of(config, table), table);
         outputTable = transform.getProducedCatalogTable();
         outputRow = transform.map(new SeaTunnelRow(new Object[] {"{\"f2\": 1}"}));
@@ -185,7 +185,7 @@ public class JsonPathTransformTest {
                                 "f1",
                                 TransformCommonOptions.COLUMN_ERROR_HANDLE_WAY_OPTION.key(),
                                 ErrorHandleWay.FAIL.name())));
-        config = ReadonlyConfig.fromMap(configMap);
+        config = Config.of(configMap);
         transform = new JsonPathTransform(JsonPathTransformConfig.of(config, table), table);
         outputTable = transform.getProducedCatalogTable();
         try {
@@ -210,7 +210,7 @@ public class JsonPathTransformTest {
                                 "f1",
                                 TransformCommonOptions.COLUMN_ERROR_HANDLE_WAY_OPTION.key(),
                                 ErrorHandleWay.SKIP.name())));
-        config = ReadonlyConfig.fromMap(configMap);
+        config = Config.of(configMap);
         transform = new JsonPathTransform(JsonPathTransformConfig.of(config, table), table);
         outputTable = transform.getProducedCatalogTable();
         outputRow = transform.map(new SeaTunnelRow(new Object[] {"{\"f2\": 1}"}));
@@ -232,7 +232,7 @@ public class JsonPathTransformTest {
                                 "f1",
                                 TransformCommonOptions.COLUMN_ERROR_HANDLE_WAY_OPTION.key(),
                                 ErrorHandleWay.SKIP_ROW.name())));
-        config = ReadonlyConfig.fromMap(configMap);
+        config = Config.of(configMap);
         transform = new JsonPathTransform(JsonPathTransformConfig.of(config, table), table);
         outputTable = transform.getProducedCatalogTable();
         outputRow = transform.map(new SeaTunnelRow(new Object[] {"{\"f2\": 1}"}));
@@ -249,7 +249,7 @@ public class JsonPathTransformTest {
                                 JsonPathTransformConfig.SRC_FIELD.key(), "data",
                                 JsonPathTransformConfig.PATH.key(), "$.f1",
                                 JsonPathTransformConfig.DEST_FIELD.key(), "f1")));
-        ReadonlyConfig config = ReadonlyConfig.fromMap(configMap);
+        Config config = Config.of(configMap);
 
         CatalogTable table =
                 CatalogTable.of(
@@ -291,7 +291,7 @@ public class JsonPathTransformTest {
                                         Arrays.asList("id", "name", "age"),
                                 JsonPathTransformConfig.DEST_TYPE.key(),
                                         Arrays.asList("bigint", "string"))));
-        ReadonlyConfig config = ReadonlyConfig.fromMap(configMap);
+        Config config = Config.of(configMap);
         CatalogTable table =
                 CatalogTableUtil.getCatalogTable(
                         "test",
@@ -323,7 +323,7 @@ public class JsonPathTransformTest {
                                 JsonPathTransformConfig.PATH.key(), "$.status",
                                 JsonPathTransformConfig.DEST_FIELD.key(), "status",
                                 JsonPathTransformConfig.DEST_TYPE.key(), "int")));
-        ReadonlyConfig config = ReadonlyConfig.fromMap(configMap);
+        Config config = Config.of(configMap);
         CatalogTable table =
                 CatalogTableUtil.getCatalogTable(
                         "test",
@@ -366,7 +366,7 @@ public class JsonPathTransformTest {
                                         Arrays.asList("user_name", "user_age", "user_theme"),
                                 JsonPathTransformConfig.DEST_TYPE.key(),
                                         Arrays.asList("string", "int", "string"))));
-        ReadonlyConfig config = ReadonlyConfig.fromMap(configMap);
+        Config config = Config.of(configMap);
         CatalogTable table =
                 CatalogTableUtil.getCatalogTable(
                         "test",
@@ -410,7 +410,7 @@ public class JsonPathTransformTest {
                                                 "second_order_id"),
                                 JsonPathTransformConfig.DEST_TYPE.key(),
                                         Arrays.asList("int", "double", "int"))));
-        ReadonlyConfig config = ReadonlyConfig.fromMap(configMap);
+        Config config = Config.of(configMap);
         CatalogTable table =
                 CatalogTableUtil.getCatalogTable(
                         "test",
@@ -475,7 +475,7 @@ public class JsonPathTransformTest {
                                                 "string", "int", "double", "int", "string",
                                                 "double"))));
 
-        ReadonlyConfig config = ReadonlyConfig.fromMap(configMap);
+        Config config = Config.of(configMap);
         CatalogTable table =
                 CatalogTableUtil.getCatalogTable(
                         "test",

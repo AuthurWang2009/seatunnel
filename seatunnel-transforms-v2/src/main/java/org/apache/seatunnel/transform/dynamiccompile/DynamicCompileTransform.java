@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.dynamiccompile;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.Column;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
@@ -51,7 +51,7 @@ public class DynamicCompileTransform extends MultipleFieldOutputTransform {
 
     private AbstractParse DynamicCompileParse;
 
-    public DynamicCompileTransform(ReadonlyConfig readonlyConfig, CatalogTable catalogTable) {
+    public DynamicCompileTransform(Config readonlyConfig, CatalogTable catalogTable) {
         super(catalogTable);
         CompileLanguage compileLanguage =
                 readonlyConfig.get(DynamicCompileTransformConfig.COMPILE_LANGUAGE);

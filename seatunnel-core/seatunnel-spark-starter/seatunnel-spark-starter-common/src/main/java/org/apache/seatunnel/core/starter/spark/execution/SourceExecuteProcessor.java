@@ -19,7 +19,7 @@ package org.apache.seatunnel.core.starter.spark.execution;
 
 import org.apache.seatunnel.api.common.JobContext;
 import org.apache.seatunnel.api.common.PluginIdentifier;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.options.EnvCommonOptions;
 import org.apache.seatunnel.api.source.SeaTunnelSource;
 import org.apache.seatunnel.api.source.SourceSplit;
@@ -37,8 +37,6 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 
 import com.google.common.collect.Lists;
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigValue;
 import scala.Tuple2;
 
 import java.io.Serializable;
@@ -64,9 +62,9 @@ public class SourceExecuteProcessor extends SparkAbstractPluginExecuteProcessor<
             JobContext jobContext,
             List<? extends Config> sourceConfigs) {
         super(sparkEnvironment, jobContext, sourceConfigs);
-        for (Map.Entry<String, ConfigValue> entry : sparkEnvironment.getConfig().entrySet()) {
+        for (Map.Entry<String, Object> entry : sparkEnvironment.getConfig().entrySet()) {
             String envKey = entry.getKey();
-            String envValue = entry.getValue().render();
+            String envValue = entry.getValue().toString();
             if (envKey != null && envValue != null) {
                 envOption.put(envKey, envValue);
             }
@@ -106,7 +104,10 @@ public class SourceExecuteProcessor extends SparkAbstractPluginExecuteProcessor<
                     new DatasetTableInfo(
                             dataset,
                             sourceTableInfo.getCatalogTables(),
-                            ReadonlyConfig.fromConfig(pluginConfig).get(PLUGIN_OUTPUT)));
+                            pluginConfigs
+                                    .get(i)
+                                    .getOptional(PLUGIN_OUTPUT)
+                                    .orElse(PLUGIN_OUTPUT.defaultValue())));
             registerInputTempView(pluginConfigs.get(i), dataset);
         }
         return sources;
@@ -132,7 +133,7 @@ public class SourceExecuteProcessor extends SparkAbstractPluginExecuteProcessor<
                             Lists.newArrayList(pluginIdentifier)));
             Tuple2<SeaTunnelSource<Object, SourceSplit, Serializable>, List<CatalogTable>> source =
                     FactoryUtil.createAndPrepareSource(
-                            ReadonlyConfig.fromConfig(sourceConfig),
+                            sourceConfig,
                             classLoader,
                             pluginIdentifier.getPluginName(),
                             fallbackCreateSource,

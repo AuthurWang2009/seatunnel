@@ -24,33 +24,20 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
-import com.typesafe.config.ConfigResolveOptions;
 
-import java.net.URISyntaxException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ReadableConfigTest {
-    private static final String CONFIG_PATH = "/conf/option-test.conf";
-    private static ReadonlyConfig config;
+    private static Config config;
     private static Map<String, Object> map;
 
     @BeforeAll
-    public static void prepare() throws URISyntaxException {
-        Config rawConfig =
-                ConfigFactory.parseFile(
-                                Paths.get(ReadableConfigTest.class.getResource(CONFIG_PATH).toURI())
-                                        .toFile())
-                        .resolve(ConfigResolveOptions.defaults().setAllowUnresolved(true))
-                        .resolveWith(
-                                ConfigFactory.systemProperties(),
-                                ConfigResolveOptions.defaults().setAllowUnresolved(true));
-        config = ReadonlyConfig.fromConfig(rawConfig.getConfigList("source").get(0));
+    public static void prepare() {
+        config = TestConfigUtils.getOptionTestConfig();
+        config = Config.getSource(config).get(0);
         map = new HashMap<>();
         Map<String, String> inner = new HashMap<>();
         inner.put("path", "mac");
@@ -58,7 +45,10 @@ public class ReadableConfigTest {
         inner.put("map", "{\"fantasy\":\"final\"}");
         map.put("inner", inner);
         map.put("type", "source");
-        map.put("patch.note", "hollow");
+        // Config parsing converts "patch.note" to nested structure {patch: {note: value}}
+        Map<String, String> patch = new HashMap<>();
+        patch.put("note", "hollow");
+        map.put("patch", patch);
         map.put("name", "saitou");
     }
 

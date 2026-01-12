@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.table;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.ConfigEntry;
 import org.apache.seatunnel.api.config.ConfigOption;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.table.catalog.TablePath;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
@@ -113,7 +113,7 @@ public class TableFilterConfig implements Serializable {
         return true;
     }
 
-    public static TableFilterConfig of(ReadonlyConfig config) {
+    public static TableFilterConfig of(Config config) {
         TableFilterConfig filterConfig = new TableFilterConfig();
         filterConfig.setDatabasePattern(config.get(DATABASE_PATTERN));
         filterConfig.setSchemaPattern(config.get(SCHEMA_PATTERN));

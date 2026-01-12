@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.writer;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtil;
 import org.apache.seatunnel.api.table.type.BasicType;
@@ -44,7 +44,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 
-import com.typesafe.config.ConfigFactory;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
@@ -78,10 +77,7 @@ public class ParquetWriteStrategyTest {
                             LocalTimeType.LOCAL_DATE_TIME_TYPE,
                             PrimitiveByteArrayType.INSTANCE
                         });
-        FileSinkConfig writeSinkConfig =
-                new FileSinkConfig(
-                        ReadonlyConfig.fromConfig(ConfigFactory.parseMap(writeConfig)),
-                        writeRowType);
+        FileSinkConfig writeSinkConfig = new FileSinkConfig(Config.of(writeConfig), writeRowType);
         ParquetWriteStrategy writeStrategy = new ParquetWriteStrategy(writeSinkConfig);
         ParquetReadStrategyTest.LocalConf hadoopConf =
                 new ParquetReadStrategyTest.LocalConf(FS_DEFAULT_NAME_DEFAULT);

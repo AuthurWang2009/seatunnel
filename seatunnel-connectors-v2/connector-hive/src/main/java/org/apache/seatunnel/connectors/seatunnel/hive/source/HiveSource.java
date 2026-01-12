@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.hive.source;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.source.Boundedness;
 import org.apache.seatunnel.api.source.SourceReader;
 import org.apache.seatunnel.api.source.SourceSplitEnumerator;
@@ -39,7 +39,7 @@ public class HiveSource extends BaseHdfsFileSource {
 
     private final MultipleTableHiveSourceConfig multipleTableHiveSourceConfig;
 
-    public HiveSource(ReadonlyConfig readonlyConfig) {
+    public HiveSource(Config readonlyConfig) {
         this.multipleTableHiveSourceConfig = new MultipleTableHiveSourceConfig(readonlyConfig);
     }
 

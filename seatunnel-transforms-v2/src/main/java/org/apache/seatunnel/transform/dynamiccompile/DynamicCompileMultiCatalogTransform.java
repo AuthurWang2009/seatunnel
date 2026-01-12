@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.dynamiccompile;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
 import org.apache.seatunnel.api.transform.SeaTunnelTransform;
@@ -28,13 +28,13 @@ import java.util.List;
 public class DynamicCompileMultiCatalogTransform extends AbstractMultiCatalogMapTransform {
 
     public DynamicCompileMultiCatalogTransform(
-            List<CatalogTable> inputCatalogTables, ReadonlyConfig config) {
+            List<CatalogTable> inputCatalogTables, Config config) {
         super(inputCatalogTables, config);
     }
 
     @Override
     protected SeaTunnelTransform<SeaTunnelRow> buildTransform(
-            CatalogTable inputCatalogTable, ReadonlyConfig config) {
+            CatalogTable inputCatalogTable, Config config) {
         return new DynamicCompileTransform(config, inputCatalogTable);
     }
 

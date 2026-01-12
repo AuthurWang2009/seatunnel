@@ -17,7 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.oss.source.config;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.config.BaseFileSourceConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileSystemType;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
@@ -40,7 +39,7 @@ public class OssFileSourceConfig extends BaseFileSourceConfig {
         return FileSystemType.OSS.getFileSystemPluginName();
     }
 
-    public OssFileSourceConfig(ReadonlyConfig readonlyConfig) {
+    public OssFileSourceConfig(org.apache.seatunnel.api.config.Config readonlyConfig) {
         super(readonlyConfig);
     }
 }

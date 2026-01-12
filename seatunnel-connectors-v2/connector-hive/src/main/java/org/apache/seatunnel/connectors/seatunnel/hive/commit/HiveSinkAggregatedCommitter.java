@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.hive.commit;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 import org.apache.seatunnel.connectors.seatunnel.file.sink.commit.FileAggregatedCommitInfo;
 import org.apache.seatunnel.connectors.seatunnel.file.sink.commit.FileSinkAggregatedCommitter;
@@ -42,11 +42,11 @@ public class HiveSinkAggregatedCommitter extends FileSinkAggregatedCommitter {
     private final boolean abortDropPartitionMetadata;
     private final boolean overwrite;
 
-    private final ReadonlyConfig readonlyConfig;
+    private final Config readonlyConfig;
     private final HiveMetaStoreProxy hiveMetaStore;
 
     public HiveSinkAggregatedCommitter(
-            ReadonlyConfig readonlyConfig, String dbName, String tableName, HadoopConf hadoopConf) {
+            Config readonlyConfig, String dbName, String tableName, HadoopConf hadoopConf) {
         super(hadoopConf);
         this.readonlyConfig = readonlyConfig;
         this.hiveMetaStore = new HiveMetaStoreProxy(readonlyConfig);

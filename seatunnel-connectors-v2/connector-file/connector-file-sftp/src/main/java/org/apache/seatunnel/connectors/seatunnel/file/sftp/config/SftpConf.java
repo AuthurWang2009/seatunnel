@@ -17,7 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.sftp.config;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 
 import java.util.HashMap;
@@ -41,7 +40,7 @@ public class SftpConf extends HadoopConf {
         return SCHEMA;
     }
 
-    public static HadoopConf buildWithConfig(ReadonlyConfig config) {
+    public static HadoopConf buildWithConfig(org.apache.seatunnel.api.config.Config config) {
         String host = config.get(SftpFileBaseOptions.SFTP_HOST);
         int port = config.get(SftpFileBaseOptions.SFTP_PORT);
         String defaultFS = String.format("sftp://%s:%s", host, port);

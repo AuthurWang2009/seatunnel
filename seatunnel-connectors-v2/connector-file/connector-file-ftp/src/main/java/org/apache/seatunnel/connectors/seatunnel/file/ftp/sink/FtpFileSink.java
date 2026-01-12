@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.ftp.sink;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileSystemType;
 import org.apache.seatunnel.connectors.seatunnel.file.ftp.config.FtpConf;
@@ -34,7 +34,7 @@ public class FtpFileSink extends BaseMultipleTableFileSink {
         return FileSystemType.FTP.getFileSystemPluginName();
     }
 
-    public FtpFileSink(ReadonlyConfig readonlyConfig, CatalogTable catalogTable) {
+    public FtpFileSink(Config readonlyConfig, CatalogTable catalogTable) {
         super(FtpConf.buildWithConfig(readonlyConfig), readonlyConfig, catalogTable);
         this.catalogTable = catalogTable;
     }

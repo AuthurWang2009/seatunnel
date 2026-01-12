@@ -18,7 +18,7 @@
 package org.apache.seatunnel.connectors.seatunnel.jdbc.sink;
 
 import org.apache.seatunnel.api.common.JobContext;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.serialization.DefaultSerializer;
 import org.apache.seatunnel.api.serialization.Serializer;
 import org.apache.seatunnel.api.sink.DataSaveMode;
@@ -76,7 +76,7 @@ public class JdbcSink
 
     private final JdbcDialect dialect;
 
-    private final ReadonlyConfig config;
+    private final Config config;
 
     private final DataSaveMode dataSaveMode;
 
@@ -85,7 +85,7 @@ public class JdbcSink
     private final CatalogTable catalogTable;
 
     public JdbcSink(
-            ReadonlyConfig config,
+            Config config,
             JdbcSinkConfig jdbcSinkConfig,
             JdbcDialect dialect,
             SchemaSaveMode schemaSaveMode,

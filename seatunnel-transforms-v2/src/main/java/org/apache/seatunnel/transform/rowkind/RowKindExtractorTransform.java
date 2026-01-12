@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.rowkind;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.Column;
 import org.apache.seatunnel.api.table.catalog.PhysicalColumn;
@@ -34,12 +34,12 @@ import java.util.Arrays;
 
 public class RowKindExtractorTransform extends SingleFieldOutputTransform {
 
-    private final ReadonlyConfig config;
+    private final Config config;
 
     private final RowKindExtractorTransformType transformType;
 
     public RowKindExtractorTransform(
-            @NonNull ReadonlyConfig config, @NonNull CatalogTable inputCatalogTable) {
+            @NonNull Config config, @NonNull CatalogTable inputCatalogTable) {
         super(inputCatalogTable);
         this.config = config;
         this.transformType = config.get(RowKindExtractorTransformConfig.TRANSFORM_TYPE);

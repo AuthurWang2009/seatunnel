@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.exception;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtil;
 import org.apache.seatunnel.api.table.factory.TableTransformFactoryContext;
@@ -60,8 +60,8 @@ public class TransformErrorTest {
 
     @Test
     void testFieldMapperTransformWithError() {
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         new HashMap<String, Object>() {
                             {
                                 put(
@@ -92,8 +92,8 @@ public class TransformErrorTest {
 
     @Test
     void testCopyTransformWithError() {
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         new HashMap<String, Object>() {
                             {
                                 put(
@@ -121,8 +121,8 @@ public class TransformErrorTest {
                 "ErrorCode:[TRANSFORM_COMMON-01], ErrorDescription:[The input field 'age1' of 'Copy' transform not found in upstream schema]",
                 exception.getMessage());
 
-        ReadonlyConfig config2 =
-                ReadonlyConfig.fromMap(
+        Config config2 =
+                Config.of(
                         new HashMap<String, Object>() {
                             {
                                 put(CopyTransformConfig.SRC_FIELD.key(), "ageB");
@@ -148,8 +148,8 @@ public class TransformErrorTest {
 
     @Test
     void testFilterTransformWithError() {
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         new HashMap<String, Object>() {
                             {
                                 put(
@@ -181,8 +181,8 @@ public class TransformErrorTest {
 
     @Test
     void testJsonPathTransformWithError() {
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         new HashMap<String, Object>() {
                             {
                                 put(
@@ -231,8 +231,8 @@ public class TransformErrorTest {
 
     @Test
     void testReplaceTransformWithError() {
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         new HashMap<String, Object>() {
                             {
                                 put(ReplaceTransformConfig.KEY_REPLACE_FIELD.key(), "age");
@@ -261,8 +261,8 @@ public class TransformErrorTest {
 
     @Test
     void testSplitTransformWithError() {
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         new HashMap<String, Object>() {
                             {
                                 put(SplitTransformConfig.KEY_SPLIT_FIELD.key(), "age");

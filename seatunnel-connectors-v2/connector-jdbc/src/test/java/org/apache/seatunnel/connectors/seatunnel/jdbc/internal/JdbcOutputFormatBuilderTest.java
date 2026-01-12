@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.jdbc.internal;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.PhysicalColumn;
 import org.apache.seatunnel.api.table.catalog.TableSchema;
 import org.apache.seatunnel.api.table.type.BasicType;
@@ -114,7 +114,7 @@ public class JdbcOutputFormatBuilderTest {
                 new JdbcOutputFormatBuilder(
                                 dialect,
                                 provider,
-                                JdbcSinkConfig.of(ReadonlyConfig.fromMap(config)),
+                                JdbcSinkConfig.of(Config.of(config)),
                                 schema,
                                 schema)
                         .build();

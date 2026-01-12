@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.api.table.factory;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.common.utils.SeaTunnelException;
 
@@ -31,10 +31,10 @@ import java.util.List;
 @Getter
 public abstract class TableFactoryContext {
 
-    private final ReadonlyConfig options;
+    private final Config options;
     private final ClassLoader classLoader;
 
-    public TableFactoryContext(ReadonlyConfig options, ClassLoader classLoader) {
+    public TableFactoryContext(Config options, ClassLoader classLoader) {
         this.options = options;
         this.classLoader = classLoader;
     }

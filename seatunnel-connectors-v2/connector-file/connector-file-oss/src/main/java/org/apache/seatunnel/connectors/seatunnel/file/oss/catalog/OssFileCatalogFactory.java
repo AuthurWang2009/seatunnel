@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.oss.catalog;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.util.OptionRule;
 import org.apache.seatunnel.api.table.catalog.Catalog;
 import org.apache.seatunnel.api.table.factory.CatalogFactory;
@@ -33,12 +33,12 @@ import com.google.auto.service.AutoService;
 @AutoService(Factory.class)
 public class OssFileCatalogFactory implements CatalogFactory {
     @Override
-    public Catalog createCatalog(String catalogName, ReadonlyConfig options) {
-        HadoopConf hadoopConf = OssHadoopConf.buildWithConfig(options);
+    public Catalog createCatalog(String catalogName, Config readonlyConfig) {
+        HadoopConf hadoopConf = OssHadoopConf.buildWithConfig(readonlyConfig);
         HadoopFileSystemProxy fileSystemUtils = new HadoopFileSystemProxy(hadoopConf);
         return new OssFileCatalog(
                 fileSystemUtils,
-                options.get(FileBaseSourceOptions.FILE_PATH),
+                readonlyConfig.get(FileBaseSourceOptions.FILE_PATH),
                 FileSystemType.OSS.getFileSystemPluginName());
     }
 

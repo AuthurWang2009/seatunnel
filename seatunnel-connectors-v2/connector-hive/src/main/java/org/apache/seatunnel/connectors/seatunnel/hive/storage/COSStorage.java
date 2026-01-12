@@ -18,7 +18,6 @@
 package org.apache.seatunnel.connectors.seatunnel.hive.storage;
 
 import org.apache.seatunnel.api.config.Config;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 import org.apache.seatunnel.connectors.seatunnel.file.cos.config.CosConf;
 import org.apache.seatunnel.connectors.seatunnel.file.cos.config.CosFileBaseOptions;
@@ -30,7 +29,7 @@ import java.util.Map;
 
 public class COSStorage extends AbstractStorage {
     @Override
-    public HadoopConf buildHadoopConfWithReadOnlyConfig(ReadonlyConfig readonlyConfig) {
+    public HadoopConf buildHadoopConfWithReadOnlyConfig(Config readonlyConfig) {
         Configuration configuration = loadHiveBaseHadoopConfig(readonlyConfig);
         Config config = fillBucket(readonlyConfig, configuration);
         config =

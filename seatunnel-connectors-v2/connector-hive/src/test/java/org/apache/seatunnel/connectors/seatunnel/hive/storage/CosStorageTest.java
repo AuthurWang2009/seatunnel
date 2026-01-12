@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.hive.storage;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 import org.apache.seatunnel.connectors.seatunnel.file.cos.config.CosConf;
 import org.apache.seatunnel.connectors.seatunnel.file.cos.config.CosFileBaseOptions;
@@ -32,8 +32,8 @@ import java.util.HashMap;
 
 public class CosStorageTest {
 
-    private static final ReadonlyConfig COS =
-            ReadonlyConfig.fromMap(
+    private static final Config COS =
+            Config.of(
                     new HashMap<String, Object>() {
                         {
                             put(
@@ -63,7 +63,7 @@ public class CosStorageTest {
         HashMap<String, Object> map = new HashMap<>();
         map.put("hive.hadoop.conf-path", filePath);
         map.putAll(COS.toMap());
-        ReadonlyConfig readonlyConfig = ReadonlyConfig.fromMap(map);
+        Config readonlyConfig = Config.of(map);
         COSStorage cosStorage = new COSStorage();
         HadoopConf hadoopConf = cosStorage.buildHadoopConfWithReadOnlyConfig(readonlyConfig);
         assertHadoopConf(hadoopConf);

@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.hive.storage;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 import org.apache.seatunnel.connectors.seatunnel.file.s3.config.S3FileBaseOptions;
 import org.apache.seatunnel.connectors.seatunnel.hive.config.HiveOnS3Conf;
@@ -32,8 +32,8 @@ import java.util.HashMap;
 
 public class S3StorageTest {
 
-    private static final ReadonlyConfig S3A =
-            ReadonlyConfig.fromMap(
+    private static final Config S3A =
+            Config.of(
                     new HashMap<String, Object>() {
                         {
                             put(
@@ -57,8 +57,8 @@ public class S3StorageTest {
                         }
                     });
 
-    private static final ReadonlyConfig S3 =
-            ReadonlyConfig.fromMap(
+    private static final Config S3 =
+            Config.of(
                     new HashMap<String, Object>() {
                         {
                             put(
@@ -100,7 +100,7 @@ public class S3StorageTest {
         HashMap<String, Object> map = new HashMap<>();
         map.put("hive.hadoop.conf-path", filePath);
         map.putAll(S3A.toMap());
-        ReadonlyConfig readonlyConfig = ReadonlyConfig.fromMap(map);
+        Config readonlyConfig = Config.of(map);
         S3Storage s3Storage = new S3Storage();
         HadoopConf hadoopConf = s3Storage.buildHadoopConfWithReadOnlyConfig(readonlyConfig);
         assertHadoopConfForS3a(hadoopConf);

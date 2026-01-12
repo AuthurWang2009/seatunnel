@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.jdbc;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.source.SeaTunnelSource;
 import org.apache.seatunnel.api.table.factory.TableSourceFactoryContext;
 import org.apache.seatunnel.common.exception.SeaTunnelRuntimeException;
@@ -103,8 +103,8 @@ public class JdbcErrorIT extends TestSuiteBase implements TestResource {
 
     @Test
     void testThrowMultiTableAndFieldsInfoWhenDataTypeUnsupported() {
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         new HashMap<String, Object>() {
                             {
                                 put("url", MYSQL_CONTAINER.getJdbcUrl());

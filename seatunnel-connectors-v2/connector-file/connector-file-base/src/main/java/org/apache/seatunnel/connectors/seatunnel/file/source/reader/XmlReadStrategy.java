@@ -280,15 +280,15 @@ public class XmlReadStrategy extends AbstractReadStrategy {
         this.delimiter =
                 pluginConfig.getOptional(FileBaseSourceOptions.FIELD_DELIMITER).orElse(null);
 
-        if (pluginConfig.getOptional(FileBaseSourceOptions.DATE_FORMAT_LEGACY).isPresent()) {
-            this.dateFormat = pluginConfig.get(FileBaseSourceOptions.DATE_FORMAT_LEGACY);
-        }
-        if (pluginConfig.getOptional(FileBaseSourceOptions.TIME_FORMAT_LEGACY).isPresent()) {
-            this.timeFormat = pluginConfig.get(FileBaseSourceOptions.TIME_FORMAT_LEGACY);
-        }
-        if (pluginConfig.getOptional(FileBaseSourceOptions.DATETIME_FORMAT_LEGACY).isPresent()) {
-            this.datetimeFormat = pluginConfig.get(FileBaseSourceOptions.DATETIME_FORMAT_LEGACY);
-        }
+        this.dateFormat =
+                DateUtils.Formatter.parse(
+                        pluginConfig.get(FileBaseSourceOptions.DATE_FORMAT_LEGACY));
+        this.timeFormat =
+                TimeUtils.Formatter.parse(
+                        pluginConfig.get(FileBaseSourceOptions.TIME_FORMAT_LEGACY));
+        this.datetimeFormat =
+                DateTimeUtils.Formatter.parse(
+                        pluginConfig.get(FileBaseSourceOptions.DATETIME_FORMAT_LEGACY));
         this.encoding =
                 pluginConfig
                         .getOptional(FileBaseSourceOptions.ENCODING)

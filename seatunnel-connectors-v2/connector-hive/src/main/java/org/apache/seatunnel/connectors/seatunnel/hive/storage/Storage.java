@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.connectors.seatunnel.hive.storage;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 
 public interface Storage {
-    HadoopConf buildHadoopConfWithReadOnlyConfig(ReadonlyConfig readonlyConfig);
+    HadoopConf buildHadoopConfWithReadOnlyConfig(Config readonlyConfig);
 }

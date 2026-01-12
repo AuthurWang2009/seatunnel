@@ -18,7 +18,6 @@
 package org.apache.seatunnel.connectors.seatunnel.hive.storage;
 
 import org.apache.seatunnel.api.config.Config;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 import org.apache.seatunnel.connectors.seatunnel.file.oss.config.OssHadoopConf;
 
@@ -30,10 +29,10 @@ import java.util.Map;
 public class OSSStorage extends AbstractStorage {
 
     @Override
-    public HadoopConf buildHadoopConfWithReadOnlyConfig(ReadonlyConfig readonlyConfig) {
+    public HadoopConf buildHadoopConfWithReadOnlyConfig(Config readonlyConfig) {
         Configuration configuration = loadHiveBaseHadoopConfig(readonlyConfig);
         Config config = fillBucket(readonlyConfig, configuration);
-        HadoopConf hadoopConf = OssHadoopConf.buildWithConfig((ReadonlyConfig) config);
+        HadoopConf hadoopConf = OssHadoopConf.buildWithConfig(config);
         Map<String, String> propsInConfiguration =
                 configuration.getPropsWithPrefix(StringUtils.EMPTY);
         hadoopConf.setExtraOptions(propsInConfiguration);

@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.metadata;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.Column;
 import org.apache.seatunnel.api.table.catalog.MetadataColumn;
@@ -46,7 +46,7 @@ public class MetadataTransform extends MultipleFieldOutputTransform {
     private MetadataSchema metadataSchema;
     private Map<String, String> metadataFieldMapping;
 
-    public MetadataTransform(ReadonlyConfig config, @NonNull CatalogTable inputCatalogTable) {
+    public MetadataTransform(Config config, @NonNull CatalogTable inputCatalogTable) {
         super(inputCatalogTable);
         initOutputFields(inputCatalogTable, config.get(MetadataTransformConfig.METADATA_FIELDS));
     }

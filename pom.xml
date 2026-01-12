@@ -34,11 +34,7 @@
     <description>Production ready big data processing product based on Apache Spark and Apache Flink.</description>
 
     <modules>
-        <!--
-            We retrieve the config module from maven repository. If you want to change the config module,
-            you need to open this annotation and change the dependency of config-shade to project.
-            <module>seatunnel-config</module>
-        -->
+
         <module>seatunnel-config</module>
         <module>seatunnel-common</module>
         <module>seatunnel-core</module>
@@ -57,7 +53,6 @@
     <properties>
         <!--todo The classification is too confusing, reclassify by type-->
         <revision>2.3.12-SNAPSHOT</revision>
-        <seatunnel.config.shade.version>2.1.1</seatunnel.config.shade.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <scala.version>2.12.15</scala.version>
@@ -93,7 +88,7 @@
         <skip.pmd.check>false</skip.pmd.check>
         <maven.deploy.skip>false</maven.deploy.skip>
         <maven.javadoc.skip>false</maven.javadoc.skip>
-        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>

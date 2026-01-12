@@ -78,10 +78,10 @@ public class FileBaseSourceOptions extends FileBaseOptions {
                     .noDefaultValue()
                     .withDescription("The columns list that the user want to read");
 
-    public static final ConfigEntry<ExcelEngine> EXCEL_ENGINE =
+    public static final ConfigEntry<String> EXCEL_ENGINE =
             ConfigOption.key("excel_engine")
-                    .enumType(ExcelEngine.class)
-                    .defaultValue(ExcelEngine.POI)
+                    .stringType()
+                    .defaultValue(ExcelEngine.POI.name())
                     .withDescription("To switch excel read engine,  e.g. POI , EasyExcel");
 
     public static final ConfigEntry<String> XML_ROW_TAG =

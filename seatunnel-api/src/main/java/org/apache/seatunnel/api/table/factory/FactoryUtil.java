@@ -19,7 +19,7 @@ package org.apache.seatunnel.api.table.factory;
 
 import org.apache.seatunnel.api.common.JobContext;
 import org.apache.seatunnel.api.common.PluginIdentifier;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.util.ConfigValidator;
 import org.apache.seatunnel.api.config.util.OptionRule;
 import org.apache.seatunnel.api.env.ParsingMode;
@@ -78,7 +78,7 @@ public final class FactoryUtil {
 
     public static <T, SplitT extends SourceSplit, StateT extends Serializable>
             Tuple2<SeaTunnelSource<T, SplitT, StateT>, List<CatalogTable>> createAndPrepareSource(
-                    ReadonlyConfig options,
+                    Config options,
                     ClassLoader classLoader,
                     String factoryIdentifier,
                     Function<PluginIdentifier, SeaTunnelSource> fallbackCreateSource,
@@ -89,7 +89,7 @@ public final class FactoryUtil {
 
     public static <T, SplitT extends SourceSplit, StateT extends Serializable>
             Tuple2<SeaTunnelSource<T, SplitT, StateT>, List<CatalogTable>> restoreAndPrepareSource(
-                    ReadonlyConfig options,
+                    Config options,
                     ClassLoader classLoader,
                     String factoryIdentifier,
                     ChangeStreamTableSourceCheckpoint checkpoint,
@@ -173,7 +173,7 @@ public final class FactoryUtil {
 
     private static <T, SplitT extends SourceSplit, StateT extends Serializable>
             SeaTunnelSource<T, SplitT, StateT> createAndPrepareSource(
-                    TableSourceFactory factory, ReadonlyConfig options, ClassLoader classLoader) {
+                    TableSourceFactory factory, Config options, ClassLoader classLoader) {
         TableSourceFactoryContext context = new TableSourceFactoryContext(options, classLoader);
         ConfigValidator.of(context.getOptions()).validate(factory.optionRule());
         TableSource<T, SplitT, StateT> tableSource = factory.createSource(context);
@@ -183,7 +183,7 @@ public final class FactoryUtil {
     private static <T, SplitT extends SourceSplit, StateT extends Serializable>
             SeaTunnelSource<T, SplitT, StateT> restoreAndPrepareSource(
                     ChangeStreamTableSourceFactory factory,
-                    ReadonlyConfig options,
+                    Config options,
                     ClassLoader classLoader,
                     ChangeStreamTableSourceState state) {
         TableSourceFactoryContext context = new TableSourceFactoryContext(options, classLoader);
@@ -196,7 +196,7 @@ public final class FactoryUtil {
     public static <IN, StateT, CommitInfoT, AggregatedCommitInfoT>
             SeaTunnelSink<IN, StateT, CommitInfoT, AggregatedCommitInfoT> createAndPrepareSink(
                     CatalogTable catalogTable,
-                    ReadonlyConfig config,
+                    Config config,
                     ClassLoader classLoader,
                     String factoryIdentifier,
                     Function<PluginIdentifier, SeaTunnelSink> fallbackCreateSink,
@@ -255,9 +255,7 @@ public final class FactoryUtil {
 
     public static <IN, StateT, CommitInfoT, AggregatedCommitInfoT>
             SeaTunnelSink<IN, StateT, CommitInfoT, AggregatedCommitInfoT> createMultiTableSink(
-                    Map<TablePath, SeaTunnelSink> sinks,
-                    ReadonlyConfig options,
-                    ClassLoader classLoader) {
+                    Map<TablePath, SeaTunnelSink> sinks, Config options, ClassLoader classLoader) {
         try {
             TableSinkFactory<IN, StateT, CommitInfoT, AggregatedCommitInfoT> factory =
                     new MultiTableSinkFactory();
@@ -272,10 +270,7 @@ public final class FactoryUtil {
     }
 
     public static Optional<Catalog> createOptionalCatalog(
-            String catalogName,
-            ReadonlyConfig options,
-            ClassLoader classLoader,
-            String factoryIdentifier) {
+            String catalogName, Config options, ClassLoader classLoader, String factoryIdentifier) {
         Optional<CatalogFactory> optionalFactory =
                 discoverOptionalFactory(classLoader, CatalogFactory.class, factoryIdentifier);
         return optionalFactory.map(
@@ -434,7 +429,7 @@ public final class FactoryUtil {
 
     public static SeaTunnelTransform<?> createAndPrepareMultiTableTransform(
             List<CatalogTable> catalogTables,
-            ReadonlyConfig options,
+            Config options,
             ClassLoader classLoader,
             String factoryIdentifier) {
         final TableTransformFactory factory =

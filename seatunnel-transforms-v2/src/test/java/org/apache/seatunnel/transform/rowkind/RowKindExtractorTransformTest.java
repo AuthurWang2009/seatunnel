@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.rowkind;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.PhysicalColumn;
 import org.apache.seatunnel.api.table.catalog.TableIdentifier;
@@ -99,8 +99,7 @@ class RowKindExtractorTransformTest {
     @Test
     void testCdcRowTransformShort() {
         RowKindExtractorTransform rowKindExtractorTransform =
-                new RowKindExtractorTransform(
-                        ReadonlyConfig.fromMap(new HashMap<>()), catalogTable);
+                new RowKindExtractorTransform(Config.of(new HashMap<>()), catalogTable);
         rowKindExtractorTransform.initRowContainerGenerator();
         SeaTunnelRow insertRow = inputRow.copy();
         Assertions.assertEquals(
@@ -128,7 +127,7 @@ class RowKindExtractorTransformTest {
         HashMap<String, Object> conf = new HashMap<>();
         conf.put("transform_type", "FULL");
         RowKindExtractorTransform rowKindExtractorTransform =
-                new RowKindExtractorTransform(ReadonlyConfig.fromMap(conf), catalogTable);
+                new RowKindExtractorTransform(Config.of(conf), catalogTable);
         rowKindExtractorTransform.initRowContainerGenerator();
         SeaTunnelRow insertRow = inputRow.copy();
         Assertions.assertEquals(

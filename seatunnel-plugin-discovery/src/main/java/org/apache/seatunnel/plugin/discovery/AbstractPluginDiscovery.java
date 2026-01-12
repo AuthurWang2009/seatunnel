@@ -19,7 +19,10 @@ package org.apache.seatunnel.plugin.discovery;
 
 import org.apache.seatunnel.api.common.PluginIdentifier;
 import org.apache.seatunnel.api.common.PluginIdentifierInterface;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigLoader;
+import org.apache.seatunnel.api.config.util.ConfigUtil;
 import org.apache.seatunnel.api.config.util.OptionRule;
 import org.apache.seatunnel.api.table.factory.Factory;
 import org.apache.seatunnel.api.table.factory.FactoryUtil;
@@ -37,10 +40,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
-import com.typesafe.config.ConfigResolveOptions;
-import com.typesafe.config.ConfigValue;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -125,8 +124,8 @@ public abstract class AbstractPluginDiscovery<T> implements PluginDiscovery<T> {
     }
 
     protected static Config loadConnectorPluginConfig() {
-        return ConfigFactory.parseFile(Common.connectorDir().resolve(PLUGIN_MAPPING_FILE).toFile())
-                .resolve(ConfigResolveOptions.defaults().setAllowUnresolved(true));
+        return ConfigLoader.load(
+                Common.connectorDir().resolve(PLUGIN_MAPPING_FILE).toAbsolutePath());
     }
 
     @Override
@@ -198,7 +197,7 @@ public abstract class AbstractPluginDiscovery<T> implements PluginDiscovery<T> {
                                                 CollectionConstants.SEATUNNEL_PLUGIN,
                                                 pluginType.getType(),
                                                 entry.getKey()),
-                                        entry.getValue().unwrapped().toString());
+                                        ConfigUtil.convertToJsonString(entry.getValue()));
                             });
         }
         return pluginIdentifiers;
@@ -437,11 +436,11 @@ public abstract class AbstractPluginDiscovery<T> implements PluginDiscovery<T> {
             return Optional.empty();
         }
         Config typeConfig = engineConfig.getConfig(pluginType);
-        Optional<Map.Entry<String, ConfigValue>> optional =
+        Optional<Map.Entry<String, Object>> optional =
                 typeConfig.entrySet().stream()
                         .filter(entry -> StringUtils.equalsIgnoreCase(entry.getKey(), pluginName))
                         .findFirst();
-        return optional.map(entry -> entry.getValue().unwrapped().toString());
+        return optional.map(entry -> entry.getValue().toString());
     }
 
     /**

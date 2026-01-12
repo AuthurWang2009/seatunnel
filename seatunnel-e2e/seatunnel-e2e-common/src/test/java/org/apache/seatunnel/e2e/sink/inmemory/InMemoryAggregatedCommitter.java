@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.e2e.sink.inmemory;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.sink.MultiTableResourceManager;
 import org.apache.seatunnel.api.sink.SinkAggregatedCommitter;
 import org.apache.seatunnel.api.sink.SupportMultiTableSinkAggregatedCommitter;
@@ -33,9 +33,9 @@ public class InMemoryAggregatedCommitter
     private static final List<String> events = new ArrayList<>();
     private static final List<InMemoryMultiTableResourceManager> resourceManagers =
             new ArrayList<>();
-    private ReadonlyConfig config;
+    private Config config;
 
-    public InMemoryAggregatedCommitter(ReadonlyConfig config) {
+    public InMemoryAggregatedCommitter(Config config) {
         this.config = config;
     }
 

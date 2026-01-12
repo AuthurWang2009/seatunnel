@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.api.table.catalog;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.options.ConnectorCommonOptions;
 import org.apache.seatunnel.api.table.factory.TableSinkFactoryContext;
 import org.apache.seatunnel.api.table.factory.TableTransformFactoryContext;
@@ -52,14 +52,13 @@ public class CatalogTableTest {
     @Test
     public void testReadCatalogTableWithUnsupportedType() {
         Catalog catalog =
-                new InMemoryCatalogFactory()
-                        .createCatalog("InMemory", ReadonlyConfig.fromMap(new HashMap<>()));
+                new InMemoryCatalogFactory().createCatalog("InMemory", Config.of(new HashMap<>()));
         SeaTunnelRuntimeException exception =
                 Assertions.assertThrows(
                         SeaTunnelRuntimeException.class,
                         () ->
                                 catalog.getTables(
-                                        ReadonlyConfig.fromMap(
+                                        Config.of(
                                                 new HashMap<String, Object>() {
                                                     {
                                                         put(

@@ -28,12 +28,7 @@ import org.apache.seatunnel.api.table.type.SeaTunnelRowType;
 import org.apache.seatunnel.api.table.type.SqlType;
 import org.apache.seatunnel.api.table.type.VectorType;
 import org.apache.seatunnel.common.exception.CommonError;
-
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
-import com.typesafe.config.ConfigObject;
-import com.typesafe.config.ConfigValue;
-import com.typesafe.config.ConfigValueType;
+import org.apache.seatunnel.common.parser.ConfigParser;
 
 import java.util.List;
 
@@ -101,6 +96,20 @@ public class SeaTunnelDataTypeConvertorUtil {
         }
     }
 
+    private static SeaTunnelDataType<?> parseComplexDataType(String field, String columnType) {
+        String type = columnType.toUpperCase().trim();
+        if (type.startsWith(SqlType.MAP.name())) {
+            return parseMapType(field, columnType);
+        }
+        if (type.startsWith(SqlType.ARRAY.name())) {
+            return parseArrayType(field, columnType);
+        }
+        if (type.startsWith(SqlType.DECIMAL.name())) {
+            return parseDecimalType(columnType);
+        }
+        return parseRowType(columnType);
+    }
+
     /**
      * User-facing data type declarations will adhere to the specifications outlined in
      * schema-feature.md. To maintain backward compatibility, this function will transform type
@@ -127,50 +136,52 @@ public class SeaTunnelDataTypeConvertorUtil {
         }
     }
 
-    private static SeaTunnelDataType<?> parseComplexDataType(String field, String columnStr) {
-        String column = columnStr.toUpperCase().replace(" ", "");
-        if (column.startsWith(SqlType.MAP.name())) {
-            return parseMapType(field, columnStr);
+    private static final ConfigParser CONFIG_PARSER;
+
+    static {
+        ConfigParser hoconParser = null;
+        for (ConfigParser parser : java.util.ServiceLoader.load(ConfigParser.class)) {
+            if (parser.getConfigType()
+                    == org.apache.seatunnel.common.config.ConfigType.HOCON) {
+                hoconParser = parser;
+                break;
+            }
         }
-        if (column.startsWith(SqlType.ARRAY.name())) {
-            return parseArrayType(field, columnStr);
+
+        if (hoconParser == null) {
+            throw new RuntimeException("HOCON ConfigParser not found");
         }
-        if (column.startsWith(SqlType.DECIMAL.name())) {
-            return parseDecimalType(columnStr);
-        }
-        if (column.trim().startsWith("{")) {
-            return parseRowType(columnStr);
-        }
-        if (column.trim().startsWith("[")) {
-            return parseRowTypeFromList(columnStr);
-        }
-        throw CommonError.unsupportedDataType("SeaTunnel", columnStr, field);
+        CONFIG_PARSER = hoconParser;
+    }
+
+    private static java.util.Map<String, Object> parseConfig(String content) {
+        return CONFIG_PARSER.parse(content);
     }
 
     private static SeaTunnelDataType<?> parseRowTypeFromList(String columnStr) {
         String confPayload = "{conf = " + columnStr + "}";
-        Config conf;
+        java.util.Map<String, Object> conf;
         try {
-            conf = ConfigFactory.parseString(confPayload);
+            conf = parseConfig(confPayload);
         } catch (RuntimeException e) {
             throw new IllegalArgumentException(
                     String.format("HOCON Config parse from %s failed.", confPayload), e);
         }
-        return parseRowTypeFromList(conf.getList("conf"));
+        return parseRowTypeFromList((List<Object>) conf.get("conf"));
     }
 
-    private static SeaTunnelDataType<?> parseRowTypeFromList(List<? extends ConfigValue> conf) {
+    private static SeaTunnelDataType<?> parseRowTypeFromList(List<Object> conf) {
         String[] fieldNames = new String[conf.size()];
         SeaTunnelDataType<?>[] fieldTypes = new SeaTunnelDataType[conf.size()];
         for (int i = 0; i < conf.size(); i++) {
-            ConfigValue configValue = conf.get(i);
-            if (configValue.valueType() != ConfigValueType.OBJECT) {
+            Object configValue = conf.get(i);
+            if (!(configValue instanceof java.util.Map)) {
                 throw new IllegalArgumentException(
                         "Unsupported parse SeaTunnel Type from " + configValue.toString());
             }
-            Config config = ((ConfigObject) configValue).toConfig();
-            String name = config.getString("name");
-            String type = config.getString("type");
+            java.util.Map<String, Object> config = (java.util.Map<String, Object>) configValue;
+            String name = String.valueOf(config.get("name"));
+            String type = String.valueOf(config.get("type"));
             fieldNames[i] = name;
             fieldTypes[i] = deserializeSeaTunnelDataType(name, type);
         }
@@ -179,46 +190,35 @@ public class SeaTunnelDataTypeConvertorUtil {
 
     private static SeaTunnelDataType<?> parseRowType(String columnStr) {
         String confPayload = "{conf = " + columnStr + "}";
-        Config conf;
+        java.util.Map<String, Object> conf;
         try {
-            conf = ConfigFactory.parseString(confPayload);
+            conf = parseConfig(confPayload);
         } catch (RuntimeException e) {
             throw new IllegalArgumentException(
                     String.format("HOCON Config parse from %s failed.", confPayload), e);
         }
-        return parseRowType(conf.getObject("conf"));
+        Object confValue = conf.get("conf");
+        if (!(confValue instanceof java.util.Map)) {
+            throw CommonError.unsupportedDataType("SeaTunnel", columnStr, "test");
+        }
+        return parseRowType((java.util.Map<String, Object>) confValue);
     }
 
-    private static SeaTunnelDataType<?> parseRowType(ConfigObject conf) {
+    private static SeaTunnelDataType<?> parseRowType(java.util.Map<String, Object> conf) {
         String[] fieldNames = new String[conf.size()];
         SeaTunnelDataType<?>[] fieldTypes = new SeaTunnelDataType[conf.size()];
         conf.keySet().toArray(fieldNames);
 
         for (int idx = 0; idx < fieldNames.length; idx++) {
             String fieldName = fieldNames[idx];
-            ConfigValue typeVal = conf.get(fieldName);
-            switch (typeVal.valueType()) {
-                case STRING:
-                    {
-                        fieldTypes[idx] =
-                                deserializeSeaTunnelDataType(
-                                        fieldNames[idx], (String) typeVal.unwrapped());
-                    }
-                    break;
-                case OBJECT:
-                    {
-                        fieldTypes[idx] = parseRowType((ConfigObject) typeVal);
-                    }
-                    break;
-                case LIST:
-                case NUMBER:
-                case BOOLEAN:
-                case NULL:
-                default:
-                    throw new IllegalArgumentException(
-                            String.format(
-                                    "Unsupported parse SeaTunnel Type from '%s'.",
-                                    typeVal.unwrapped()));
+            Object typeVal = conf.get(fieldName);
+            if (typeVal instanceof String) {
+                fieldTypes[idx] = deserializeSeaTunnelDataType(fieldNames[idx], (String) typeVal);
+            } else if (typeVal instanceof java.util.Map) {
+                fieldTypes[idx] = parseRowType((java.util.Map<String, Object>) typeVal);
+            } else {
+                throw new IllegalArgumentException(
+                        String.format("Unsupported parse SeaTunnel Type from '%s'.", typeVal));
             }
         }
         return new SeaTunnelRowType(fieldNames, fieldTypes);

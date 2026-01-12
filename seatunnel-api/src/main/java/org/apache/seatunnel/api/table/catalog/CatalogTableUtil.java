@@ -18,7 +18,6 @@
 package org.apache.seatunnel.api.table.catalog;
 
 import org.apache.seatunnel.api.config.Config;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.options.ConnectorCommonOptions;
 import org.apache.seatunnel.api.table.catalog.schema.ReadonlyConfigParser;
 import org.apache.seatunnel.api.table.factory.FactoryUtil;
@@ -87,7 +86,7 @@ public class CatalogTableUtil implements Serializable {
      *     </a>
      */
     public static List<CatalogTable> getCatalogTables(
-            ReadonlyConfig readonlyConfig, ClassLoader classLoader) {
+            Config readonlyConfig, ClassLoader classLoader) {
 
         // We use plugin_name as factoryId, so MySQL-CDC should be MySQL
         String factoryId =
@@ -96,7 +95,7 @@ public class CatalogTableUtil implements Serializable {
     }
 
     public static List<CatalogTable> getCatalogTables(
-            String factoryId, ReadonlyConfig readonlyConfig, ClassLoader classLoader) {
+            String factoryId, Config readonlyConfig, ClassLoader classLoader) {
         // Highest priority: specified schema
         Map<String, Object> schemaMap = readonlyConfig.get(ConnectorCommonOptions.SCHEMA);
         if (schemaMap != null) {
@@ -187,12 +186,12 @@ public class CatalogTableUtil implements Serializable {
             throw new RuntimeException(
                     "Schema config need option [schema], please correct your config first");
         }
-        TableSchema tableSchema = new ReadonlyConfigParser().parse((ReadonlyConfig) readonlyConfig);
+        TableSchema tableSchema = new ReadonlyConfigParser().parse(readonlyConfig);
 
-        ReadonlyConfig schemaConfig =
+        Config schemaConfig =
                 readonlyConfig
                         .getOptional(ConnectorCommonOptions.SCHEMA)
-                        .map(ReadonlyConfig::fromMap)
+                        .map(Config::of)
                         .orElseThrow(
                                 () -> new IllegalArgumentException("Schema config can't be null"));
 

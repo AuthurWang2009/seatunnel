@@ -19,7 +19,7 @@ package org.apache.seatunnel.core.starter.spark.execution;
 
 import org.apache.seatunnel.api.common.JobContext;
 import org.apache.seatunnel.api.common.PluginIdentifier;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.util.ConfigValidator;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.factory.TableTransformFactory;
@@ -45,7 +45,6 @@ import org.apache.spark.sql.catalyst.encoders.RowEncoder;
 import org.apache.spark.sql.catalyst.expressions.GenericRow;
 
 import com.google.common.collect.Lists;
-import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.URL;
@@ -141,16 +140,16 @@ public class TransformExecuteProcessor
                 TableTransformFactory factory = plugins.get(i);
                 TableTransformFactoryContext context =
                         new TableTransformFactoryContext(
-                                dataset.getCatalogTables(),
-                                ReadonlyConfig.fromConfig(pluginConfig),
-                                classLoader);
+                                dataset.getCatalogTables(), pluginConfig, classLoader);
                 ConfigValidator.of(context.getOptions()).validate(factory.optionRule());
                 SeaTunnelTransform transform = factory.createTransform(context).createTransform();
 
                 Dataset<Row> inputDataset = sparkTransform(transform, dataset);
                 registerInputTempView(pluginConfig, inputDataset);
                 String pluginOutputIdentifier =
-                        ReadonlyConfig.fromConfig(pluginConfig).get(PLUGIN_OUTPUT);
+                        pluginConfig
+                                .getOptional(PLUGIN_OUTPUT)
+                                .orElse(PLUGIN_OUTPUT.defaultValue());
                 outputTables.put(
                         pluginOutputIdentifier,
                         new DatasetTableInfo(

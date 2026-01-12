@@ -17,7 +17,8 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.writer;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
+import org.apache.seatunnel.api.config.ConfigLoader;
 import org.apache.seatunnel.api.table.type.BasicType;
 import org.apache.seatunnel.api.table.type.SeaTunnelDataType;
 import org.apache.seatunnel.api.table.type.SeaTunnelRowType;
@@ -25,9 +26,6 @@ import org.apache.seatunnel.connectors.seatunnel.file.sink.config.FileSinkConfig
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 
 import java.io.File;
 import java.net.URL;
@@ -41,14 +39,13 @@ public class FileSinkConfigTest {
         URL conf = OrcReadStrategyTest.class.getResource("/test_write_hdfs.conf");
         Assertions.assertNotNull(conf);
         String confPath = Paths.get(conf.toURI()).toString();
-        Config config = ConfigFactory.parseFile(new File(confPath));
+        Config config = ConfigLoader.load(new File(confPath).toPath());
 
         SeaTunnelRowType rowType =
                 new SeaTunnelRowType(
                         new String[] {"data", "ts"},
                         new SeaTunnelDataType[] {BasicType.STRING_TYPE, BasicType.STRING_TYPE});
-        Assertions.assertDoesNotThrow(
-                () -> new FileSinkConfig(ReadonlyConfig.fromConfig(config), rowType));
+        Assertions.assertDoesNotThrow(() -> new FileSinkConfig(config, rowType));
     }
 
     @Test
@@ -56,14 +53,13 @@ public class FileSinkConfigTest {
         URL conf = OrcReadStrategyTest.class.getResource("/test_write_hdfs_default_format.conf");
         Assertions.assertNotNull(conf);
         String confPath = Paths.get(conf.toURI()).toString();
-        Config config = ConfigFactory.parseFile(new File(confPath));
+        Config config = ConfigLoader.load(new File(confPath).toPath());
 
         SeaTunnelRowType rowType =
                 new SeaTunnelRowType(
                         new String[] {"data", "ts"},
                         new SeaTunnelDataType[] {BasicType.STRING_TYPE, BasicType.STRING_TYPE});
-        Assertions.assertDoesNotThrow(
-                () -> new FileSinkConfig(ReadonlyConfig.fromConfig(config), rowType));
+        Assertions.assertDoesNotThrow(() -> new FileSinkConfig(config, rowType));
     }
 
     @Test
@@ -71,7 +67,7 @@ public class FileSinkConfigTest {
         URL conf = OrcReadStrategyTest.class.getResource("/test_write_hive.conf");
         Assertions.assertNotNull(conf);
         String confPath = Paths.get(conf.toURI()).toString();
-        Config config = ConfigFactory.parseFile(new File(confPath));
+        Config config = ConfigLoader.load(new File(confPath).toPath());
 
         SeaTunnelRowType seaTunnelRowTypeInfo =
                 new SeaTunnelRowType(
@@ -79,8 +75,7 @@ public class FileSinkConfigTest {
                         new SeaTunnelDataType[] {
                             BasicType.STRING_TYPE, BasicType.INT_TYPE, BasicType.STRING_TYPE
                         });
-        FileSinkConfig fileSinkConfig =
-                new FileSinkConfig(ReadonlyConfig.fromConfig(config), seaTunnelRowTypeInfo);
+        FileSinkConfig fileSinkConfig = new FileSinkConfig(config, seaTunnelRowTypeInfo);
         List<Integer> sinkColumnsIndexInRow = fileSinkConfig.getSinkColumnsIndexInRow();
         Assertions.assertEquals(
                 sinkColumnsIndexInRow.size(), seaTunnelRowTypeInfo.getFieldNames().length);

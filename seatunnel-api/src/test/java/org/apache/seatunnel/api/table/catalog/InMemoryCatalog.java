@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.api.table.catalog;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.exception.CatalogException;
 import org.apache.seatunnel.api.table.catalog.exception.DatabaseAlreadyExistException;
 import org.apache.seatunnel.api.table.catalog.exception.DatabaseNotExistException;
@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class InMemoryCatalog implements Catalog {
-    private final ReadonlyConfig options;
+    private final Config options;
     private final String name;
     // database -> tables
     private final Map<String, List<CatalogTable>> catalogTables;
@@ -50,7 +50,7 @@ public class InMemoryCatalog implements Catalog {
     private static final String UNSUPPORTED_DATABASE = "unsupported";
     @Getter private boolean isRunTruncateTable = false;
 
-    InMemoryCatalog(String catalogName, ReadonlyConfig options) {
+    InMemoryCatalog(String catalogName, Config options) {
         this.name = catalogName;
         this.options = options;
         this.catalogTables = new HashMap<>();

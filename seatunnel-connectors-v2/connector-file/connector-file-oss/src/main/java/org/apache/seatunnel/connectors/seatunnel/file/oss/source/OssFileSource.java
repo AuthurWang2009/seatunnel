@@ -17,14 +17,14 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.oss.source;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileSystemType;
 import org.apache.seatunnel.connectors.seatunnel.file.oss.source.config.MultipleTableOssFileSourceConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.source.BaseMultipleTableFileSource;
 
 public class OssFileSource extends BaseMultipleTableFileSource {
 
-    public OssFileSource(ReadonlyConfig readonlyConfig) {
+    public OssFileSource(Config readonlyConfig) {
         super(new MultipleTableOssFileSourceConfig(readonlyConfig));
     }
 

@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.hive.storage;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 import org.apache.seatunnel.connectors.seatunnel.hive.exception.HiveConnectorErrorCode;
 import org.apache.seatunnel.connectors.seatunnel.hive.exception.HiveConnectorException;
@@ -38,7 +38,7 @@ public class HDFSStorage extends AbstractStorage {
     }
 
     @Override
-    public HadoopConf buildHadoopConfWithReadOnlyConfig(ReadonlyConfig readonlyConfig) {
+    public HadoopConf buildHadoopConfWithReadOnlyConfig(Config readonlyConfig) {
         try {
             String path = new URI(hiveSdLocation).getPath();
             HadoopConf hadoopConf = new HadoopConf(hiveSdLocation.replace(path, StringUtils.EMPTY));

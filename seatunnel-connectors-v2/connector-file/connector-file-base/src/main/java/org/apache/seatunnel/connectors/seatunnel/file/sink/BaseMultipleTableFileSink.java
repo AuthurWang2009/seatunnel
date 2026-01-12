@@ -18,7 +18,7 @@
 package org.apache.seatunnel.connectors.seatunnel.file.sink;
 
 import org.apache.seatunnel.api.common.JobContext;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.serialization.DefaultSerializer;
 import org.apache.seatunnel.api.serialization.Serializer;
 import org.apache.seatunnel.api.sink.DataSaveMode;
@@ -60,12 +60,12 @@ public abstract class BaseMultipleTableFileSink
     private final FileSinkConfig fileSinkConfig;
     private String jobId;
     private JobContext jobContext;
-    private final ReadonlyConfig readonlyConfig;
+    private final Config readonlyConfig;
 
     public abstract String getPluginName();
 
     public BaseMultipleTableFileSink(
-            HadoopConf hadoopConf, ReadonlyConfig readonlyConfig, CatalogTable catalogTable) {
+            HadoopConf hadoopConf, Config readonlyConfig, CatalogTable catalogTable) {
         this.readonlyConfig = readonlyConfig;
         this.hadoopConf = hadoopConf;
         this.fileSinkConfig =

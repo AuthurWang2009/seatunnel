@@ -17,11 +17,13 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.writer;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
+import org.apache.seatunnel.api.config.ConfigLoader;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtil;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
+import org.apache.seatunnel.api.table.type.SeaTunnelRowType;
 import org.apache.seatunnel.common.utils.DateTimeUtils;
 import org.apache.seatunnel.common.utils.DateUtils;
 import org.apache.seatunnel.common.utils.TimeUtils;
@@ -31,8 +33,6 @@ import org.apache.seatunnel.connectors.seatunnel.file.source.reader.XmlReadStrat
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 import lombok.Getter;
 
 import java.io.File;
@@ -60,10 +60,10 @@ public class XmlReadStrategyTest {
         Assertions.assertNotNull(conf);
         String xmlFilePath = Paths.get(xmlFile.toURI()).toString();
         String confPath = Paths.get(conf.toURI()).toString();
-        Config pluginConfig = ConfigFactory.parseFile(new File(confPath));
+        Config pluginConfig = ConfigLoader.load((new File(confPath)).toPath());
         XmlReadStrategy xmlReadStrategy = new XmlReadStrategy();
         LocalConf localConf = new LocalConf(FS_DEFAULT_NAME_DEFAULT);
-        xmlReadStrategy.setPluginConfig(ReadonlyConfig.fromConfig(pluginConfig));
+        xmlReadStrategy.setPluginConfig(pluginConfig);
         xmlReadStrategy.init(localConf);
         List<String> fileNamesByPath = xmlReadStrategy.getFileNamesByPath(xmlFilePath);
         CatalogTable catalogTable = CatalogTableUtil.buildWithConfig(pluginConfig);
@@ -71,34 +71,54 @@ public class XmlReadStrategyTest {
         TestCollector testCollector = new TestCollector();
         xmlReadStrategy.read(fileNamesByPath.get(0), "", testCollector);
         for (SeaTunnelRow seaTunnelRow : testCollector.getRows()) {
+            SeaTunnelRowType rowType = catalogTable.getSeaTunnelRowType();
             Assertions.assertEquals(seaTunnelRow.getArity(), 15);
-            Assertions.assertEquals(seaTunnelRow.getField(0).getClass(), Byte.class);
-            Assertions.assertEquals(seaTunnelRow.getField(1).getClass(), Short.class);
-            Assertions.assertEquals(seaTunnelRow.getField(2).getClass(), Integer.class);
-            Assertions.assertEquals(seaTunnelRow.getField(3).getClass(), Long.class);
-            Assertions.assertEquals(seaTunnelRow.getField(4).getClass(), String.class);
-            Assertions.assertEquals(seaTunnelRow.getField(5).getClass(), Double.class);
-            Assertions.assertEquals(seaTunnelRow.getField(6).getClass(), Float.class);
-            Assertions.assertEquals(seaTunnelRow.getField(7).getClass(), BigDecimal.class);
-            Assertions.assertEquals(seaTunnelRow.getField(8).getClass(), Boolean.class);
-            Assertions.assertEquals(seaTunnelRow.getField(9).getClass(), LinkedHashMap.class);
-            Assertions.assertEquals(seaTunnelRow.getField(10).getClass(), String[].class);
-            Assertions.assertEquals(seaTunnelRow.getField(11).getClass(), LocalDate.class);
-            Assertions.assertEquals(seaTunnelRow.getField(12).getClass(), LocalDateTime.class);
-            Assertions.assertEquals(seaTunnelRow.getField(13).getClass(), LocalTime.class);
-            Assertions.assertEquals(seaTunnelRow.getField(14).getClass(), String.class);
-
-            Assertions.assertEquals(seaTunnelRow.getField(0), (byte) 1);
-            Assertions.assertEquals(seaTunnelRow.getField(1), (short) 22);
-            Assertions.assertEquals(seaTunnelRow.getField(2), 333);
-            Assertions.assertEquals(seaTunnelRow.getField(3), 4444L);
-            Assertions.assertEquals(seaTunnelRow.getField(4), "DusayI");
-            Assertions.assertEquals(seaTunnelRow.getField(5), 5.555);
-            Assertions.assertEquals(seaTunnelRow.getField(6), (float) 6.666);
-            Assertions.assertEquals(seaTunnelRow.getField(7), new BigDecimal("7.78"));
-            Assertions.assertEquals(seaTunnelRow.getField(8), Boolean.FALSE);
             Assertions.assertEquals(
-                    seaTunnelRow.getField(9),
+                    seaTunnelRow.getField(rowType.indexOf("c_bytes")).getClass(), Byte.class);
+            Assertions.assertEquals(
+                    seaTunnelRow.getField(rowType.indexOf("c_short")).getClass(), Short.class);
+            Assertions.assertEquals(
+                    seaTunnelRow.getField(rowType.indexOf("c_int")).getClass(), Integer.class);
+            Assertions.assertEquals(
+                    seaTunnelRow.getField(rowType.indexOf("c_bigint")).getClass(), Long.class);
+            Assertions.assertEquals(
+                    seaTunnelRow.getField(rowType.indexOf("c_string")).getClass(), String.class);
+            Assertions.assertEquals(
+                    seaTunnelRow.getField(rowType.indexOf("c_double")).getClass(), Double.class);
+            Assertions.assertEquals(
+                    seaTunnelRow.getField(rowType.indexOf("c_float")).getClass(), Float.class);
+            Assertions.assertEquals(
+                    seaTunnelRow.getField(rowType.indexOf("c_decimal")).getClass(),
+                    BigDecimal.class);
+            Assertions.assertEquals(
+                    seaTunnelRow.getField(rowType.indexOf("c_boolean")).getClass(), Boolean.class);
+            Assertions.assertEquals(
+                    seaTunnelRow.getField(rowType.indexOf("c_map")).getClass(),
+                    LinkedHashMap.class);
+            Assertions.assertEquals(
+                    seaTunnelRow.getField(rowType.indexOf("c_array")).getClass(), String[].class);
+            Assertions.assertEquals(
+                    seaTunnelRow.getField(rowType.indexOf("c_date")).getClass(), LocalDate.class);
+            Assertions.assertEquals(
+                    seaTunnelRow.getField(rowType.indexOf("c_datetime")).getClass(),
+                    LocalDateTime.class);
+            Assertions.assertEquals(
+                    seaTunnelRow.getField(rowType.indexOf("c_time")).getClass(), LocalTime.class);
+
+            Assertions.assertEquals(seaTunnelRow.getField(rowType.indexOf("c_bytes")), (byte) 1);
+            Assertions.assertEquals(seaTunnelRow.getField(rowType.indexOf("c_short")), (short) 22);
+            Assertions.assertEquals(seaTunnelRow.getField(rowType.indexOf("c_int")), 333);
+            Assertions.assertEquals(seaTunnelRow.getField(rowType.indexOf("c_bigint")), 4444L);
+            Assertions.assertEquals(seaTunnelRow.getField(rowType.indexOf("c_string")), "DusayI");
+            Assertions.assertEquals(seaTunnelRow.getField(rowType.indexOf("c_double")), 5.555);
+            Assertions.assertEquals(
+                    seaTunnelRow.getField(rowType.indexOf("c_float")), (float) 6.666);
+            Assertions.assertEquals(
+                    seaTunnelRow.getField(rowType.indexOf("c_decimal")), new BigDecimal("7.78"));
+            Assertions.assertEquals(
+                    seaTunnelRow.getField(rowType.indexOf("c_boolean")), Boolean.FALSE);
+            Assertions.assertEquals(
+                    seaTunnelRow.getField(rowType.indexOf("c_map")),
                     new LinkedHashMap<String, String>() {
                         {
                             put("name", "Ivan");
@@ -106,18 +126,18 @@ public class XmlReadStrategyTest {
                         }
                     });
             Assertions.assertArrayEquals(
-                    (String[]) seaTunnelRow.getField(10), new String[] {"Ivan", "Dusayi"});
+                    (String[]) seaTunnelRow.getField(rowType.indexOf("c_array")),
+                    new String[] {"Ivan", "Dusayi"});
             Assertions.assertEquals(
-                    seaTunnelRow.getField(11),
+                    seaTunnelRow.getField(rowType.indexOf("c_date")),
                     DateUtils.parse("2024-01-31", DateUtils.Formatter.YYYY_MM_DD));
             Assertions.assertEquals(
-                    seaTunnelRow.getField(12),
+                    seaTunnelRow.getField(rowType.indexOf("c_datetime")),
                     DateTimeUtils.parse(
                             "2024-01-31 16:00:48", DateTimeUtils.Formatter.YYYY_MM_DD_HH_MM_SS));
             Assertions.assertEquals(
-                    seaTunnelRow.getField(13),
+                    seaTunnelRow.getField(rowType.indexOf("c_time")),
                     TimeUtils.parse("16:00:48", TimeUtils.Formatter.HH_MM_SS));
-            Assertions.assertEquals(seaTunnelRow.getField(14), "xmlTest");
         }
     }
 

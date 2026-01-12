@@ -97,16 +97,14 @@ public class ExcelReadStrategy extends AbstractReadStrategy {
         }
 
         if (pluginConfig.getOptional(FileBaseSourceOptions.DATE_FORMAT_LEGACY).isPresent()) {
-            dateFormatterPattern =
-                    pluginConfig.get(FileBaseSourceOptions.DATE_FORMAT_LEGACY).getValue();
+            dateFormatterPattern = pluginConfig.get(FileBaseSourceOptions.DATE_FORMAT_LEGACY);
         }
         if (pluginConfig.getOptional(FileBaseSourceOptions.DATETIME_FORMAT_LEGACY).isPresent()) {
             dateTimeFormatterPattern =
-                    pluginConfig.get(FileBaseSourceOptions.DATETIME_FORMAT_LEGACY).getValue();
+                    pluginConfig.get(FileBaseSourceOptions.DATETIME_FORMAT_LEGACY);
         }
         if (pluginConfig.getOptional(FileBaseSourceOptions.TIME_FORMAT_LEGACY).isPresent()) {
-            timeFormatterPattern =
-                    pluginConfig.get(FileBaseSourceOptions.TIME_FORMAT_LEGACY).getValue();
+            timeFormatterPattern = pluginConfig.get(FileBaseSourceOptions.TIME_FORMAT_LEGACY);
         }
 
         ExcelCellUtils excelCellUtils =
@@ -116,7 +114,9 @@ public class ExcelReadStrategy extends AbstractReadStrategy {
                         dateTimeFormatterPattern,
                         timeFormatterPattern);
 
-        if (ExcelEngine.EASY_EXCEL.equals(pluginConfig.get(FileBaseSourceOptions.EXCEL_ENGINE))) {
+        if (ExcelEngine.EASY_EXCEL
+                .name()
+                .equalsIgnoreCase(pluginConfig.get(FileBaseSourceOptions.EXCEL_ENGINE))) {
             log.info("Parsing Excel with EasyExcel");
 
             ExcelReaderBuilder read =

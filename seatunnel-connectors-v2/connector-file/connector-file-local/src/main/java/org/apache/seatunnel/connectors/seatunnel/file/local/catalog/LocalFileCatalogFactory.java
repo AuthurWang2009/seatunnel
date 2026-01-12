@@ -17,7 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.local.catalog;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.config.util.OptionRule;
 import org.apache.seatunnel.api.table.catalog.Catalog;
 import org.apache.seatunnel.api.table.factory.CatalogFactory;
@@ -32,7 +31,8 @@ import com.google.auto.service.AutoService;
 @AutoService(Factory.class)
 public class LocalFileCatalogFactory implements CatalogFactory {
     @Override
-    public Catalog createCatalog(String catalogName, ReadonlyConfig options) {
+    public Catalog createCatalog(
+            String catalogName, org.apache.seatunnel.api.config.Config options) {
         HadoopFileSystemProxy fileSystemUtils =
                 new HadoopFileSystemProxy(new LocalFileHadoopConf());
         return new LocalFileCatalog(

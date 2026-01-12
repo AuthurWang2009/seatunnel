@@ -17,11 +17,11 @@
 
 package org.apache.seatunnel.api.table.factory;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.Catalog;
 
 public interface CatalogFactory extends Factory {
 
     /** Creates a {@link Catalog} using the options. */
-    Catalog createCatalog(String catalogName, ReadonlyConfig options);
+    Catalog createCatalog(String catalogName, Config options);
 }

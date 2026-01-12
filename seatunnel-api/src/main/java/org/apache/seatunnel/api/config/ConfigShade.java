@@ -19,9 +19,7 @@ package org.apache.seatunnel.api.config;
 
 import java.util.Map;
 
-/**
- * The interface that provides the ability to encrypt and decrypt {@link com.typesafe.config.Config}
- */
+/** The interface that provides the ability to encrypt and decrypt Config */
 public interface ConfigShade {
 
     /**

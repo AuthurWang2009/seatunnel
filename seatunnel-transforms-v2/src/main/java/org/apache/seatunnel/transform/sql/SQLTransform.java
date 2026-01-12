@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.sql;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.ConfigEntry;
 import org.apache.seatunnel.api.config.ConfigOption;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.options.ConnectorCommonOptions;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.Column;
@@ -69,7 +69,7 @@ public class SQLTransform extends AbstractCatalogSupportFlatMapTransform {
 
     private final String inputTableName;
 
-    public SQLTransform(@NonNull ReadonlyConfig config, @NonNull CatalogTable catalogTable) {
+    public SQLTransform(@NonNull Config config, @NonNull CatalogTable catalogTable) {
         super(catalogTable);
         this.query = config.get(KEY_QUERY);
         if (config.getOptional(KEY_ENGINE).isPresent()) {

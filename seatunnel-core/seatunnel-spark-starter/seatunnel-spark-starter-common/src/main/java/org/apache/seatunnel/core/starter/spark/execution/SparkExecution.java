@@ -18,20 +18,18 @@
 package org.apache.seatunnel.core.starter.spark.execution;
 
 import org.apache.seatunnel.api.common.JobContext;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.common.Constants;
-import org.apache.seatunnel.common.config.TypesafeConfigUtils;
 import org.apache.seatunnel.core.starter.exception.TaskExecuteException;
 import org.apache.seatunnel.core.starter.execution.PluginExecuteProcessor;
 import org.apache.seatunnel.core.starter.execution.RuntimeEnvironment;
 import org.apache.seatunnel.core.starter.execution.TaskExecution;
 import org.apache.seatunnel.translation.spark.execution.DatasetTableInfo;
 
-import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.DriverManager;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -72,8 +70,7 @@ public class SparkExecution implements TaskExecution {
                 new TransformExecuteProcessor(
                         sparkRuntimeEnvironment,
                         jobContext,
-                        TypesafeConfigUtils.getConfigList(
-                                config, Constants.TRANSFORM, Collections.emptyList()));
+                        config.getConfigList(Constants.TRANSFORM));
         this.sinkPluginExecuteProcessor =
                 new SinkExecuteProcessor(
                         sparkRuntimeEnvironment, jobContext, config.getConfigList(Constants.SINK));

@@ -19,7 +19,7 @@ package org.apache.seatunnel.core.starter.spark.execution;
 
 import org.apache.seatunnel.api.common.JobContext;
 import org.apache.seatunnel.api.common.PluginIdentifier;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.options.EnvCommonOptions;
 import org.apache.seatunnel.api.sink.SaveModeExecuteWrapper;
 import org.apache.seatunnel.api.sink.SaveModeHandler;
@@ -45,7 +45,6 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SaveMode;
 
 import com.google.common.collect.Lists;
-import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.URL;
@@ -134,7 +133,7 @@ public class SinkExecuteProcessor
                                 SeaTunnelSink<Object, Object, Object, Object> sink =
                                         FactoryUtil.createAndPrepareSink(
                                                 catalogTable,
-                                                ReadonlyConfig.fromConfig(sinkConfig),
+                                                sinkConfig,
                                                 classLoader,
                                                 sinkConfig.getString(PLUGIN_NAME.key()),
                                                 fallbackCreateSink,
@@ -142,9 +141,7 @@ public class SinkExecuteProcessor
                                 sink.setJobContext(jobContext);
                                 sinks.put(catalogTable.getTableId().toTablePath(), sink);
                             });
-            SeaTunnelSink sink =
-                    tryGenerateMultiTableSink(
-                            sinks, ReadonlyConfig.fromConfig(sinkConfig), classLoader);
+            SeaTunnelSink sink = tryGenerateMultiTableSink(sinks, sinkConfig, classLoader);
             // TODO modify checkpoint location
             handleSaveMode(sink);
             String applicationId =

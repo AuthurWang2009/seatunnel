@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.common;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
 import org.apache.seatunnel.api.transform.SeaTunnelMapTransform;
@@ -28,8 +28,7 @@ import java.util.List;
 public abstract class AbstractMultiCatalogMapTransform extends AbstractMultiCatalogTransform
         implements SeaTunnelMapTransform<SeaTunnelRow> {
 
-    public AbstractMultiCatalogMapTransform(
-            List<CatalogTable> inputCatalogTables, ReadonlyConfig config) {
+    public AbstractMultiCatalogMapTransform(List<CatalogTable> inputCatalogTables, Config config) {
         super(inputCatalogTables, config);
     }
 

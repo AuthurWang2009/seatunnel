@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.split;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.ConfigEntry;
 import org.apache.seatunnel.api.config.ConfigOption;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -53,7 +53,7 @@ public class SplitTransformConfig implements Serializable {
     private String[] outputFields;
     private String[] emptySplits;
 
-    public static SplitTransformConfig of(ReadonlyConfig config) {
+    public static SplitTransformConfig of(Config config) {
         SplitTransformConfig splitTransformConfig = new SplitTransformConfig();
         splitTransformConfig.setSeparator(config.get(KEY_SEPARATOR));
         splitTransformConfig.setSplitField(config.get(KEY_SPLIT_FIELD));

@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.jdbc.config;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -68,7 +68,7 @@ public class JdbcSourceTableConfig implements Serializable {
     @Tolerate
     public JdbcSourceTableConfig() {}
 
-    public static List<JdbcSourceTableConfig> of(ReadonlyConfig connectorConfig) {
+    public static List<JdbcSourceTableConfig> of(Config connectorConfig) {
         List<JdbcSourceTableConfig> tableList;
         if (connectorConfig.getOptional(JdbcSourceOptions.TABLE_LIST).isPresent()) {
             if (connectorConfig.getOptional(JdbcSourceOptions.QUERY).isPresent()

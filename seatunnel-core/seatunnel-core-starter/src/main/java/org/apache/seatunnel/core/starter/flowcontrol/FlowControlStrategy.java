@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.core.starter.flowcontrol;
 
-import com.typesafe.config.Config;
+import org.apache.seatunnel.api.config.Config;
 
 import java.util.Map;
 import java.util.Optional;

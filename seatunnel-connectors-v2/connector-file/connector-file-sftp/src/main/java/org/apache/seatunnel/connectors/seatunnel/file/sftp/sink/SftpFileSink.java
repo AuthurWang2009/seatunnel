@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.sftp.sink;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileSystemType;
 import org.apache.seatunnel.connectors.seatunnel.file.sftp.config.SftpConf;
@@ -29,7 +29,7 @@ public class SftpFileSink extends BaseMultipleTableFileSink {
 
     private final CatalogTable catalogTable;
 
-    public SftpFileSink(ReadonlyConfig readonlyConfig, CatalogTable catalogTable) {
+    public SftpFileSink(Config readonlyConfig, CatalogTable catalogTable) {
         super(SftpConf.buildWithConfig(readonlyConfig), readonlyConfig, catalogTable);
         this.catalogTable = catalogTable;
     }

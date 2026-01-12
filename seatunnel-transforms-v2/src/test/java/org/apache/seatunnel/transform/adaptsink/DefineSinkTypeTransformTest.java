@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.adaptsink;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtil;
 import org.apache.seatunnel.api.table.factory.TableTransformFactoryContext;
@@ -53,8 +53,8 @@ public class DefineSinkTypeTransformTest {
                                 new SeaTunnelDataType[] {
                                     BasicType.STRING_TYPE, BasicType.INT_TYPE
                                 }));
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         ImmutableMap.of(
                                 "columns",
                                 Arrays.asList(
@@ -99,8 +99,8 @@ public class DefineSinkTypeTransformTest {
                                     BasicType.STRING_TYPE, BasicType.INT_TYPE
                                 }));
 
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         ImmutableMap.of(
                                 "columns",
                                         Arrays.asList(
@@ -163,8 +163,8 @@ public class DefineSinkTypeTransformTest {
                                     BasicType.STRING_TYPE, BasicType.INT_TYPE
                                 }));
 
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         ImmutableMap.of(
                                 "columns",
                                 Arrays.asList(

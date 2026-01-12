@@ -20,7 +20,7 @@ package org.apache.seatunnel.connectors.seatunnel.source;
 import org.apache.seatunnel.api.common.JobContext;
 import org.apache.seatunnel.api.common.metrics.AbstractMetricsContext;
 import org.apache.seatunnel.api.common.metrics.MetricsContext;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.event.EventListener;
 import org.apache.seatunnel.api.source.Boundedness;
 import org.apache.seatunnel.api.source.Collector;
@@ -43,7 +43,7 @@ import java.util.Set;
 public class SourceFlowTestUtils {
 
     public static List<SeaTunnelRow> runBatchWithCheckpointDisabled(
-            ReadonlyConfig options, TableSourceFactory factory) throws Exception {
+            Config options, TableSourceFactory factory) throws Exception {
         JobContext context = new JobContext(System.currentTimeMillis());
         context.setJobMode(JobMode.BATCH);
         context.setEnableCheckpoint(false);
@@ -51,7 +51,7 @@ public class SourceFlowTestUtils {
     }
 
     public static List<SeaTunnelRow> runBatchWithCheckpointEnabled(
-            ReadonlyConfig options, TableSourceFactory factory) throws Exception {
+            Config options, TableSourceFactory factory) throws Exception {
         JobContext context = new JobContext(System.currentTimeMillis());
         context.setJobMode(JobMode.BATCH);
         context.setEnableCheckpoint(true);
@@ -60,7 +60,7 @@ public class SourceFlowTestUtils {
     }
 
     public static List<SeaTunnelRow> runParallelSubtasksBatchWithCheckpointDisabled(
-            ReadonlyConfig options, TableSourceFactory factory, int parallelism) throws Exception {
+            Config options, TableSourceFactory factory, int parallelism) throws Exception {
         JobContext context = new JobContext(System.currentTimeMillis());
         context.setJobMode(JobMode.BATCH);
         context.setEnableCheckpoint(false);
@@ -68,7 +68,7 @@ public class SourceFlowTestUtils {
     }
 
     private static List<SeaTunnelRow> runWithContext(
-            ReadonlyConfig options,
+            Config options,
             TableSourceFactory factory,
             JobContext context,
             Boundedness boundedness,

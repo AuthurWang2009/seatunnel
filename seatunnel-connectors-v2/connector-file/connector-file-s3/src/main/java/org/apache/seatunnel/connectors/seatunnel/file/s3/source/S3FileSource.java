@@ -17,14 +17,14 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.s3.source;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileSystemType;
 import org.apache.seatunnel.connectors.seatunnel.file.s3.source.config.MultipleTableS3FileSourceConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.source.BaseMultipleTableFileSource;
 
 public class S3FileSource extends BaseMultipleTableFileSource {
 
-    public S3FileSource(ReadonlyConfig readonlyConfig) {
+    public S3FileSource(Config readonlyConfig) {
         super(new MultipleTableS3FileSourceConfig(readonlyConfig));
     }
 

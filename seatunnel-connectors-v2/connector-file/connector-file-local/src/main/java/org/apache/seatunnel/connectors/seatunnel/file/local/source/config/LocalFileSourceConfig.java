@@ -17,7 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.local.source.config;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.config.BaseFileSourceConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileSystemType;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
@@ -40,7 +39,7 @@ public class LocalFileSourceConfig extends BaseFileSourceConfig {
         return FileSystemType.LOCAL.getFileSystemPluginName();
     }
 
-    public LocalFileSourceConfig(ReadonlyConfig readonlyConfig) {
+    public LocalFileSourceConfig(org.apache.seatunnel.api.config.Config readonlyConfig) {
         super(readonlyConfig);
     }
 }

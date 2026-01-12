@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.nlpmodel.llm;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
 import org.apache.seatunnel.api.transform.SeaTunnelTransform;
@@ -26,13 +26,13 @@ import org.apache.seatunnel.transform.common.AbstractMultiCatalogMapTransform;
 import java.util.List;
 
 public class LLMMultiCatalogTransform extends AbstractMultiCatalogMapTransform {
-    public LLMMultiCatalogTransform(List<CatalogTable> inputCatalogTables, ReadonlyConfig config) {
+    public LLMMultiCatalogTransform(List<CatalogTable> inputCatalogTables, Config config) {
         super(inputCatalogTables, config);
     }
 
     @Override
     protected SeaTunnelTransform<SeaTunnelRow> buildTransform(
-            CatalogTable inputCatalogTable, ReadonlyConfig config) {
+            CatalogTable inputCatalogTable, Config config) {
         return new LLMTransform(config, inputCatalogTable);
     }
 

@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.validator;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.Column;
 import org.apache.seatunnel.api.table.catalog.PhysicalColumn;
@@ -60,7 +60,7 @@ public class DataValidatorTransform extends AbstractCatalogSupportMapTransform {
     private final ErrorHandleWay errorHandleWay;
     private final String errorTable;
 
-    public DataValidatorTransform(ReadonlyConfig readonlyConfig, CatalogTable catalogTable) {
+    public DataValidatorTransform(Config readonlyConfig, CatalogTable catalogTable) {
         super(catalogTable);
         this.config = DataValidatorTransformConfig.of(readonlyConfig);
         this.errorHandleWay =

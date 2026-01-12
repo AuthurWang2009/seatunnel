@@ -28,4 +28,26 @@ public interface ConfigParser {
     Map<String, Object> parse(Path path);
 
     Map<String, Object> parse(String content);
+
+    /**
+     * Parse configuration from file with variable substitution.
+     *
+     * @param path the path to the configuration file
+     * @param variables user-provided variables for substitution (can be null)
+     * @return the parsed configuration with variables resolved
+     */
+    default Map<String, Object> parse(Path path, Map<String, Object> variables) {
+        return ConfigVariableResolver.resolve(parse(path), variables);
+    }
+
+    /**
+     * Parse configuration from string content with variable substitution.
+     *
+     * @param content the configuration content
+     * @param variables user-provided variables for substitution (can be null)
+     * @return the parsed configuration with variables resolved
+     */
+    default Map<String, Object> parse(String content, Map<String, Object> variables) {
+        return ConfigVariableResolver.resolve(parse(content), variables);
+    }
 }

@@ -18,6 +18,8 @@
 package org.apache.seatunnel.core.starter.spark;
 
 import org.apache.seatunnel.api.common.PluginIdentifier;
+import org.apache.seatunnel.api.config.Config;
+import org.apache.seatunnel.api.config.ConfigBuilder;
 import org.apache.seatunnel.api.options.EnvCommonOptions;
 import org.apache.seatunnel.common.config.Common;
 import org.apache.seatunnel.common.config.DeployMode;
@@ -27,13 +29,10 @@ import org.apache.seatunnel.core.starter.Starter;
 import org.apache.seatunnel.core.starter.spark.args.SparkCommandArgs;
 import org.apache.seatunnel.core.starter.utils.CommandLineUtils;
 import org.apache.seatunnel.core.starter.utils.CompressionUtils;
-import org.apache.seatunnel.core.starter.utils.ConfigBuilder;
 import org.apache.seatunnel.plugin.discovery.seatunnel.SeaTunnelSinkPluginDiscovery;
 import org.apache.seatunnel.plugin.discovery.seatunnel.SeaTunnelSourcePluginDiscovery;
 
 import org.apache.commons.lang3.StringUtils;
-
-import com.typesafe.config.Config;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -133,9 +132,7 @@ public class SparkStarter implements Starter {
     static Map<String, String> getSparkConf(String configFile, List<String> variables) {
         Config appConfig = ConfigBuilder.of(configFile, variables);
         return appConfig.getConfig("env").entrySet().stream()
-                .collect(
-                        Collectors.toMap(
-                                Map.Entry::getKey, e -> e.getValue().unwrapped().toString()));
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().toString()));
     }
 
     /** return connector's jars, which located in 'connectors/*'. */

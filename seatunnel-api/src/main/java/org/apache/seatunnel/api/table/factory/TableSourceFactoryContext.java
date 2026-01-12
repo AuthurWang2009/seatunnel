@@ -17,14 +17,14 @@
 
 package org.apache.seatunnel.api.table.factory;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 
 import lombok.Getter;
 
 @Getter
 public class TableSourceFactoryContext extends TableFactoryContext {
 
-    public TableSourceFactoryContext(ReadonlyConfig options, ClassLoader classLoader) {
+    public TableSourceFactoryContext(Config options, ClassLoader classLoader) {
         super(options, classLoader);
     }
 }

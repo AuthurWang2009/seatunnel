@@ -17,10 +17,10 @@
 
 package org.apache.seatunnel.api.config.util;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.ConfigEntry;
 import org.apache.seatunnel.api.config.ConfigOption;
 import org.apache.seatunnel.api.config.OptionTest;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -75,7 +75,7 @@ public class ConfigValidatorTest {
                     .withDescription("test single choice value");
 
     void validate(Map<String, Object> config, OptionRule rule) {
-        ConfigValidator.of(ReadonlyConfig.fromMap(config)).validate(rule);
+        ConfigValidator.of(Config.of(config)).validate(rule);
     }
 
     @Test

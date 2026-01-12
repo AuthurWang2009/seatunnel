@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.common;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
 import org.apache.seatunnel.api.transform.SeaTunnelFlatMapTransform;
@@ -29,7 +29,7 @@ public abstract class AbstractMultiCatalogFlatMapTransform extends AbstractMulti
         implements SeaTunnelFlatMapTransform<SeaTunnelRow> {
 
     public AbstractMultiCatalogFlatMapTransform(
-            List<CatalogTable> inputCatalogTables, ReadonlyConfig config) {
+            List<CatalogTable> inputCatalogTables, Config config) {
         super(inputCatalogTables, config);
     }
 

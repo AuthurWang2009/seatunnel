@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.s3.config;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 
 import org.junit.jupiter.api.Assertions;
@@ -34,15 +34,15 @@ public class S3HadoopConfTest {
         config.put("bucket", "test");
         config.put("access_key", "access_key");
         config.put("secret_key", "secret_key");
-        HadoopConf conf = S3HadoopConf.buildWithReadOnlyConfig(ReadonlyConfig.fromMap(config));
+        HadoopConf conf = S3HadoopConf.buildWithReadOnlyConfig(Config.of(config));
         Assertions.assertTrue(conf.getExtraOptions().containsKey("fs.s3n.awsAccessKeyId"));
 
         config.remove("access_key");
-        conf = S3HadoopConf.buildWithReadOnlyConfig(ReadonlyConfig.fromMap(config));
+        conf = S3HadoopConf.buildWithReadOnlyConfig(Config.of(config));
         Assertions.assertTrue(conf.getExtraOptions().containsKey("fs.s3n.awsAccessKeyId"));
 
         config.remove("secret_key");
-        conf = S3HadoopConf.buildWithReadOnlyConfig(ReadonlyConfig.fromMap(config));
+        conf = S3HadoopConf.buildWithReadOnlyConfig(Config.of(config));
         Assertions.assertFalse(conf.getExtraOptions().containsKey("fs.s3n.awsAccessKeyId"));
     }
 }

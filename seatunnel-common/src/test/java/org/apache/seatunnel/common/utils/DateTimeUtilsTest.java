@@ -171,7 +171,7 @@ public class DateTimeUtilsTest {
         }
         long t2 = System.currentTimeMillis();
         // Use an explicit time format 'yyyy-MM-dd HH:mm:ss' for processing, use time: 4552ms
-        System.out.println((t2 - t1) + "");
+        System.out.println("Time elapsed " + (t2 - t1) + " ms");
 
         for (int i = 0; i < 10000000; i++) {
             DateTimeUtils.parse(datetimeStr);
@@ -179,7 +179,7 @@ public class DateTimeUtilsTest {
         long t3 = System.currentTimeMillis();
         // If format is not specified, the system automatically obtains the format 'yyyy-MM-dd
         // HH:mm:ss' for processing, use time: 6082ms
-        System.out.println((t3 - t2) + "");
+        System.out.println("Time elapsed " + (t3 - t2) + " ms");
 
         long t4 = System.currentTimeMillis();
         for (int i = 0; i < 10000000; i++) {
@@ -187,7 +187,7 @@ public class DateTimeUtilsTest {
         }
         long t5 = System.currentTimeMillis();
         // Use an explicit time format 'yyyyMMddHHmmss' for processing, use time: 4610ms
-        System.out.println((t5 - t4) + "");
+        System.out.println("Time elapsed " + (t5 - t4) + " ms");
 
         for (int i = 0; i < 10000000; i++) {
             DateTimeUtils.parse(datetimeStr1);
@@ -196,7 +196,7 @@ public class DateTimeUtilsTest {
         // If format is not specified, the system automatically obtains the format 'yyyyMMddHHmmss'
         // for processing, use time: 4842ms
 
-        System.out.println((t6 - t5) + "");
+        System.out.println("Time elapsed " + (t6 - t5) + " ms");
 
         long t7 = System.currentTimeMillis();
         for (int i = 0; i < 10000000; i++) {
@@ -204,7 +204,7 @@ public class DateTimeUtilsTest {
         }
         long t8 = System.currentTimeMillis();
         // Use an explicit time format 'yyyy.MM.dd HH:mm:ss.SSS' for processing, use time: 8162ms
-        System.out.println((t8 - t7) + "");
+        System.out.println("Time elapsed " + (t8 - t7) + " ms");
 
         for (int i = 0; i < 10000000; i++) {
             DateTimeUtils.parse(datetimeStr2);
@@ -212,7 +212,7 @@ public class DateTimeUtilsTest {
         long t9 = System.currentTimeMillis();
         // If format is not specified, the system automatically obtains the format 'yyyy.MM.dd
         // HH:mm:ss.SSS' for processing, use time: 11366ms
-        System.out.println((t9 - t8) + "");
+        System.out.println("Time elapsed " + (t9 - t8) + " ms");
 
         long t10 = System.currentTimeMillis();
         for (int i = 0; i < 10000000; i++) {
@@ -220,7 +220,7 @@ public class DateTimeUtilsTest {
         }
         long t11 = System.currentTimeMillis();
         // Use an explicit time format 'yyyy.MM.dd HH:mm:ss' for processing, use time: 4405ms
-        System.out.println((t11 - t10) + "");
+        System.out.println("Time elapsed " + (t11 - t10) + " ms");
 
         for (int i = 0; i < 10000000; i++) {
             DateTimeUtils.parse(datetimeStr3);
@@ -228,6 +228,6 @@ public class DateTimeUtilsTest {
         long t12 = System.currentTimeMillis();
         // If format is not specified, the system automatically obtains the format 'yyyy.MM.dd
         // HH:mm:ss' for processing, use time: 7771ms
-        System.out.println((t12 - t11) + "");
+        System.out.println("Time elapsed " + (t12 - t11) + " ms");
     }
 }

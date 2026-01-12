@@ -17,7 +17,8 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.writer;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
+import org.apache.seatunnel.api.config.ConfigLoader;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtil;
@@ -55,8 +56,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -147,11 +146,11 @@ public class ParquetReadStrategyTest {
         Assertions.assertNotNull(conf);
         String path = Paths.get(resource.toURI()).toString();
         String confPath = Paths.get(conf.toURI()).toString();
-        Config pluginConfig = ConfigFactory.parseFile(new File(confPath));
+        Config pluginConfig = ConfigLoader.load((new File(confPath)).toPath());
         ParquetReadStrategy parquetReadStrategy = new ParquetReadStrategy();
         LocalConf localConf = new LocalConf(FS_DEFAULT_NAME_DEFAULT);
         parquetReadStrategy.init(localConf);
-        parquetReadStrategy.setPluginConfig(ReadonlyConfig.fromConfig(pluginConfig));
+        parquetReadStrategy.setPluginConfig(pluginConfig);
         SeaTunnelRowType seaTunnelRowTypeInfo = parquetReadStrategy.getSeaTunnelRowTypeInfo(path);
         Assertions.assertNotNull(seaTunnelRowTypeInfo);
         log.info(seaTunnelRowTypeInfo.toString());
@@ -176,11 +175,11 @@ public class ParquetReadStrategyTest {
         Assertions.assertNotNull(conf);
         String path = Paths.get(resource.toURI()).toString();
         String confPath = Paths.get(conf.toURI()).toString();
-        Config pluginConfig = ConfigFactory.parseFile(new File(confPath));
+        Config pluginConfig = ConfigLoader.load((new File(confPath)).toPath());
         ParquetReadStrategy parquetReadStrategy = new ParquetReadStrategy();
         LocalConf localConf = new LocalConf(FS_DEFAULT_NAME_DEFAULT);
         parquetReadStrategy.init(localConf);
-        parquetReadStrategy.setPluginConfig(ReadonlyConfig.fromConfig(pluginConfig));
+        parquetReadStrategy.setPluginConfig(pluginConfig);
         SeaTunnelRowType seaTunnelRowTypeInfo = parquetReadStrategy.getSeaTunnelRowTypeInfo(path);
         Assertions.assertNotNull(seaTunnelRowTypeInfo);
         log.info(seaTunnelRowTypeInfo.toString());
@@ -268,7 +267,7 @@ public class ParquetReadStrategyTest {
         URL conf = ParquetReadStrategyTest.class.getResource("/test_user_config_read_parquet.conf");
         Assertions.assertNotNull(conf);
         String confPath = Paths.get(conf.toURI()).toString();
-        Config pluginConfig = ConfigFactory.parseFile(new File(confPath));
+        Config pluginConfig = ConfigLoader.load((new File(confPath)).toPath());
         CatalogTable catalogTable = CatalogTableUtil.buildWithConfig(pluginConfig);
 
         ParquetReadStrategy parquetReadStrategy = new ParquetReadStrategy();

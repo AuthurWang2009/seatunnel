@@ -17,9 +17,12 @@
 
 package org.apache.seatunnel.e2e.common.util;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
+import org.apache.seatunnel.api.config.ConfigAdapter;
+import org.apache.seatunnel.api.config.ConfigLoader;
 import org.apache.seatunnel.api.table.factory.FactoryException;
 import org.apache.seatunnel.common.constants.PluginType;
+import org.apache.seatunnel.common.utils.ParserException;
 import org.apache.seatunnel.e2e.common.container.EngineType;
 import org.apache.seatunnel.e2e.common.container.TestContainer;
 
@@ -33,7 +36,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.typesafe.config.Config;
 import groovy.lang.Tuple2;
 import lombok.extern.slf4j.Slf4j;
 
@@ -137,8 +139,7 @@ public final class ContainerUtil {
     }
 
     public static Set<String> getConnectorNames(Config config) {
-        return ReadonlyConfig.fromConfig(config).toMap().values().stream()
-                .collect(Collectors.toSet());
+        return config.toMap().values().stream().map(Object::toString).collect(Collectors.toSet());
     }
 
     public static Set<String> getConnectorIdentifier(String connectorType, String pluginType) {
@@ -153,8 +154,7 @@ public final class ContainerUtil {
                                         + File.separator
                                         + ContainerUtil.PLUGIN_MAPPING_FILE));
         Config connectors = connectorsMapping.getConfig(connectorType);
-        treeSet.addAll(
-                ReadonlyConfig.fromConfig(connectors.getConfig(pluginType)).toMap().keySet());
+        treeSet.addAll(connectors.getConfig(pluginType).toMap().keySet());
         return treeSet;
     }
 
@@ -324,7 +324,10 @@ public final class ContainerUtil {
             Config jobConfig, Config connectorsMap, String pluginType) {
         List<? extends Config> connectorConfigList = jobConfig.getConfigList(pluginType);
         Map<String, String> connectors = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-        ReadonlyConfig.fromConfig(connectorsMap.getConfig(pluginType)).toMap(connectors);
+        connectorsMap
+                .getConfig(pluginType)
+                .toMap()
+                .forEach((k, v) -> connectors.put(k, v.toString()));
         return connectorConfigList.stream()
                 .map(config -> config.getString("plugin_name"))
                 .filter(connectors::containsKey)
@@ -345,7 +348,26 @@ public final class ContainerUtil {
     }
 
     private static Config getConfig(File file) {
-        return ConfigBuilder.of(file.toPath());
+        Path filePath = file.toPath();
+        Optional<ConfigAdapter> adapterSupplier = ConfigAdapterUtils.selectAdapter(filePath);
+        if (adapterSupplier.isPresent()) {
+            return getConfig(adapterSupplier.get(), filePath);
+        }
+        return ConfigLoader.load(filePath);
+    }
+
+    public static Config getConfig(ConfigAdapter configAdapter, Path filePath) {
+        try {
+            Map<String, Object> flattenedMap = configAdapter.loadConfig(filePath);
+            return Config.of(flattenedMap);
+        } catch (ParserException e) {
+            throw e;
+        } catch (Exception warn) {
+            log.warn(
+                    "Loading config failed with spi {}, fallback to HOCON loader.",
+                    configAdapter.getClass().getName());
+            return ConfigLoader.load(filePath);
+        }
     }
 
     public static void checkPathExist(String path) {

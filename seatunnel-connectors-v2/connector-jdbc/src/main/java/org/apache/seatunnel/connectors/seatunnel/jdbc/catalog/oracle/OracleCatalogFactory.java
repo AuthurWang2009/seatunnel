@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.jdbc.catalog.oracle;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.util.OptionRule;
 import org.apache.seatunnel.api.config.util.OptionValidationException;
 import org.apache.seatunnel.api.table.catalog.Catalog;
@@ -40,7 +40,7 @@ public class OracleCatalogFactory implements CatalogFactory {
     }
 
     @Override
-    public Catalog createCatalog(String catalogName, ReadonlyConfig options) {
+    public Catalog createCatalog(String catalogName, Config options) {
         String urlWithDatabase = options.get(JdbcCommonOptions.URL);
         JdbcUrlUtil.UrlInfo urlInfo = OracleURLParser.parse(urlWithDatabase);
         Optional<String> defaultDatabase = urlInfo.getDefaultDatabase();

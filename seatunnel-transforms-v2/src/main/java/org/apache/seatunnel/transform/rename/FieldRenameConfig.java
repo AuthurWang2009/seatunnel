@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.rename;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.ConfigEntry;
 import org.apache.seatunnel.api.config.ConfigOption;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.AllArgsConstructor;
@@ -116,7 +116,7 @@ public class FieldRenameConfig implements Serializable {
         private Boolean isRegex;
     }
 
-    public static FieldRenameConfig of(ReadonlyConfig config) {
+    public static FieldRenameConfig of(Config config) {
         FieldRenameConfig renameConfig = new FieldRenameConfig();
         renameConfig.setConvertCase(config.get(CONVERT_CASE));
         renameConfig.setPrefix(config.get(PREFIX));

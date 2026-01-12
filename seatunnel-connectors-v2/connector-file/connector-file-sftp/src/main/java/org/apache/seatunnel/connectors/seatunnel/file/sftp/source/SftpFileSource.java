@@ -17,13 +17,13 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.sftp.source;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileSystemType;
 import org.apache.seatunnel.connectors.seatunnel.file.sftp.config.MultipleTableSFTPFileSourceConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.source.BaseMultipleTableFileSource;
 
 public class SftpFileSource extends BaseMultipleTableFileSource {
-    public SftpFileSource(ReadonlyConfig config) {
+    public SftpFileSource(Config config) {
         super(new MultipleTableSFTPFileSourceConfig(config));
     }
 

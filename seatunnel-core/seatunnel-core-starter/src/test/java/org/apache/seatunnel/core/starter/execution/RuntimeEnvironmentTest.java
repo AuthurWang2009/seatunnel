@@ -17,33 +17,37 @@
 
 package org.apache.seatunnel.core.starter.execution;
 
+import org.apache.seatunnel.api.config.Config;
+import org.apache.seatunnel.api.config.ConfigLoader;
+import org.apache.seatunnel.common.config.ConfigType;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 
 public class RuntimeEnvironmentTest {
 
     @Test
     void testEnableCheckpoint() {
         Config config =
-                ConfigFactory.parseString(
-                        "env {\n" + "  parallelism = 1\n" + "  job.mode = \"BATCH\"\n" + "}");
+                ConfigLoader.load(
+                        "env {\n" + "  parallelism = 1\n" + "  job.mode = \"BATCH\"\n" + "}",
+                        ConfigType.HOCON);
         Assertions.assertFalse(RuntimeEnvironment.getEnableCheckpoint(config));
 
         config =
-                ConfigFactory.parseString(
-                        "env {\n" + "  parallelism = 1\n" + "  job.mode = \"STREAMING\"\n" + "}");
+                ConfigLoader.load(
+                        "env {\n" + "  parallelism = 1\n" + "  job.mode = \"STREAMING\"\n" + "}",
+                        ConfigType.HOCON);
         Assertions.assertTrue(RuntimeEnvironment.getEnableCheckpoint(config));
 
         config =
-                ConfigFactory.parseString(
+                ConfigLoader.load(
                         "env {\n"
                                 + "  parallelism = 1\n"
                                 + "  job.mode = \"BATCH\"\n"
                                 + "  checkpoint.interval = 10\n"
-                                + "}");
+                                + "}",
+                        ConfigType.HOCON);
         Assertions.assertTrue(RuntimeEnvironment.getEnableCheckpoint(config));
     }
 }

@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.hdfs;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.options.SinkConnectorCommonOptions;
 import org.apache.seatunnel.api.sink.SeaTunnelSink;
 import org.apache.seatunnel.api.sink.multitablesink.MultiTableSinkFactory;
@@ -95,7 +95,7 @@ public class HdfsFileSinkTest {
         List<SeaTunnelRow> rows = createTestRows();
 
         SinkFlowTestUtils.runBatchWithCheckpointDisabled(
-                catalogTable, ReadonlyConfig.fromMap(config), new HdfsFileSinkFactory(), rows);
+                catalogTable, Config.of(config), new HdfsFileSinkFactory(), rows);
 
         Path resultPath = new Path(FS_TARGET_PATH);
         FileSystem fs = resultPath.getFileSystem(new Configuration());
@@ -122,7 +122,7 @@ public class HdfsFileSinkTest {
 
         FileUtils.deleteDirectory(new File(FS_TARGET_PATH));
         SinkFlowTestUtils.runBatchWithCheckpointDisabled(
-                catalogTable, ReadonlyConfig.fromMap(config), new HdfsFileSinkFactory(), rows);
+                catalogTable, Config.of(config), new HdfsFileSinkFactory(), rows);
 
         Configuration hadoopConf = new Configuration();
         hadoopConf.set("fs.defaultFS", "file:///");
@@ -184,10 +184,8 @@ public class HdfsFileSinkTest {
         HadoopConf hadoopConf = new HadoopConf(DEFAULT_FS);
 
         // create multi sink
-        HdfsFileSink sink1 =
-                new HdfsFileSink(hadoopConf, ReadonlyConfig.fromMap(table1Options), catalogTable);
-        HdfsFileSink sink2 =
-                new HdfsFileSink(hadoopConf, ReadonlyConfig.fromMap(table2Options), catalogTable);
+        HdfsFileSink sink1 = new HdfsFileSink(hadoopConf, Config.of(table1Options), catalogTable);
+        HdfsFileSink sink2 = new HdfsFileSink(hadoopConf, Config.of(table2Options), catalogTable);
 
         Map<TablePath, SeaTunnelSink> sinks = new HashMap<>();
         sinks.put(tablePath1, sink1);
@@ -197,7 +195,7 @@ public class HdfsFileSinkTest {
         basicConfig.put(SinkConnectorCommonOptions.MULTI_TABLE_SINK_REPLICA.key(), 1);
         MultiTableFactoryContext multiTableContext =
                 new MultiTableFactoryContext(
-                        ReadonlyConfig.fromMap(basicConfig), getClass().getClassLoader(), sinks);
+                        Config.of(basicConfig), getClass().getClassLoader(), sinks);
 
         // create test rows
         List<SeaTunnelRow> rows = createTestRows();

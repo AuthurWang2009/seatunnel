@@ -40,13 +40,7 @@
 
         <dependency>
             <groupId>org.apache.seatunnel</groupId>
-            <artifactId>seatunnel-config-base</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.seatunnel</groupId>
-            <artifactId>seatunnel-config-sql</artifactId>
+            <artifactId>seatunnel-config</artifactId>
             <version>${project.version}</version>
         </dependency>
 

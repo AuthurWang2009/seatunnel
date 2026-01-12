@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.filterrowkind;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.type.RowKind;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
@@ -39,8 +39,7 @@ public class FilterRowKindTransform extends FilterRowTransform {
     private Set<RowKind> includeKinds = Collections.emptySet();
     private Set<RowKind> excludeKinds = Collections.emptySet();
 
-    public FilterRowKindTransform(
-            @NonNull ReadonlyConfig config, @NonNull CatalogTable inputCatalogTable) {
+    public FilterRowKindTransform(@NonNull Config config, @NonNull CatalogTable inputCatalogTable) {
         super(inputCatalogTable);
         initConfig(config);
     }
@@ -50,7 +49,7 @@ public class FilterRowKindTransform extends FilterRowTransform {
         return PLUGIN_NAME;
     }
 
-    private void initConfig(ReadonlyConfig config) {
+    private void initConfig(Config config) {
         if (config.get(FilterRowKinkTransformConfig.INCLUDE_KINDS) == null) {
             excludeKinds = new HashSet<>(config.get(FilterRowKinkTransformConfig.EXCLUDE_KINDS));
         } else {

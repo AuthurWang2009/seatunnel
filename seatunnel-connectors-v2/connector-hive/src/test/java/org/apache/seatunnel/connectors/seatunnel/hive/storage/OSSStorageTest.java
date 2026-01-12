@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.hive.storage;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 import org.apache.seatunnel.connectors.seatunnel.file.oss.config.OssHadoopConf;
 
@@ -31,8 +31,8 @@ import java.util.HashMap;
 
 public class OSSStorageTest {
 
-    private static final ReadonlyConfig OSS =
-            ReadonlyConfig.fromMap(
+    private static final Config OSS =
+            Config.of(
                     new HashMap<String, Object>() {
                         {
                             put(
@@ -59,7 +59,7 @@ public class OSSStorageTest {
         HashMap<String, Object> map = new HashMap<>();
         map.put("hive.hadoop.conf-path", filePath);
         map.putAll(OSS.toMap());
-        ReadonlyConfig readonlyConfig = ReadonlyConfig.fromMap(map);
+        Config readonlyConfig = Config.of(map);
         OSSStorage ossStorage = new OSSStorage();
         HadoopConf hadoopConf = ossStorage.buildHadoopConfWithReadOnlyConfig(readonlyConfig);
         assertHadoopConf(hadoopConf);

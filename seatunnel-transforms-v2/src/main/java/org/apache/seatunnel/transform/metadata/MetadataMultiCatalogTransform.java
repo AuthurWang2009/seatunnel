@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.metadata;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
 import org.apache.seatunnel.api.transform.SeaTunnelTransform;
@@ -27,8 +27,7 @@ import java.util.List;
 
 public class MetadataMultiCatalogTransform extends AbstractMultiCatalogMapTransform {
 
-    public MetadataMultiCatalogTransform(
-            List<CatalogTable> inputCatalogTables, ReadonlyConfig config) {
+    public MetadataMultiCatalogTransform(List<CatalogTable> inputCatalogTables, Config config) {
         super(inputCatalogTables, config);
     }
 
@@ -39,7 +38,7 @@ public class MetadataMultiCatalogTransform extends AbstractMultiCatalogMapTransf
 
     @Override
     protected SeaTunnelTransform<SeaTunnelRow> buildTransform(
-            CatalogTable inputCatalogTable, ReadonlyConfig config) {
+            CatalogTable inputCatalogTable, Config config) {
         return new MetadataTransform(config, inputCatalogTable);
     }
 }

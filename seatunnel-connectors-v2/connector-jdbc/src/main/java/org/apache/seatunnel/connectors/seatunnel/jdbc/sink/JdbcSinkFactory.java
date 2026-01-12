@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.jdbc.sink;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.util.OptionRule;
 import org.apache.seatunnel.api.options.ConnectorCommonOptions;
 import org.apache.seatunnel.api.options.SinkConnectorCommonOptions;
@@ -56,22 +56,22 @@ public class JdbcSinkFactory implements TableSinkFactory {
         return "Jdbc";
     }
 
-    private ReadonlyConfig getCatalogOptions(TableSinkFactoryContext context) {
-        ReadonlyConfig config = context.getOptions();
+    private Config getCatalogOptions(TableSinkFactoryContext context) {
+        Config config = context.getOptions();
         // TODO Remove obsolete code
         Optional<Map<String, String>> catalogOptions =
                 config.getOptional(ConnectorCommonOptions.CATALOG_OPTIONS);
         if (catalogOptions.isPresent()) {
-            return ReadonlyConfig.fromMap(new HashMap<>(catalogOptions.get()));
+            return Config.of(new HashMap<>(catalogOptions.get()));
         }
         return config;
     }
 
     @Override
     public TableSink createSink(TableSinkFactoryContext context) {
-        ReadonlyConfig config = context.getOptions();
+        Config config = context.getOptions();
         CatalogTable catalogTable = context.getCatalogTable();
-        ReadonlyConfig catalogOptions = getCatalogOptions(context);
+        Config catalogOptions = getCatalogOptions(context);
         Optional<String> optionalTable = config.getOptional(JdbcSinkOptions.TABLE);
         Optional<String> optionalDatabase = config.getOptional(JdbcSinkOptions.DATABASE);
         if (!optionalTable.isPresent()) {
@@ -150,7 +150,7 @@ public class JdbcSinkFactory implements TableSinkFactory {
                         catalogTable.getPartitionKeys(),
                         catalogTable.getComment(),
                         catalogTable.getCatalogName());
-        Map<String, String> map = config.toMap();
+        Map<String, Object> map = config.toMap();
         if (catalogTable.getTableId().getSchemaName() != null) {
             map.put(
                     JdbcSinkOptions.TABLE.key(),
@@ -203,9 +203,9 @@ public class JdbcSinkFactory implements TableSinkFactory {
                             catalogTable.getComment(),
                             catalogTable.getCatalogName());
         }
-        config = ReadonlyConfig.fromMap(new HashMap<>(map));
+        config = Config.of(new HashMap<>(map));
         // always execute
-        final ReadonlyConfig options = config;
+        final Config options = config;
         JdbcSinkConfig sinkConfig = JdbcSinkConfig.of(config);
         FieldIdeEnum fieldIdeEnum = config.get(JdbcSinkOptions.FIELD_IDE);
         catalogTable

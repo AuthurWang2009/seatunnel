@@ -70,7 +70,7 @@ public class BinaryReadStrategy extends AbstractReadStrategy {
 
         // Load complete file mode configuration
         if (pluginConfig.getOptional(FileBaseSourceOptions.BINARY_COMPLETE_FILE_MODE).isPresent()) {
-            boolean isCompleteFileMode =
+            this.completeFileMode =
                     pluginConfig.get(FileBaseSourceOptions.BINARY_COMPLETE_FILE_MODE);
         }
     }

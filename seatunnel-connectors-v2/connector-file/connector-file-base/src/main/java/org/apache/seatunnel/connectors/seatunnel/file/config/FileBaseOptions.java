@@ -115,10 +115,10 @@ public class FileBaseOptions extends ConnectorCommonOptions {
                     .noDefaultValue()
                     .withDescription("To be read sheet name,only valid for excel files");
 
-    public static final ConfigEntry<ExcelEngine> EXCEL_ENGINE =
+    public static final ConfigEntry<String> EXCEL_ENGINE =
             ConfigOption.key("excel_engine")
-                    .enumType(ExcelEngine.class)
-                    .defaultValue(ExcelEngine.POI)
+                    .stringType()
+                    .defaultValue(ExcelEngine.POI.name())
                     .withDescription("To switch excel read engine,  e.g. POI , EasyExcel");
 
     public static final ConfigEntry<String> XML_ROW_TAG =
@@ -154,21 +154,21 @@ public class FileBaseOptions extends ConnectorCommonOptions {
                     .defaultValue(ArchiveCompressFormat.NONE)
                     .withDescription("Archive compression codec");
 
-    public static final ConfigEntry<DateUtils.Formatter> DATE_FORMAT_LEGACY =
+    public static final ConfigEntry<String> DATE_FORMAT_LEGACY =
             ConfigOption.key("date_format")
-                    .enumType(DateUtils.Formatter.class)
-                    .defaultValue(DateUtils.Formatter.YYYY_MM_DD)
+                    .stringType()
+                    .defaultValue(DateUtils.Formatter.YYYY_MM_DD.getValue())
                     .withDescription("Date format");
 
-    public static final ConfigEntry<DateTimeUtils.Formatter> DATETIME_FORMAT_LEGACY =
+    public static final ConfigEntry<String> DATETIME_FORMAT_LEGACY =
             ConfigOption.key("datetime_format")
-                    .enumType(DateTimeUtils.Formatter.class)
-                    .defaultValue(DateTimeUtils.Formatter.YYYY_MM_DD_HH_MM_SS)
+                    .stringType()
+                    .defaultValue(DateTimeUtils.Formatter.YYYY_MM_DD_HH_MM_SS.getValue())
                     .withDescription("Datetime format");
 
-    public static final ConfigEntry<TimeUtils.Formatter> TIME_FORMAT_LEGACY =
+    public static final ConfigEntry<String> TIME_FORMAT_LEGACY =
             ConfigOption.key("time_format")
-                    .enumType(TimeUtils.Formatter.class)
-                    .defaultValue(TimeUtils.Formatter.HH_MM_SS)
+                    .stringType()
+                    .defaultValue(TimeUtils.Formatter.HH_MM_SS.getValue())
                     .withDescription("Time format");
 }

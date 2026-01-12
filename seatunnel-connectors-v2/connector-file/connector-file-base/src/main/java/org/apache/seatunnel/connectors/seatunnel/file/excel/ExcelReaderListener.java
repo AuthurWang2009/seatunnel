@@ -17,6 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.excel;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.type.SeaTunnelDataType;
 import org.apache.seatunnel.api.table.type.SeaTunnelRow;
@@ -28,7 +29,6 @@ import com.alibaba.excel.exception.ExcelDataConvertException;
 import com.alibaba.excel.metadata.Cell;
 import com.alibaba.excel.metadata.data.ReadCellData;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Closeable;
@@ -71,21 +71,26 @@ public class ExcelReaderListener extends AnalysisEventListener<Map<Integer, Obje
 
     @Override
     public void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {
+
         for (int i = 0; i < headMap.size(); i++) {
-            String header = headMap.get(i).getStringValue();
-            if (!"null".equals(header)) {
-                customHeaders.put(i, header);
+            ReadCellData<?> cellData = headMap.get(i);
+            if (cellData != null) {
+                String header = cellData.getStringValue();
+                if (!"null".equals(header)) {
+                    customHeaders.put(i, header);
+                }
             }
         }
     }
 
     @Override
     public void invoke(Map<Integer, Object> data, AnalysisContext context) {
+
         cellCount = data.size();
         SeaTunnelRow seaTunnelRow = new SeaTunnelRow(fieldTypes.length);
         Map<Integer, Cell> cellMap = context.readRowHolder().getCellMap();
-        int i = 0;
-        for (; i < fieldTypes.length; i++) {
+
+        for (int i = 0; i < fieldTypes.length; i++) {
             if (cellMap.get(i) == null) {
                 seaTunnelRow.setField(i, null);
             } else {

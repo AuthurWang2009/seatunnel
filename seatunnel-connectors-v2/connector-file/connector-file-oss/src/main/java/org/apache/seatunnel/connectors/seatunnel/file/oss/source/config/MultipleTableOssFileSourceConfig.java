@@ -17,18 +17,18 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.oss.source.config;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.connectors.seatunnel.file.config.BaseFileSourceConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.config.BaseMultipleTableFileSourceConfig;
 
 public class MultipleTableOssFileSourceConfig extends BaseMultipleTableFileSourceConfig {
 
-    public MultipleTableOssFileSourceConfig(ReadonlyConfig ossFileSourceRootConfig) {
+    public MultipleTableOssFileSourceConfig(Config ossFileSourceRootConfig) {
         super(ossFileSourceRootConfig);
     }
 
     @Override
-    public BaseFileSourceConfig getBaseSourceConfig(ReadonlyConfig readonlyConfig) {
+    public BaseFileSourceConfig getBaseSourceConfig(Config readonlyConfig) {
         return new OssFileSourceConfig(readonlyConfig);
     }
 }

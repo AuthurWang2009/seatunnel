@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.copy;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.ConfigEntry;
 import org.apache.seatunnel.api.config.ConfigOption;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -55,7 +55,7 @@ public class CopyTransformConfig implements Serializable {
 
     private LinkedHashMap<String, String> fields;
 
-    public static CopyTransformConfig of(ReadonlyConfig config) {
+    public static CopyTransformConfig of(Config config) {
         LinkedHashMap<String, String> fields = new LinkedHashMap<>();
         Optional<Map<String, String>> optional = config.getOptional(FIELDS);
         if (optional.isPresent()) {

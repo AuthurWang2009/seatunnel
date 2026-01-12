@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.e2e.sink.inmemory;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.sink.MultiTableResourceManager;
 import org.apache.seatunnel.api.sink.SinkWriter;
 import org.apache.seatunnel.api.sink.SupportMultiTableSinkWriter;
@@ -69,9 +69,9 @@ public class InMemorySinkWriter
         return resourceManagers;
     }
 
-    private ReadonlyConfig config;
+    private Config config;
 
-    public InMemorySinkWriter(ReadonlyConfig config) {
+    public InMemorySinkWriter(Config config) {
         this.config = config;
     }
 

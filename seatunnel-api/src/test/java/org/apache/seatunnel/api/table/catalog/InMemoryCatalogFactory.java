@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.api.table.catalog;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.util.OptionRule;
 import org.apache.seatunnel.api.table.factory.CatalogFactory;
 import org.apache.seatunnel.api.table.factory.Factory;
@@ -27,7 +27,7 @@ import com.google.auto.service.AutoService;
 @AutoService(Factory.class)
 public class InMemoryCatalogFactory implements CatalogFactory {
     @Override
-    public Catalog createCatalog(String catalogName, ReadonlyConfig options) {
+    public Catalog createCatalog(String catalogName, Config options) {
         return new InMemoryCatalog(catalogName, options);
     }
 

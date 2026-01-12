@@ -17,11 +17,10 @@
 
 package org.apache.seatunnel.connectors.seatunnel.common.source.reader;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.ConfigEntry;
 import org.apache.seatunnel.api.config.ConfigOption;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 
-import com.typesafe.config.Config;
 import lombok.Getter;
 
 @Getter
@@ -43,10 +42,6 @@ public class SourceReaderOptions {
     public final int elementQueueCapacity;
 
     public SourceReaderOptions(Config config) {
-        this(ReadonlyConfig.fromConfig(config));
-    }
-
-    public SourceReaderOptions(ReadonlyConfig config) {
         this.sourceReaderCloseTimeout = config.get(SOURCE_READER_CLOSE_TIMEOUT);
         this.elementQueueCapacity = config.get(ELEMENT_QUEUE_CAPACITY);
     }

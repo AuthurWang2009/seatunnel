@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.s3.sink;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.util.OptionRule;
 import org.apache.seatunnel.api.options.SinkConnectorCommonOptions;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
@@ -126,7 +126,7 @@ public class S3FileSinkFactory implements TableSinkFactory {
     @Override
     public TableSink createSink(TableSinkFactoryContext context) {
         final CatalogTable catalogTable = context.getCatalogTable();
-        final ReadonlyConfig finalConfig = context.getOptions();
+        final Config finalConfig = context.getOptions();
         return () -> new S3FileSink(catalogTable, finalConfig);
     }
 }

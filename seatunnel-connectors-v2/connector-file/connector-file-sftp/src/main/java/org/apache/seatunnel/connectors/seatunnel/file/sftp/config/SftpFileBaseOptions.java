@@ -38,8 +38,5 @@ public class SftpFileBaseOptions extends FileBaseOptions {
                     .noDefaultValue()
                     .withDescription("SFTP server host");
     public static final ConfigEntry<Integer> SFTP_PORT =
-            ConfigOption.key("port")
-                    .intType()
-                    .noDefaultValue()
-                    .withDescription("SFTP server port");
+            ConfigOption.key("port").intType().noDefaultValue().withDescription("SFTP server port");
 }

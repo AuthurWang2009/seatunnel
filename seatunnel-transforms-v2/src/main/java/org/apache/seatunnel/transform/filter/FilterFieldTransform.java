@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.filter;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.util.ConfigValidator;
 import org.apache.seatunnel.api.config.util.OptionRule;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
@@ -52,8 +52,7 @@ public class FilterFieldTransform extends AbstractCatalogSupportMapTransform {
     private final List<String> includeFields;
     private final List<String> excludeFields;
 
-    public FilterFieldTransform(
-            @NonNull ReadonlyConfig config, @NonNull CatalogTable catalogTable) {
+    public FilterFieldTransform(@NonNull Config config, @NonNull CatalogTable catalogTable) {
         super(catalogTable);
         SeaTunnelRowType seaTunnelRowType = catalogTable.getTableSchema().toPhysicalRowDataType();
         includeFields = config.get(FilterFieldTransformConfig.INCLUDE_FIELDS);

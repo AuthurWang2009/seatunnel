@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.replace;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.ConfigEntry;
 import org.apache.seatunnel.api.config.ConfigOption;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Data;
@@ -96,7 +96,7 @@ public class ReplaceTransformConfig implements Serializable {
         private Boolean replaceFirst;
     }
 
-    public static ReplaceTransformConfig of(ReadonlyConfig config) {
+    public static ReplaceTransformConfig of(Config config) {
         ReplaceTransformConfig replaceTransformConfig = new ReplaceTransformConfig();
         replaceTransformConfig.setReplaceField(config.get(KEY_REPLACE_FIELD));
         replaceTransformConfig.setPattern(config.get(KEY_PATTERN));

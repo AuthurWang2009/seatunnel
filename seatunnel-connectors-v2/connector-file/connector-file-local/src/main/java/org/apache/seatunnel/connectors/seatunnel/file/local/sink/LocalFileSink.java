@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.local.sink;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileSystemType;
 import org.apache.seatunnel.connectors.seatunnel.file.local.config.LocalFileHadoopConf;
@@ -29,7 +29,7 @@ public class LocalFileSink extends BaseMultipleTableFileSink {
 
     private final CatalogTable catalogTable;
 
-    public LocalFileSink(ReadonlyConfig readonlyConfig, CatalogTable catalogTable) {
+    public LocalFileSink(Config readonlyConfig, CatalogTable catalogTable) {
         super(new LocalFileHadoopConf(), readonlyConfig, catalogTable);
         this.catalogTable = catalogTable;
     }

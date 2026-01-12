@@ -17,7 +17,8 @@
 
 package org.apache.seatunnel.api.table.catalog;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
+import org.apache.seatunnel.api.config.TestConfigUtils;
 import org.apache.seatunnel.api.options.ConnectorCommonOptions;
 import org.apache.seatunnel.api.table.type.ArrayType;
 import org.apache.seatunnel.api.table.type.BasicType;
@@ -31,24 +32,13 @@ import org.apache.seatunnel.api.table.type.SqlType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
-import com.typesafe.config.ConfigValueFactory;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CatalogTableUtilTest {
     @Test
-    public void testSimpleSchemaParse() throws FileNotFoundException, URISyntaxException {
-        String path = getTestConfigFile("/conf/simple.schema.conf");
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(ConfigFactory.parseFile(new File(path)).root().unwrapped());
+    public void testSimpleSchemaParse() {
+        Config config = TestConfigUtils.getSimpleSchemaConfig();
         SeaTunnelRowType seaTunnelRowType =
                 CatalogTableUtil.buildWithConfig(config).getSeaTunnelRowType();
         Assertions.assertNotNull(seaTunnelRowType);
@@ -70,10 +60,8 @@ public class CatalogTableUtilTest {
     }
 
     @Test
-    public void testComplexSchemaParse() throws FileNotFoundException, URISyntaxException {
-        String path = getTestConfigFile("/conf/complex.schema.conf");
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(ConfigFactory.parseFile(new File(path)).root().unwrapped());
+    public void testComplexSchemaParse() {
+        Config config = TestConfigUtils.getComplexSchemaConfig();
         SeaTunnelRowType seaTunnelRowType =
                 CatalogTableUtil.buildWithConfig(config).getSeaTunnelRowType();
         Assertions.assertNotNull(seaTunnelRowType);
@@ -100,13 +88,11 @@ public class CatalogTableUtilTest {
     }
 
     @Test
-    public void testSpecialSchemaParse() throws FileNotFoundException, URISyntaxException {
-        String path = getTestConfigFile("/conf/config_special_schema.conf");
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(ConfigFactory.parseFile(new File(path)).root().unwrapped());
+    public void testSpecialSchemaParse() {
+        Config config = TestConfigUtils.getSpecialSchemaConfig();
         SeaTunnelRowType seaTunnelRowType =
                 CatalogTableUtil.buildWithConfig(config).getSeaTunnelRowType();
-        Assertions.assertEquals(seaTunnelRowType.getTotalFields(), 12);
+        Assertions.assertEquals(12, seaTunnelRowType.getTotalFields());
         // t.date is a specific field name test
         Assertions.assertEquals(
                 seaTunnelRowType.getFieldType(seaTunnelRowType.indexOf("t.byteArray")).getSqlType(),
@@ -116,18 +102,21 @@ public class CatalogTableUtilTest {
     }
 
     @Test
-    public void testCatalogUtilGetCatalogTable() throws FileNotFoundException, URISyntaxException {
-        String path = getTestConfigFile("/conf/getCatalogTable.conf");
-        Config config = ConfigFactory.parseFile(new File(path));
-        // source is a map { InMemory { ... } }
-        Config sourceEnv = config.getConfig("source");
-        String pluginName = sourceEnv.root().keySet().iterator().next();
-        Config source = sourceEnv.getConfig(pluginName);
+    public void testCatalogUtilGetCatalogTable() {
+        Config config = TestConfigUtils.getOneTableConfig();
 
-        ReadonlyConfig sourceReadonlyConfig = ReadonlyConfig.fromMap(source.root().unwrapped());
+        // Use Config.getSource() API to get source configs as a List
+        List<Config> sourceConfigs = Config.getSource(config);
+        Assertions.assertEquals(1, sourceConfigs.size());
+        Config source = sourceConfigs.get(0);
+
+        // Verify plugin_name is set correctly
+        String pluginName = source.getString("plugin_name");
+        Assertions.assertEquals("InMemory", pluginName);
+
         List<CatalogTable> catalogTables =
                 CatalogTableUtil.getCatalogTables(
-                        sourceReadonlyConfig, Thread.currentThread().getContextClassLoader());
+                        source, Thread.currentThread().getContextClassLoader());
         Assertions.assertEquals(2, catalogTables.size());
         Assertions.assertEquals(
                 TableIdentifier.of("InMemory", TablePath.of("st.public.table1")),
@@ -137,43 +126,36 @@ public class CatalogTableUtilTest {
                 catalogTables.get(1).getTableId());
         // test empty tables
         Config emptyTableSource =
-                source.withValue(
-                        ConnectorCommonOptions.TABLE_NAMES.key(),
-                        ConfigValueFactory.fromIterable(new ArrayList<>()));
-        ReadonlyConfig emptyReadonlyConfig =
-                ReadonlyConfig.fromMap(emptyTableSource.root().unwrapped());
+                source.withValue(ConnectorCommonOptions.TABLE_NAMES.key(), new ArrayList<>());
 
         Assertions.assertThrows(
                 RuntimeException.class,
                 () ->
                         CatalogTableUtil.getCatalogTables(
-                                emptyReadonlyConfig,
-                                Thread.currentThread().getContextClassLoader()));
+                                emptyTableSource, Thread.currentThread().getContextClassLoader()));
         // test unknown catalog
-        Config cannotFindCatalogSource =
-                source.withValue("plugin_name", ConfigValueFactory.fromAnyRef("unknownCatalog"));
-        ReadonlyConfig cannotFindCatalogReadonlyConfig =
-                ReadonlyConfig.fromMap(cannotFindCatalogSource.root().unwrapped());
+        Config cannotFindCatalogSource = source.withValue("plugin_name", "unknownCatalog");
 
         Assertions.assertThrows(
                 RuntimeException.class,
                 () ->
                         CatalogTableUtil.getCatalogTables(
-                                cannotFindCatalogReadonlyConfig,
+                                cannotFindCatalogSource,
                                 Thread.currentThread().getContextClassLoader()));
     }
 
     @Test
-    public void testDefaultTablePath() throws FileNotFoundException, URISyntaxException {
-        String path = getTestConfigFile("/conf/default_tablepath.conf");
-        Config config = ConfigFactory.parseFile(new File(path));
+    public void testDefaultTablePath() {
+        Config config = TestConfigUtils.getDefaultTablePathConfig();
         // 'default_tablepath.conf' source is a map, not list.
         Config sourceEnv = config.getConfig("source");
         // We need the inner config "MongoDB-CDC"
-        String pluginName = sourceEnv.root().keySet().iterator().next();
+        // We need the inner config "MongoDB-CDC"
+        // We need the inner config "MongoDB-CDC"
+        String pluginName = "MongoDB-CDC";
         Config source = sourceEnv.getConfig(pluginName);
 
-        ReadonlyConfig sourceReadonlyConfig = ReadonlyConfig.fromMap(source.root().unwrapped());
+        Config sourceReadonlyConfig = Config.of(source.toMap());
         CatalogTable catalogTable = CatalogTableUtil.buildWithConfig(sourceReadonlyConfig);
         Assertions.assertEquals(
                 TablePath.DEFAULT.getDatabaseName(), catalogTable.getTablePath().getDatabaseName());
@@ -184,10 +166,8 @@ public class CatalogTableUtilTest {
     }
 
     @Test
-    public void testGenericRowSchemaTest() throws FileNotFoundException, URISyntaxException {
-        String path = getTestConfigFile("/conf/generic_row.schema.conf");
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(ConfigFactory.parseFile(new File(path)).root().unwrapped());
+    public void testGenericRowSchemaTest() {
+        Config config = TestConfigUtils.getGenericRowSchemaConfig();
         SeaTunnelRowType seaTunnelRowType =
                 CatalogTableUtil.buildWithConfig(config).getSeaTunnelRowType();
         Assertions.assertNotNull(seaTunnelRowType);
@@ -225,14 +205,5 @@ public class CatalogTableUtilTest {
         SeaTunnelRowType mapType1ValType =
                 (SeaTunnelRowType) ((SeaTunnelDataType<?>) mapType1.getValueType());
         Assertions.assertEquals(expectedVal, mapType1ValType);
-    }
-
-    public static String getTestConfigFile(String configFile)
-            throws FileNotFoundException, URISyntaxException {
-        URL resource = CatalogTableUtilTest.class.getResource(configFile);
-        if (resource == null) {
-            throw new FileNotFoundException("Can't find config file: " + configFile);
-        }
-        return Paths.get(resource.toURI()).toString();
     }
 }

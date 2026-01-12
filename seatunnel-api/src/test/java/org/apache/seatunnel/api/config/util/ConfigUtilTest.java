@@ -17,12 +17,12 @@
 
 package org.apache.seatunnel.api.config.util;
 
+import org.apache.seatunnel.api.config.Config;
+import org.apache.seatunnel.api.config.ConfigLoader;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
@@ -34,12 +34,11 @@ public class ConfigUtilTest {
     @BeforeAll
     public static void init() throws URISyntaxException {
         config =
-                ConfigFactory.parseFile(
+                ConfigLoader.load(
                         Paths.get(
-                                        ConfigUtilTest.class
-                                                .getResource("/conf/option-test.conf")
-                                                .toURI())
-                                .toFile());
+                                ConfigUtilTest.class
+                                        .getResource("/conf/option-test.conf")
+                                        .toURI()));
     }
 
     @Test

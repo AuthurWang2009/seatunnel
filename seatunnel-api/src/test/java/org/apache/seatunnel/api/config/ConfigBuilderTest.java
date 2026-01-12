@@ -26,7 +26,7 @@ public class ConfigBuilderTest {
         Config overlay =
                 ConfigBuilder.create().put("a.b", "overlay").put("a.d", "overlay_d").build();
 
-        Config merged = ConfigBuilder.of(base).config(overlay).build();
+        Config merged = ConfigBuilder.of(base).from(overlay).build();
 
         Assertions.assertEquals("overlay", merged.getString("a.b"));
         Assertions.assertEquals("base_c", merged.getString("a.c"));

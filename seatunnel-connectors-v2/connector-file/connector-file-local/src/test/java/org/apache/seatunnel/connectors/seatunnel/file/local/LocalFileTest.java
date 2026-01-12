@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.local;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.PhysicalColumn;
 import org.apache.seatunnel.api.table.catalog.TableIdentifier;
@@ -86,7 +86,7 @@ public class LocalFileTest {
         FileUtils.deleteFile("/tmp/seatunnel/LocalFileTest");
         SinkFlowTestUtils.runBatchWithCheckpointDisabled(
                 catalogTable,
-                ReadonlyConfig.fromMap(options),
+                Config.of(options),
                 new LocalFileSinkFactory(),
                 Arrays.asList(
                         new SeaTunnelRow(new Object[] {"test"}),
@@ -103,7 +103,7 @@ public class LocalFileTest {
                         () ->
                                 SinkFlowTestUtils.runBatchWithCheckpointEnabled(
                                         catalogTable,
-                                        ReadonlyConfig.fromMap(options),
+                                        Config.of(options),
                                         new LocalFileSinkFactory(),
                                         Arrays.asList(
                                                 new SeaTunnelRow(new Object[] {"test"}),
@@ -118,7 +118,7 @@ public class LocalFileTest {
                         () ->
                                 SinkFlowTestUtils.runParallelSubtasksBatchWithCheckpointDisabled(
                                         catalogTable,
-                                        ReadonlyConfig.fromMap(options),
+                                        Config.of(options),
                                         new LocalFileSinkFactory(),
                                         Arrays.asList(
                                                 new SeaTunnelRow(new Object[] {"test"}),
@@ -132,7 +132,7 @@ public class LocalFileTest {
         options.put("file_name_expression", "${transactionId}_2");
         SinkFlowTestUtils.runParallelSubtasksBatchWithCheckpointDisabled(
                 catalogTable,
-                ReadonlyConfig.fromMap(options),
+                Config.of(options),
                 new LocalFileSinkFactory(),
                 Arrays.asList(
                         new SeaTunnelRow(new Object[] {"test"}),
@@ -147,7 +147,7 @@ public class LocalFileTest {
         FileUtils.deleteFile("/tmp/seatunnel/LocalFileTest");
         SinkFlowTestUtils.runBatchWithCheckpointDisabled(
                 catalogTable,
-                ReadonlyConfig.fromMap(options),
+                Config.of(options),
                 new LocalFileSinkFactory(),
                 Arrays.asList(
                         new SeaTunnelRow(new Object[] {"test"}),
@@ -183,7 +183,7 @@ public class LocalFileTest {
         FileUtils.deleteFile("/tmp/seatunnel/LocalFileTest");
         SinkFlowTestUtils.runBatchWithCheckpointDisabled(
                 catalogTable,
-                ReadonlyConfig.fromMap(options),
+                Config.of(options),
                 new LocalFileSinkFactory(),
                 Collections.emptyList());
         Assertions.assertEquals(
@@ -196,7 +196,7 @@ public class LocalFileTest {
         FileUtils.deleteFile("/tmp/seatunnel/LocalFileTest");
         SinkFlowTestUtils.runBatchWithCheckpointDisabled(
                 catalogTable,
-                ReadonlyConfig.fromMap(options),
+                Config.of(options),
                 new LocalFileSinkFactory(),
                 Collections.emptyList());
         Assertions.assertEquals(
@@ -208,7 +208,7 @@ public class LocalFileTest {
         options.put("enable_header_write", true);
         SinkFlowTestUtils.runBatchWithCheckpointDisabled(
                 catalogTable,
-                ReadonlyConfig.fromMap(options),
+                Config.of(options),
                 new LocalFileSinkFactory(),
                 Collections.emptyList());
         Assertions.assertEquals(
@@ -219,7 +219,7 @@ public class LocalFileTest {
         options.put("file_format_type", "parquet");
         SinkFlowTestUtils.runBatchWithCheckpointDisabled(
                 catalogTable,
-                ReadonlyConfig.fromMap(options),
+                Config.of(options),
                 new LocalFileSinkFactory(),
                 Collections.emptyList());
         Assertions.assertEquals(
@@ -232,7 +232,7 @@ public class LocalFileTest {
                         () ->
                                 SinkFlowTestUtils.runBatchWithCheckpointDisabled(
                                         catalogTable,
-                                        ReadonlyConfig.fromMap(options),
+                                        Config.of(options),
                                         new LocalFileSinkFactory(),
                                         Collections.emptyList()));
         Assertions.assertEquals(
@@ -256,7 +256,7 @@ public class LocalFileTest {
         FileUtils.deleteFile("/tmp/seatunnel/LocalFileTest");
         SinkFlowTestUtils.runBatchWithCheckpointDisabled(
                 catalogTable,
-                ReadonlyConfig.fromMap(options),
+                Config.of(options),
                 new LocalFileSinkFactory(),
                 Arrays.asList(
                         new SeaTunnelRow(new Object[] {"test"}),
@@ -269,7 +269,7 @@ public class LocalFileTest {
         FileUtils.deleteFile("/tmp/seatunnel/LocalFileTest");
         SinkFlowTestUtils.runBatchWithCheckpointDisabled(
                 catalogTable,
-                ReadonlyConfig.fromMap(options),
+                Config.of(options),
                 new LocalFileSinkFactory(),
                 Arrays.asList(
                         new SeaTunnelRow(new Object[] {"test"}),
@@ -289,13 +289,13 @@ public class LocalFileTest {
         readOptions.put("filename_extension", "ppp");
         List<SeaTunnelRow> rows =
                 SourceFlowTestUtils.runBatchWithCheckpointDisabled(
-                        ReadonlyConfig.fromMap(readOptions), new LocalFileSourceFactory());
+                        Config.of(readOptions), new LocalFileSourceFactory());
         Assertions.assertEquals(2, rows.size());
 
         readOptions.put("filename_extension", "ppp2");
         List<SeaTunnelRow> emptyRows =
                 SourceFlowTestUtils.runBatchWithCheckpointDisabled(
-                        ReadonlyConfig.fromMap(readOptions), new LocalFileSourceFactory());
+                        Config.of(readOptions), new LocalFileSourceFactory());
 
         Assertions.assertEquals(0, emptyRows.size());
     }
@@ -311,7 +311,7 @@ public class LocalFileTest {
                 };
         List<SeaTunnelRow> rows =
                 SourceFlowTestUtils.runParallelSubtasksBatchWithCheckpointDisabled(
-                        ReadonlyConfig.fromMap(readOptions), new LocalFileSourceFactory(), 2);
+                        Config.of(readOptions), new LocalFileSourceFactory(), 2);
         Assertions.assertEquals(3, rows.size());
     }
 
@@ -379,7 +379,7 @@ public class LocalFileTest {
 
         SinkFlowTestUtils.runBatchWithCheckpointDisabled(
                 catalogTable,
-                ReadonlyConfig.fromMap(options),
+                Config.of(options),
                 new LocalFileSinkFactory(),
                 Arrays.asList(row1, row2, row3, row1UpdateBefore, row1UpdateAfter, row2Delete));
         Assertions.assertEquals(
@@ -473,7 +473,7 @@ public class LocalFileTest {
 
         SinkFlowTestUtils.runBatchWithCheckpointDisabled(
                 catalogTable,
-                ReadonlyConfig.fromMap(options),
+                Config.of(options),
                 new LocalFileSinkFactory(),
                 Arrays.asList(row1, row2, row3, row1UpdateBefore, row1UpdateAfter, row2Delete));
         Assertions.assertEquals(
@@ -566,7 +566,7 @@ public class LocalFileTest {
 
         SinkFlowTestUtils.runBatchWithCheckpointDisabled(
                 catalogTable,
-                ReadonlyConfig.fromMap(options),
+                Config.of(options),
                 new LocalFileSinkFactory(),
                 Arrays.asList(row1, row2, row3, row1UpdateBefore, row1UpdateAfter, row2Delete));
         Assertions.assertEquals(
@@ -623,7 +623,7 @@ public class LocalFileTest {
         options.put("file_name_expression", "test1");
         SinkFlowTestUtils.runBatchWithCheckpointDisabled(
                 catalogTable,
-                ReadonlyConfig.fromMap(options),
+                Config.of(options),
                 new LocalFileSinkFactory(),
                 Collections.singletonList(new SeaTunnelRow(new Object[] {"test1"})));
 
@@ -631,7 +631,7 @@ public class LocalFileTest {
         options.put("file_name_expression", "test2");
         SinkFlowTestUtils.runBatchWithCheckpointDisabled(
                 catalogTable,
-                ReadonlyConfig.fromMap(options),
+                Config.of(options),
                 new LocalFileSinkFactory(),
                 Collections.singletonList(new SeaTunnelRow(new Object[] {"test2"})));
 
@@ -639,7 +639,7 @@ public class LocalFileTest {
         options.put("file_name_expression", "test3");
         SinkFlowTestUtils.runBatchWithCheckpointDisabled(
                 catalogTable,
-                ReadonlyConfig.fromMap(options),
+                Config.of(options),
                 new LocalFileSinkFactory(),
                 Collections.singletonList(new SeaTunnelRow(new Object[] {"test3"})));
 
@@ -675,7 +675,7 @@ public class LocalFileTest {
         Assertions.assertEquals(
                 3,
                 SourceFlowTestUtils.runBatchWithCheckpointDisabled(
-                                ReadonlyConfig.fromMap(readOptions1), new LocalFileSourceFactory())
+                                Config.of(readOptions1), new LocalFileSourceFactory())
                         .size());
 
         // test case2: only file2 can be read, if set filter time is yesterday
@@ -696,7 +696,7 @@ public class LocalFileTest {
                 };
         List<SeaTunnelRow> readContext =
                 SourceFlowTestUtils.runBatchWithCheckpointDisabled(
-                        ReadonlyConfig.fromMap(readOptions2), new LocalFileSourceFactory());
+                        Config.of(readOptions2), new LocalFileSourceFactory());
         Assertions.assertEquals(1, readContext.size());
         Assertions.assertEquals("test2", readContext.get(0).getField(0));
 
@@ -720,7 +720,7 @@ public class LocalFileTest {
 
         List<SeaTunnelRow> rows3 =
                 SourceFlowTestUtils.runBatchWithCheckpointDisabled(
-                        ReadonlyConfig.fromMap(readOptions3), new LocalFileSourceFactory());
+                        Config.of(readOptions3), new LocalFileSourceFactory());
 
         Assertions.assertEquals(1, rows3.size());
         Assertions.assertEquals("test3", rows3.get(0).getField(0));

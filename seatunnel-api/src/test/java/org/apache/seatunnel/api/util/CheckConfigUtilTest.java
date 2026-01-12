@@ -18,7 +18,6 @@
 package org.apache.seatunnel.api.util;
 
 import org.apache.seatunnel.api.config.Config;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.common.config.CheckResult;
 
 import org.junit.jupiter.api.Assertions;
@@ -87,6 +86,6 @@ public class CheckConfigUtilTest {
         configMap.put("k2", new ArrayList<>());
         configMap.put("k3", null);
 
-        return ReadonlyConfig.fromMap(configMap);
+        return Config.of(configMap);
     }
 }

@@ -17,7 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.oss.sink;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.config.util.OptionRule;
 import org.apache.seatunnel.api.options.SinkConnectorCommonOptions;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
@@ -44,7 +43,7 @@ public class OssFileSinkFactory extends BaseMultipleTableFileSinkFactory {
 
     @Override
     public TableSink createSink(TableSinkFactoryContext context) {
-        ReadonlyConfig readonlyConfig = context.getOptions();
+        org.apache.seatunnel.api.config.Config readonlyConfig = context.getOptions();
         CatalogTable catalogTable = context.getCatalogTable();
         return () -> new OssFileSink(readonlyConfig, catalogTable);
     }

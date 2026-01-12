@@ -17,7 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.s3.source.config;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.config.BaseFileSourceConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileSystemType;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
@@ -40,7 +39,7 @@ public class S3FileSourceConfig extends BaseFileSourceConfig {
         return FileSystemType.S3.getFileSystemPluginName();
     }
 
-    public S3FileSourceConfig(ReadonlyConfig readonlyConfig) {
+    public S3FileSourceConfig(org.apache.seatunnel.api.config.Config readonlyConfig) {
         super(readonlyConfig);
     }
 }

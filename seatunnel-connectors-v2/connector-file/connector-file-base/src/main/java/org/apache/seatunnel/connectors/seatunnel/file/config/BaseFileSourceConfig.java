@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.config;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.options.ConnectorCommonOptions;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtil;
@@ -51,13 +51,13 @@ public abstract class BaseFileSourceConfig implements Serializable {
     private final FileFormat fileFormat;
     private final ReadStrategy readStrategy;
     private final List<String> filePaths;
-    private final ReadonlyConfig baseFileSourceConfig;
+    private final Config baseFileSourceConfig;
 
     public abstract HadoopConf getHadoopConfig();
 
     public abstract String getPluginName();
 
-    public BaseFileSourceConfig(ReadonlyConfig readonlyConfig) {
+    public BaseFileSourceConfig(Config readonlyConfig) {
         this.baseFileSourceConfig = readonlyConfig;
         this.fileFormat = readonlyConfig.get(FileBaseSourceOptions.FILE_FORMAT_TYPE);
         this.readStrategy = ReadStrategyFactory.of(readonlyConfig, getHadoopConfig());
@@ -66,7 +66,7 @@ public abstract class BaseFileSourceConfig implements Serializable {
         this.catalogTable = parseCatalogTable(readonlyConfig);
     }
 
-    private List<String> parseFilePaths(ReadonlyConfig readonlyConfig) {
+    private List<String> parseFilePaths(Config readonlyConfig) {
         String rootPath = null;
         try {
             rootPath = readonlyConfig.get(FileBaseSourceOptions.FILE_PATH);
@@ -78,7 +78,7 @@ public abstract class BaseFileSourceConfig implements Serializable {
         }
     }
 
-    private CatalogTable parseCatalogTable(ReadonlyConfig readonlyConfig) {
+    private CatalogTable parseCatalogTable(Config readonlyConfig) {
         final CatalogTable catalogTable;
         boolean configSchema =
                 readonlyConfig.getOptional(ConnectorCommonOptions.SCHEMA).isPresent();

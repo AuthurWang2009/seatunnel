@@ -17,13 +17,13 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.ftp.source;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileSystemType;
 import org.apache.seatunnel.connectors.seatunnel.file.ftp.config.MultipleTableFTPFileSourceConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.source.BaseMultipleTableFileSource;
 
 public class FtpFileSource extends BaseMultipleTableFileSource {
-    public FtpFileSource(ReadonlyConfig readonlyConfig) {
+    public FtpFileSource(Config readonlyConfig) {
         super(new MultipleTableFTPFileSourceConfig(readonlyConfig));
     }
 

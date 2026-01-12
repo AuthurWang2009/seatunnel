@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.hive.utils;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.connectors.seatunnel.file.hadoop.HadoopLoginFactory;
 import org.apache.seatunnel.connectors.seatunnel.file.hdfs.source.config.HdfsSourceConfigOptions;
 import org.apache.seatunnel.connectors.seatunnel.hive.config.HiveConfig;
@@ -65,7 +65,7 @@ public class HiveMetaStoreProxy implements Closeable, Serializable {
 
     private transient HiveMetaStoreClient hiveClient;
 
-    public HiveMetaStoreProxy(ReadonlyConfig config) {
+    public HiveMetaStoreProxy(Config config) {
         this.metastoreUri = config.get(HiveOptions.METASTORE_URI);
         this.hadoopConfDir = config.get(HiveConfig.HADOOP_CONF_PATH);
         this.hiveSitePath = config.get(HiveConfig.HIVE_SITE_PATH);

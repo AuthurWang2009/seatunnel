@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.sftp.catalog;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.util.OptionRule;
 import org.apache.seatunnel.api.table.catalog.Catalog;
 import org.apache.seatunnel.api.table.factory.CatalogFactory;
@@ -32,7 +32,7 @@ import com.google.auto.service.AutoService;
 @AutoService(Factory.class)
 public class SftpFileCatalogFactory implements CatalogFactory {
     @Override
-    public Catalog createCatalog(String catalogName, ReadonlyConfig options) {
+    public Catalog createCatalog(String catalogName, Config options) {
         HadoopFileSystemProxy fileSystemUtils =
                 new HadoopFileSystemProxy(SftpConf.buildWithConfig(options));
         return new SftpFileCatalog(

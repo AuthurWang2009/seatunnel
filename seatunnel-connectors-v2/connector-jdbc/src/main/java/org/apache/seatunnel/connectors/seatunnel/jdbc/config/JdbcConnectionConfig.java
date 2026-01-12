@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.jdbc.config;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 
 import lombok.Getter;
 
@@ -67,7 +67,7 @@ public class JdbcConnectionConfig implements Serializable {
 
     private boolean handleBlobAsString = JdbcCommonOptions.HANDLE_BLOB_AS_STRING.defaultValue();
 
-    public static JdbcConnectionConfig of(ReadonlyConfig config) {
+    public static JdbcConnectionConfig of(Config config) {
         JdbcConnectionConfig.Builder builder = JdbcConnectionConfig.builder();
         builder.url(config.get(JdbcCommonOptions.URL));
         builder.compatibleMode(config.get(JdbcCommonOptions.COMPATIBLE_MODE));

@@ -17,18 +17,18 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.local.source.config;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.connectors.seatunnel.file.config.BaseFileSourceConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.config.BaseMultipleTableFileSourceConfig;
 
 public class MultipleTableLocalFileSourceConfig extends BaseMultipleTableFileSourceConfig {
 
-    public MultipleTableLocalFileSourceConfig(ReadonlyConfig localFileSourceRootConfig) {
+    public MultipleTableLocalFileSourceConfig(Config localFileSourceRootConfig) {
         super(localFileSourceRootConfig);
     }
 
     @Override
-    public BaseFileSourceConfig getBaseSourceConfig(ReadonlyConfig readonlyConfig) {
+    public BaseFileSourceConfig getBaseSourceConfig(Config readonlyConfig) {
         return new LocalFileSourceConfig(readonlyConfig);
     }
 }

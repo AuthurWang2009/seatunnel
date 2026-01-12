@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.embedding;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtil;
 import org.apache.seatunnel.api.table.catalog.Column;
@@ -42,7 +42,7 @@ public class EmbeddingTransformTest {
                 "{\"path\":\"/seatunnel/test_csv_data.csv\",\"bucket\":\"s3a://ltchen\",\"fs.s3a.endpoint\":\"tos-s3-cn-beijing.volces.com\",\"fs.s3a.aws.credentials.provider\":\"org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider\",\"file_format_type\":\"csv\",\"access_key\":\"xxx\",\"secret_key\":\"xxx\",\"csv_use_header_line\":true,\"field_delimiter\":\",\",\"schema\":{\"fields\":{\"id\":\"int\",\"code\":\"int\",\"data\":\"string\",\"success\":\"boolean\"},\"primaryKey\":{\"name\":\"id\",\"columnNames\":[\"id\"]}},\"plugin_name\":\"S3File\"}";
         Map<String, Object> sourceConfigMap =
                 objectMapper.readValue(sourceConfig, new TypeReference<Map<String, Object>>() {});
-        ReadonlyConfig readonlyConfig = ReadonlyConfig.fromMap(sourceConfigMap);
+        Config readonlyConfig = Config.of(sourceConfigMap);
         CatalogTable inputCatalogTable = CatalogTableUtil.buildWithConfig("S3File", readonlyConfig);
 
         int dimension = 1024;
@@ -53,7 +53,7 @@ public class EmbeddingTransformTest {
         Map<String, Object> embeddingConfigMap =
                 objectMapper.readValue(
                         embeddingConfig, new TypeReference<Map<String, Object>>() {});
-        ReadonlyConfig config = ReadonlyConfig.fromMap(embeddingConfigMap);
+        Config config = Config.of(embeddingConfigMap);
         EmbeddingTransform embeddingTransform = new EmbeddingTransform(config, inputCatalogTable);
 
         Column[] columns = embeddingTransform.getOutputColumns();

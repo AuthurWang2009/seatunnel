@@ -17,7 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.s3.config;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 
 import java.util.HashMap;
@@ -48,7 +47,8 @@ public class S3HadoopConf extends HadoopConf {
         super(hdfsNameKey);
     }
 
-    public static HadoopConf buildWithReadOnlyConfig(ReadonlyConfig config) {
+    public static HadoopConf buildWithReadOnlyConfig(
+            org.apache.seatunnel.api.config.Config config) {
 
         String bucketName = config.get(S3FileBaseOptions.S3_BUCKET);
         S3HadoopConf hadoopConf = new S3HadoopConf(bucketName);
@@ -81,7 +81,8 @@ public class S3HadoopConf extends HadoopConf {
         }
     }
 
-    private void putS3SK(Map<String, String> s3Options, ReadonlyConfig config) {
+    private void putS3SK(
+            Map<String, String> s3Options, org.apache.seatunnel.api.config.Config config) {
         if (!config.getOptional(S3FileBaseOptions.S3_ACCESS_KEY).isPresent()
                 && !config.getOptional(S3FileBaseOptions.S3_SECRET_KEY).isPresent()) {
             return;

@@ -86,10 +86,7 @@ public class ModelTransformConfig implements Serializable {
                     .withDescription("The row batch size of each process");
 
     public static final ConfigEntry<Integer> DIMENSION =
-            ConfigOption.key("dimension")
-                    .intType()
-                    .defaultValue(2048)
-                    .withDescription("dimension");
+            ConfigOption.key("dimension").intType().defaultValue(2048).withDescription("dimension");
 
     public static class CustomRequestConfig {
 

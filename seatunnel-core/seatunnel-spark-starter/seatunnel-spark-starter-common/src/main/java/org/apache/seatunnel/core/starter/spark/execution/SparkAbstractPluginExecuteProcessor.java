@@ -18,7 +18,7 @@
 package org.apache.seatunnel.core.starter.spark.execution;
 
 import org.apache.seatunnel.api.common.JobContext;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.sink.SeaTunnelSink;
 import org.apache.seatunnel.api.sink.SupportMultiTableSink;
 import org.apache.seatunnel.api.table.catalog.TablePath;
@@ -30,7 +30,6 @@ import org.apache.seatunnel.translation.spark.execution.DatasetTableInfo;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 
-import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -67,9 +66,8 @@ public abstract class SparkAbstractPluginExecuteProcessor<T>
     protected abstract List<T> initializePlugins(List<? extends Config> pluginConfigs);
 
     protected void registerInputTempView(Config pluginConfig, Dataset<Row> dataStream) {
-        ReadonlyConfig readonlyConfig = ReadonlyConfig.fromConfig(pluginConfig);
-        if (readonlyConfig.getOptional(PLUGIN_OUTPUT).isPresent()) {
-            String tableName = readonlyConfig.get(PLUGIN_OUTPUT);
+        if (pluginConfig.getOptional(PLUGIN_OUTPUT).isPresent()) {
+            String tableName = pluginConfig.get(PLUGIN_OUTPUT);
             registerTempView(tableName, dataStream);
         }
     }
@@ -78,8 +76,7 @@ public abstract class SparkAbstractPluginExecuteProcessor<T>
             Config pluginConfig,
             SparkRuntimeEnvironment sparkRuntimeEnvironment,
             List<DatasetTableInfo> upstreamDataStreams) {
-        List<String> pluginInputIdentifiers =
-                ReadonlyConfig.fromConfig(pluginConfig).get(PLUGIN_INPUT);
+        List<String> pluginInputIdentifiers = pluginConfig.get(PLUGIN_INPUT);
         if (pluginInputIdentifiers == null || pluginInputIdentifiers.isEmpty()) {
             return Optional.empty();
         }
@@ -110,9 +107,7 @@ public abstract class SparkAbstractPluginExecuteProcessor<T>
 
     // if not support multi table, rollback
     protected SeaTunnelSink tryGenerateMultiTableSink(
-            Map<TablePath, SeaTunnelSink> sinks,
-            ReadonlyConfig sinkConfig,
-            ClassLoader classLoader) {
+            Map<TablePath, SeaTunnelSink> sinks, Config sinkConfig, ClassLoader classLoader) {
         if (sinks.values().stream().anyMatch(sink -> !(sink instanceof SupportMultiTableSink))) {
             log.info("Unsupported multi table sink api, rollback to sink template");
             // choose the first sink

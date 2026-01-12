@@ -17,7 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.sftp.config;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.config.BaseFileSourceConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileSystemType;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
@@ -39,7 +38,7 @@ public class SFTPFileSourceConfig extends BaseFileSourceConfig {
         return FileSystemType.SFTP.getFileSystemPluginName();
     }
 
-    public SFTPFileSourceConfig(ReadonlyConfig readonlyConfig) {
+    public SFTPFileSourceConfig(org.apache.seatunnel.api.config.Config readonlyConfig) {
         super(readonlyConfig);
     }
 }

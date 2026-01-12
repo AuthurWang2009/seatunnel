@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.api.table.catalog.schema;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.options.ConnectorCommonOptions;
 import org.apache.seatunnel.api.table.catalog.Column;
 import org.apache.seatunnel.api.table.catalog.ConstraintKey;
@@ -35,21 +35,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ReadonlyConfigParser implements TableSchemaParser<ReadonlyConfig> {
+public class ReadonlyConfigParser implements TableSchemaParser<Config> {
 
-    private final TableSchemaParser.ColumnParser<ReadonlyConfig> columnParser = new ColumnParser();
-    private final TableSchemaParser.FieldParser<ReadonlyConfig> fieldParser = new FieldParser();
-    private final TableSchemaParser.ConstraintKeyParser<ReadonlyConfig> constraintKeyParser =
+    private final TableSchemaParser.ColumnParser<Config> columnParser = new ColumnParser();
+    private final TableSchemaParser.FieldParser<Config> fieldParser = new FieldParser();
+    private final TableSchemaParser.ConstraintKeyParser<Config> constraintKeyParser =
             new ConstraintKeyParser();
-    private final TableSchemaParser.PrimaryKeyParser<ReadonlyConfig> primaryKeyParser =
+    private final TableSchemaParser.PrimaryKeyParser<Config> primaryKeyParser =
             new PrimaryKeyParser();
 
     @Override
-    public TableSchema parse(ReadonlyConfig readonlyConfig) {
-        ReadonlyConfig schemaConfig =
+    public TableSchema parse(Config readonlyConfig) {
+        Config schemaConfig =
                 readonlyConfig
                         .getOptional(ConnectorCommonOptions.SCHEMA)
-                        .map(ReadonlyConfig::fromMap)
+                        .map(Config::of)
                         .orElseThrow(
                                 () -> new IllegalArgumentException("Schema config can't be null"));
 
@@ -78,10 +78,10 @@ public class ReadonlyConfigParser implements TableSchemaParser<ReadonlyConfig> {
         return tableSchemaBuilder.build();
     }
 
-    private static class FieldParser implements TableSchemaParser.FieldParser<ReadonlyConfig> {
+    private static class FieldParser implements TableSchemaParser.FieldParser<Config> {
 
         @Override
-        public List<Column> parse(ReadonlyConfig schemaConfig) {
+        public List<Column> parse(Config schemaConfig) {
             JsonNode jsonNode =
                     JsonUtils.toJsonNode(schemaConfig.get(ConnectorCommonOptions.FIELDS));
             Map<String, String> fieldsMap = JsonUtils.toStringMap(jsonNode);
@@ -100,12 +100,12 @@ public class ReadonlyConfigParser implements TableSchemaParser<ReadonlyConfig> {
         }
     }
 
-    private static class ColumnParser implements TableSchemaParser.ColumnParser<ReadonlyConfig> {
+    private static class ColumnParser implements TableSchemaParser.ColumnParser<Config> {
 
         @Override
-        public List<Column> parse(ReadonlyConfig schemaConfig) {
+        public List<Column> parse(Config schemaConfig) {
             return schemaConfig.get(ConnectorCommonOptions.COLUMNS).stream()
-                    .map(ReadonlyConfig::fromMap)
+                    .map(Config::of)
                     .map(
                             columnConfig -> {
                                 String name =
@@ -152,12 +152,12 @@ public class ReadonlyConfigParser implements TableSchemaParser<ReadonlyConfig> {
     }
 
     private static class ConstraintKeyParser
-            implements TableSchemaParser.ConstraintKeyParser<ReadonlyConfig> {
+            implements TableSchemaParser.ConstraintKeyParser<Config> {
 
         @Override
-        public List<ConstraintKey> parse(ReadonlyConfig schemaConfig) {
+        public List<ConstraintKey> parse(Config schemaConfig) {
             return schemaConfig.get(ConnectorCommonOptions.CONSTRAINT_KEYS).stream()
-                    .map(ReadonlyConfig::fromMap)
+                    .map(Config::of)
                     .map(
                             constraintKeyConfig -> {
                                 String constraintName =
@@ -184,9 +184,7 @@ public class ReadonlyConfigParser implements TableSchemaParser<ReadonlyConfig> {
                                                 .map(
                                                         constraintColumnMapList ->
                                                                 constraintColumnMapList.stream()
-                                                                        .map(
-                                                                                ReadonlyConfig
-                                                                                        ::fromMap)
+                                                                        .map(Config::of)
                                                                         .map(
                                                                                 constraintColumnConfig -> {
                                                                                     String
@@ -225,13 +223,12 @@ public class ReadonlyConfigParser implements TableSchemaParser<ReadonlyConfig> {
         }
     }
 
-    private static class PrimaryKeyParser
-            implements TableSchemaParser.PrimaryKeyParser<ReadonlyConfig> {
+    private static class PrimaryKeyParser implements TableSchemaParser.PrimaryKeyParser<Config> {
 
         @Override
-        public PrimaryKey parse(ReadonlyConfig schemaConfig) {
-            ReadonlyConfig primaryKeyConfig =
-                    ReadonlyConfig.fromMap(schemaConfig.get(ConnectorCommonOptions.PRIMARY_KEY));
+        public PrimaryKey parse(Config schemaConfig) {
+            Config primaryKeyConfig =
+                    Config.of(schemaConfig.get(ConnectorCommonOptions.PRIMARY_KEY));
             String primaryKeyName =
                     primaryKeyConfig
                             .getOptional(ConnectorCommonOptions.PRIMARY_KEY_NAME)

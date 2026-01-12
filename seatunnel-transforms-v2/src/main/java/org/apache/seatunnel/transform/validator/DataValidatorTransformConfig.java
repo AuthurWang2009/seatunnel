@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.validator;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.ConfigEntry;
 import org.apache.seatunnel.api.config.ConfigOption;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.transform.validator.rule.LengthValidationRule;
 import org.apache.seatunnel.transform.validator.rule.NotNullValidationRule;
 import org.apache.seatunnel.transform.validator.rule.RangeValidationRule;
@@ -69,7 +69,7 @@ public class DataValidatorTransformConfig implements Serializable {
         private List<ValidationRule> rules = new ArrayList<>();
     }
 
-    public static DataValidatorTransformConfig of(ReadonlyConfig config) {
+    public static DataValidatorTransformConfig of(Config config) {
         DataValidatorTransformConfig validatorConfig = new DataValidatorTransformConfig();
         List<Map<String, Object>> fieldRulesMap = config.get(FIELD_RULES);
         List<FieldValidationRule> fieldRules = parseFieldRules(fieldRulesMap);

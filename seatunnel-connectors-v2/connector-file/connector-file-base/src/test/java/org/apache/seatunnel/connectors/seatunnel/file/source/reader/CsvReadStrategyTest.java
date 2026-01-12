@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.source.reader;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.source.Collector;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtil;
 import org.apache.seatunnel.api.table.type.BasicType;
@@ -29,7 +29,6 @@ import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.typesafe.config.ConfigFactory;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.URL;
@@ -50,7 +49,7 @@ public class CsvReadStrategyTest {
         LocalConf localConf = new LocalConf(FS_DEFAULT_NAME_DEFAULT);
         csvReadStrategy.init(localConf);
         csvReadStrategy.getFileNamesByPath(path);
-        csvReadStrategy.setPluginConfig(ReadonlyConfig.fromConfig(ConfigFactory.empty()));
+        csvReadStrategy.setPluginConfig(Config.of(new java.util.HashMap<>()));
         csvReadStrategy.setCatalogTable(
                 CatalogTableUtil.getCatalogTable(
                         "test",
@@ -80,8 +79,13 @@ public class CsvReadStrategyTest {
         csvReadStrategy.init(localConf);
         csvReadStrategy.getFileNamesByPath(path);
         System.setProperty("field_delimiter", ";");
-        csvReadStrategy.setPluginConfig(
-                ReadonlyConfig.fromConfig(ConfigFactory.systemProperties()));
+        // ReadonlyConfig.fromConfig(ConfigFactory.systemProperties()) is not directly supported by
+        // We need to implement a similar logic if we want to support system properties, or just
+        // fetch the specific property we need.
+        // Looking at the test, it seems it only cares about "field_delimiter".
+        java.util.Map<String, Object> systemProps = new java.util.HashMap<>();
+        System.getProperties().forEach((k, v) -> systemProps.put(String.valueOf(k), v));
+        csvReadStrategy.setPluginConfig(Config.of(systemProps));
         csvReadStrategy.setCatalogTable(
                 CatalogTableUtil.getCatalogTable(
                         "test",

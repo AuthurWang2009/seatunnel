@@ -17,7 +17,8 @@
 
 package org.apache.seatunnel.api.table.catalog.schema;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
+import org.apache.seatunnel.api.config.TestConfigUtils;
 import org.apache.seatunnel.api.table.catalog.Column;
 import org.apache.seatunnel.api.table.catalog.ConstraintKey;
 import org.apache.seatunnel.api.table.catalog.PrimaryKey;
@@ -28,18 +29,13 @@ import org.apache.seatunnel.api.table.type.SqlType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileNotFoundException;
-import java.net.URISyntaxException;
 import java.util.List;
 
-class ReadonlyConfigParserTest extends BaseConfigParserTest {
-
-    private static final String COLUMN_CONFIG = "/conf/catalog/schema_column.conf";
-    private static final String FIELD_CONFIG = "/conf/catalog/schema_field.conf";
+class ReadonlyConfigParserTest {
 
     @Test
-    void parseColumn() throws FileNotFoundException, URISyntaxException {
-        ReadonlyConfig config = getReadonlyConfig(COLUMN_CONFIG);
+    void parseColumn() {
+        Config config = TestConfigUtils.getSchemaColumnConfig();
 
         ReadonlyConfigParser readonlyConfigParser = new ReadonlyConfigParser();
         TableSchema tableSchema = readonlyConfigParser.parse(config);
@@ -49,8 +45,8 @@ class ReadonlyConfigParserTest extends BaseConfigParserTest {
     }
 
     @Test
-    void parseField() throws FileNotFoundException, URISyntaxException {
-        ReadonlyConfig config = getReadonlyConfig(FIELD_CONFIG);
+    void parseField() {
+        Config config = TestConfigUtils.getSchemaFieldConfig();
 
         ReadonlyConfigParser readonlyConfigParser = new ReadonlyConfigParser();
         TableSchema tableSchema = readonlyConfigParser.parse(config);
@@ -81,41 +77,51 @@ class ReadonlyConfigParserTest extends BaseConfigParserTest {
         List<Column> columns = tableSchema.getColumns();
         Assertions.assertEquals(19, columns.size());
 
-        Assertions.assertEquals("id", columns.get(0).getName());
+        Column idColumn = findColumn(columns, "id");
+        Assertions.assertEquals("id", idColumn.getName());
 
-        Assertions.assertEquals("map", columns.get(1).getName());
+        Column mapColumn = findColumn(columns, "map");
         Assertions.assertEquals(
                 "map<string, map<string, string>>",
-                columns.get(1).getDataType().toString().toLowerCase());
+                mapColumn.getDataType().toString().toLowerCase());
 
-        Assertions.assertEquals("map_array", columns.get(2).getName());
+        Column mapArrayColumn = findColumn(columns, "map_array");
         Assertions.assertEquals(
                 "map<string, map<string, array<int>>>",
-                columns.get(2).getDataType().toString().toLowerCase());
+                mapArrayColumn.getDataType().toString().toLowerCase());
 
-        Assertions.assertEquals("array", columns.get(3).getName());
+        Column arrayColumn = findColumn(columns, "array");
         Assertions.assertEquals(
-                "array<tinyint>", columns.get(3).getDataType().toString().toLowerCase());
+                "array<tinyint>", arrayColumn.getDataType().toString().toLowerCase());
 
-        Assertions.assertEquals("string", columns.get(4).getName());
-        Assertions.assertEquals("string", columns.get(4).getDataType().toString().toLowerCase());
+        Column stringColumn = findColumn(columns, "string");
+        Assertions.assertEquals("string", stringColumn.getDataType().toString().toLowerCase());
 
-        Assertions.assertEquals("row", columns.get(18).getName());
-        Assertions.assertEquals(SqlType.ROW, columns.get(18).getDataType().getSqlType());
+        Column rowColumn = findColumn(columns, "row");
+        Assertions.assertEquals(SqlType.ROW, rowColumn.getDataType().getSqlType());
 
-        SeaTunnelRowType seaTunnelRowType = (SeaTunnelRowType) columns.get(18).getDataType();
+        SeaTunnelRowType seaTunnelRowType = (SeaTunnelRowType) rowColumn.getDataType();
         Assertions.assertEquals(18, seaTunnelRowType.getTotalFields());
 
-        SeaTunnelRowType seatunnalRowType1 = (SeaTunnelRowType) seaTunnelRowType.getFieldType(17);
+        int fieldIndex = seaTunnelRowType.indexOf("row");
+        SeaTunnelRowType seatunnalRowType1 =
+                (SeaTunnelRowType) seaTunnelRowType.getFieldType(fieldIndex);
         Assertions.assertEquals(17, seatunnalRowType1.getTotalFields());
 
         if (comeFromColumnConfig) {
-            Assertions.assertEquals(0, columns.get(0).getDefaultValue());
-            Assertions.assertEquals("I'm default value", columns.get(4).getDefaultValue());
-            Assertions.assertEquals(false, columns.get(5).getDefaultValue());
-            Assertions.assertEquals(1.1, columns.get(10).getDefaultValue());
-            Assertions.assertEquals("2020-01-01", columns.get(15).getDefaultValue());
-            Assertions.assertEquals(4294967295L, columns.get(4).getColumnLength());
+            Assertions.assertEquals(0, idColumn.getDefaultValue());
+            Assertions.assertEquals("I'm default value", stringColumn.getDefaultValue());
+            Assertions.assertEquals(false, findColumn(columns, "boolean").getDefaultValue());
+            Assertions.assertEquals(1.1, findColumn(columns, "float").getDefaultValue());
+            Assertions.assertEquals("2020-01-01", findColumn(columns, "date").getDefaultValue());
+            Assertions.assertEquals(4294967295L, stringColumn.getColumnLength());
         }
+    }
+
+    private Column findColumn(List<Column> columns, String name) {
+        return columns.stream()
+                .filter(c -> c.getName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new AssertionError("Column not found: " + name));
     }
 }

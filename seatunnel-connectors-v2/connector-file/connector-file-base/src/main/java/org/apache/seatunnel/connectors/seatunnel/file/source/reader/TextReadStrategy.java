@@ -55,11 +55,12 @@ public class TextReadStrategy extends AbstractReadStrategy {
     private String fieldDelimiter = FileBaseSourceOptions.FIELD_DELIMITER.defaultValue();
     private String rowDelimiter = FileBaseSourceOptions.ROW_DELIMITER.defaultValue();
     private DateUtils.Formatter dateFormat =
-            FileBaseSourceOptions.DATE_FORMAT_LEGACY.defaultValue();
+            DateUtils.Formatter.parse(FileBaseSourceOptions.DATE_FORMAT_LEGACY.defaultValue());
     private DateTimeUtils.Formatter datetimeFormat =
-            FileBaseSourceOptions.DATETIME_FORMAT_LEGACY.defaultValue();
+            DateTimeUtils.Formatter.parse(
+                    FileBaseSourceOptions.DATETIME_FORMAT_LEGACY.defaultValue());
     private TimeUtils.Formatter timeFormat =
-            FileBaseSourceOptions.TIME_FORMAT_LEGACY.defaultValue();
+            TimeUtils.Formatter.parse(FileBaseSourceOptions.TIME_FORMAT_LEGACY.defaultValue());
     private CompressFormat compressFormat = FileBaseSourceOptions.COMPRESS_CODEC.defaultValue();
     private TextLineSplitor textLineSplitor;
     private int[] indexes;
@@ -344,13 +345,19 @@ public class TextReadStrategy extends AbstractReadStrategy {
 
     private void initFormatter() {
         if (pluginConfig.getOptional(FileBaseSourceOptions.DATE_FORMAT_LEGACY).isPresent()) {
-            dateFormat = pluginConfig.get(FileBaseSourceOptions.DATE_FORMAT_LEGACY);
+            dateFormat =
+                    DateUtils.Formatter.parse(
+                            pluginConfig.get(FileBaseSourceOptions.DATE_FORMAT_LEGACY));
         }
         if (pluginConfig.getOptional(FileBaseSourceOptions.DATETIME_FORMAT_LEGACY).isPresent()) {
-            datetimeFormat = pluginConfig.get(FileBaseSourceOptions.DATETIME_FORMAT_LEGACY);
+            datetimeFormat =
+                    DateTimeUtils.Formatter.parse(
+                            pluginConfig.get(FileBaseSourceOptions.DATETIME_FORMAT_LEGACY));
         }
         if (pluginConfig.getOptional(FileBaseSourceOptions.TIME_FORMAT_LEGACY).isPresent()) {
-            timeFormat = pluginConfig.get(FileBaseSourceOptions.TIME_FORMAT_LEGACY);
+            timeFormat =
+                    TimeUtils.Formatter.parse(
+                            pluginConfig.get(FileBaseSourceOptions.TIME_FORMAT_LEGACY));
         }
         if (pluginConfig.getOptional(FileBaseSourceOptions.COMPRESS_CODEC).isPresent()) {
             compressFormat = pluginConfig.get(FileBaseSourceOptions.COMPRESS_CODEC);

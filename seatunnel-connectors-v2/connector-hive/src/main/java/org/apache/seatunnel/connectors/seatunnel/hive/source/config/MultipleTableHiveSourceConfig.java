@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.hive.source.config;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.options.ConnectorCommonOptions;
 
 import com.google.common.collect.Lists;
@@ -33,7 +33,7 @@ public class MultipleTableHiveSourceConfig implements Serializable {
 
     @Getter private List<HiveSourceConfig> hiveSourceConfigs;
 
-    public MultipleTableHiveSourceConfig(ReadonlyConfig readonlyConfig) {
+    public MultipleTableHiveSourceConfig(Config readonlyConfig) {
         if (readonlyConfig.getOptional(ConnectorCommonOptions.TABLE_LIST).isPresent()) {
             parseFromLocalFileSourceByTableList(readonlyConfig);
         } else if (readonlyConfig.getOptional(ConnectorCommonOptions.TABLE_CONFIGS).isPresent()) {
@@ -43,24 +43,24 @@ public class MultipleTableHiveSourceConfig implements Serializable {
         }
     }
 
-    private void parseFromLocalFileSourceByTableList(ReadonlyConfig readonlyConfig) {
+    private void parseFromLocalFileSourceByTableList(Config readonlyConfig) {
         this.hiveSourceConfigs =
                 readonlyConfig.get(ConnectorCommonOptions.TABLE_LIST).stream()
-                        .map(ReadonlyConfig::fromMap)
+                        .map(Config::of)
                         .map(HiveSourceConfig::new)
                         .collect(Collectors.toList());
     }
     // hive is structured, should use table_list
     @Deprecated
-    private void parseFromLocalFileSourceByTableConfigs(ReadonlyConfig readonlyConfig) {
+    private void parseFromLocalFileSourceByTableConfigs(Config readonlyConfig) {
         this.hiveSourceConfigs =
                 readonlyConfig.get(ConnectorCommonOptions.TABLE_CONFIGS).stream()
-                        .map(ReadonlyConfig::fromMap)
+                        .map(Config::of)
                         .map(HiveSourceConfig::new)
                         .collect(Collectors.toList());
     }
 
-    private void parseFromLocalFileSourceConfig(ReadonlyConfig localFileSourceRootConfig) {
+    private void parseFromLocalFileSourceConfig(Config localFileSourceRootConfig) {
         HiveSourceConfig hiveSourceConfig = new HiveSourceConfig(localFileSourceRootConfig);
         this.hiveSourceConfigs = Lists.newArrayList(hiveSourceConfig);
     }

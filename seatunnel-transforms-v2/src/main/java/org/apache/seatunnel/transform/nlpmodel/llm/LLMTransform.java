@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.nlpmodel.llm;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.Column;
 import org.apache.seatunnel.api.table.catalog.PhysicalColumn;
@@ -42,11 +42,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class LLMTransform extends SingleFieldOutputTransform {
-    private final ReadonlyConfig config;
+    private final Config config;
     private final SeaTunnelDataType<?> outputDataType;
     private Model model;
 
-    public LLMTransform(@NonNull ReadonlyConfig config, @NonNull CatalogTable inputCatalogTable) {
+    public LLMTransform(@NonNull Config config, @NonNull CatalogTable inputCatalogTable) {
         super(inputCatalogTable);
         this.config = config;
         this.outputDataType =
@@ -71,9 +71,9 @@ public class LLMTransform extends SingleFieldOutputTransform {
         switch (provider) {
             case CUSTOM:
                 // load custom_config from the configuration
-                ReadonlyConfig customConfig =
+                Config customConfig =
                         config.getOptional(ModelTransformConfig.CustomRequestConfig.CUSTOM_CONFIG)
-                                .map(ReadonlyConfig::fromMap)
+                                .map(Config::of)
                                 .orElseThrow(
                                         () ->
                                                 new IllegalArgumentException(

@@ -19,7 +19,6 @@ package org.apache.seatunnel.connectors.seatunnel.hive.sink;
 
 import org.apache.seatunnel.api.common.JobContext;
 import org.apache.seatunnel.api.config.Config;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.serialization.DefaultSerializer;
 import org.apache.seatunnel.api.serialization.Serializer;
 import org.apache.seatunnel.api.sink.SeaTunnelSink;
@@ -71,13 +70,13 @@ public class HiveSink
     // And use getTableInformation to get the Table object
     private transient Table tableInformation;
     private final CatalogTable catalogTable;
-    private final ReadonlyConfig readonlyConfig;
+    private final Config readonlyConfig;
     private final HadoopConf hadoopConf;
     private final FileSinkConfig fileSinkConfig;
     private transient WriteStrategy writeStrategy;
     private String jobId;
 
-    public HiveSink(ReadonlyConfig readonlyConfig, CatalogTable catalogTable) {
+    public HiveSink(Config readonlyConfig, CatalogTable catalogTable) {
         this.readonlyConfig = readonlyConfig;
         this.catalogTable = catalogTable;
         this.tableInformation = getTableInformation();
@@ -87,7 +86,7 @@ public class HiveSink
     }
 
     private FileSinkConfig generateFileSinkConfig(
-            ReadonlyConfig readonlyConfig, CatalogTable catalogTable) {
+            Config readonlyConfig, CatalogTable catalogTable) {
         Table tableInformation = getTableInformation();
         // Since ReadonlyConfig implements Config, we can use it directly.
         // But we want to create a derived config, and ReadonlyConfig is immutable,
@@ -186,7 +185,7 @@ public class HiveSink
         return Optional.of(new DefaultSerializer<>());
     }
 
-    private HadoopConf createHadoopConf(ReadonlyConfig readonlyConfig) {
+    private HadoopConf createHadoopConf(Config readonlyConfig) {
         String hdfsLocation = getTableInformation().getSd().getLocation();
 
         /**

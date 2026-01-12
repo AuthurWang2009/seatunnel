@@ -16,9 +16,9 @@
  */
 package org.apache.seatunnel.transform.jsonpath;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.ConfigEntry;
 import org.apache.seatunnel.api.config.ConfigOption;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.Column;
 import org.apache.seatunnel.api.table.catalog.PhysicalColumn;
@@ -92,8 +92,8 @@ public class JsonPathTransformConfig implements Serializable {
         this.errorHandleWay = errorHandleWay;
     }
 
-    public static JsonPathTransformConfig of(ReadonlyConfig config, CatalogTable table) {
-        if (!config.toConfig().hasPath(COLUMNS.key())) {
+    public static JsonPathTransformConfig of(Config config, CatalogTable table) {
+        if (!config.hasPath(COLUMNS.key())) {
             throw new TransformException(
                     COLUMNS_MUST_NOT_EMPTY, COLUMNS_MUST_NOT_EMPTY.getErrorMessage());
         }

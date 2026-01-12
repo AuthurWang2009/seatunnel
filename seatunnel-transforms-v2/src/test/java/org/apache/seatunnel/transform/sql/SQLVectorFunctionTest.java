@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.sql;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.PhysicalColumn;
 import org.apache.seatunnel.api.table.catalog.TableIdentifier;
@@ -76,8 +76,8 @@ public class SQLVectorFunctionTest {
 
     @Test
     public void testVectorTruncate() {
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         Collections.singletonMap(
                                 "query",
                                 "SELECT id, VECTOR_REDUCE(vector_field, 3,'TRUNCATE') as truncated_vector FROM dual"));
@@ -108,8 +108,8 @@ public class SQLVectorFunctionTest {
 
     @Test
     public void testVectorNormalize() {
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         Collections.singletonMap(
                                 "query",
                                 "SELECT id, VECTOR_NORMALIZE(vector_field) as normalized_vector FROM dual"));
@@ -138,8 +138,8 @@ public class SQLVectorFunctionTest {
 
     @Test
     public void testVectorReduce() {
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         Collections.singletonMap(
                                 "query",
                                 "SELECT id, VECTOR_REDUCE(vector_field, 3, 'TRUNCATE') as reduced_vector FROM dual"));
@@ -169,8 +169,8 @@ public class SQLVectorFunctionTest {
 
     @Test
     public void testVectorRandomProjection() {
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         Collections.singletonMap(
                                 "query",
                                 "SELECT id, VECTOR_REDUCE(vector_field, 3,'RANDOM_PROJECTION') as projected_vector FROM dual"));
@@ -202,8 +202,8 @@ public class SQLVectorFunctionTest {
 
     @Test
     public void testVectorSparseProjection() {
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         Collections.singletonMap(
                                 "query",
                                 "SELECT id, VECTOR_REDUCE(vector_field, 3,'SPARSE_RANDOM_PROJECTION') as sparse_projected_vector FROM dual"));

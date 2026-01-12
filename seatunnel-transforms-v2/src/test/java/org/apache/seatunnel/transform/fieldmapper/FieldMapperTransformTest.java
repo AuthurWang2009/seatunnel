@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.fieldmapper;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.ConstraintKey;
 import org.apache.seatunnel.api.table.catalog.PhysicalColumn;
@@ -118,8 +118,7 @@ class FieldMapperTransformTest {
         Map<String, Object> config = Collections.singletonMap(FIELD_MAPPER.key(), mapper);
         FieldMapperTransform transform =
                 new FieldMapperTransform(
-                        FieldMapperTransformConfig.of(ReadonlyConfig.fromMap(config)),
-                        catalogTable);
+                        FieldMapperTransformConfig.of(Config.of(config)), catalogTable);
 
         TableSchema newSchema = transform.getProducedCatalogTable().getTableSchema();
 

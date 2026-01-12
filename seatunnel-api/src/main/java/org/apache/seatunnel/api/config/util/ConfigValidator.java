@@ -17,8 +17,8 @@
 
 package org.apache.seatunnel.api.config.util;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.ConfigEntry;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.config.SingleChoiceConfigEntry;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -29,13 +29,13 @@ import java.util.List;
 import java.util.Objects;
 
 public class ConfigValidator {
-    private final ReadonlyConfig config;
+    private final Config config;
 
-    private ConfigValidator(ReadonlyConfig config) {
+    private ConfigValidator(Config config) {
         this.config = config;
     }
 
-    public static ConfigValidator of(ReadonlyConfig config) {
+    public static ConfigValidator of(Config config) {
         return new ConfigValidator(config);
     }
 

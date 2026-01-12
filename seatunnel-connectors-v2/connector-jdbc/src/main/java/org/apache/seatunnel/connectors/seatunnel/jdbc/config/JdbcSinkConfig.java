@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.jdbc.config;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 
 import lombok.Builder;
 import lombok.Data;
@@ -42,7 +42,7 @@ public class JdbcSinkConfig implements Serializable {
     private boolean useCopyStatement;
     @Builder.Default private boolean createIndex = true;
 
-    public static JdbcSinkConfig of(ReadonlyConfig config) {
+    public static JdbcSinkConfig of(Config config) {
         JdbcSinkConfigBuilder builder = JdbcSinkConfig.builder();
         builder.jdbcConnectionConfig(JdbcConnectionConfig.of(config));
         builder.isExactlyOnce(config.get(JdbcSinkOptions.IS_EXACTLY_ONCE));

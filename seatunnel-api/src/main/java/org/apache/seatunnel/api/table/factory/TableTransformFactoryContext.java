@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.api.table.factory;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 
 import lombok.Getter;
@@ -30,7 +30,7 @@ public class TableTransformFactoryContext extends TableFactoryContext {
     private final List<CatalogTable> catalogTables;
 
     public TableTransformFactoryContext(
-            List<CatalogTable> catalogTables, ReadonlyConfig options, ClassLoader classLoader) {
+            List<CatalogTable> catalogTables, Config options, ClassLoader classLoader) {
         super(options, classLoader);
         checkCatalogTableIllegal(catalogTables);
         this.catalogTables = catalogTables;

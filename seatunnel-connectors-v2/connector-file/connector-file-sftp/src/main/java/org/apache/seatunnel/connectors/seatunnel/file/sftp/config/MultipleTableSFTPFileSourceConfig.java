@@ -17,18 +17,18 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.sftp.config;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.connectors.seatunnel.file.config.BaseFileSourceConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.config.BaseMultipleTableFileSourceConfig;
 
 public class MultipleTableSFTPFileSourceConfig extends BaseMultipleTableFileSourceConfig {
 
-    public MultipleTableSFTPFileSourceConfig(ReadonlyConfig ossFileSourceRootConfig) {
+    public MultipleTableSFTPFileSourceConfig(Config ossFileSourceRootConfig) {
         super(ossFileSourceRootConfig);
     }
 
     @Override
-    public BaseFileSourceConfig getBaseSourceConfig(ReadonlyConfig readonlyConfig) {
+    public BaseFileSourceConfig getBaseSourceConfig(Config readonlyConfig) {
         return new SFTPFileSourceConfig(readonlyConfig);
     }
 }

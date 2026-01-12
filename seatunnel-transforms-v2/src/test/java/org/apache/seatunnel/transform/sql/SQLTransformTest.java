@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.transform.sql;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.CatalogTableUtil;
 import org.apache.seatunnel.api.table.catalog.PhysicalColumn;
@@ -47,8 +47,8 @@ public class SQLTransformTest {
     private static final String[] FIELD_NAMES =
             new String[] {"id", "name", "age", TIMESTAMP_FIELDNAME};
     private static final String GENERATE_PARTITION_KEY = "dt";
-    private static final ReadonlyConfig READONLY_CONFIG =
-            ReadonlyConfig.fromMap(
+    private static final Config READONLY_CONFIG =
+            Config.of(
                     new HashMap<String, Object>() {
                         {
                             put(
@@ -79,7 +79,7 @@ public class SQLTransformTest {
     public void testQueryWithAnyTable() {
         SQLTransform sqlTransform =
                 new SQLTransform(
-                        ReadonlyConfig.fromMap(
+                        Config.of(
                                 new HashMap<String, Object>() {
                                     {
                                         put("query", "select * from dual");
@@ -163,8 +163,8 @@ public class SQLTransformTest {
                                 new SeaTunnelDataType[] {
                                     BasicType.INT_TYPE, BasicType.STRING_TYPE
                                 }));
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         Collections.singletonMap(
                                 "query",
                                 "select `id`, trim(`apply`) as `apply` from dual where `apply` = 'a'"));
@@ -182,7 +182,7 @@ public class SQLTransformTest {
         Assertions.assertNull(result);
 
         config =
-                ReadonlyConfig.fromMap(
+                Config.of(
                         Collections.singletonMap(
                                 "query",
                                 "select id, IFNULL(`apply`, '1') as `apply` from dual  where `apply` = 'a'"));
@@ -203,7 +203,7 @@ public class SQLTransformTest {
                                 fields,
                                 new SeaTunnelDataType[] {BasicType.INT_TYPE, BasicType.LONG_TYPE}));
         config =
-                ReadonlyConfig.fromMap(
+                Config.of(
                         Collections.singletonMap(
                                 "query",
                                 "select id, `apply` + 1 as `apply` from dual where `apply` > 0"));
@@ -231,7 +231,7 @@ public class SQLTransformTest {
                                             BasicType.STRING_TYPE, BasicType.STRING_TYPE)
                                 }));
         config =
-                ReadonlyConfig.fromMap(
+                Config.of(
                         Collections.singletonMap(
                                 "query",
                                 "select id, `apply`.k1 as `apply` from dual where `apply`.k1 = 'a'"));
@@ -266,7 +266,7 @@ public class SQLTransformTest {
                                             BasicType.STRING_TYPE, BasicType.STRING_TYPE)
                                 }));
         config =
-                ReadonlyConfig.fromMap(
+                Config.of(
                         Collections.singletonMap(
                                 "query",
                                 "select id, map.`apply` as `apply` from dual where map.`apply` = 'a'"));
@@ -296,8 +296,8 @@ public class SQLTransformTest {
                                 new SeaTunnelDataType[] {
                                     BasicType.INT_TYPE, BasicType.BOOLEAN_TYPE
                                 }));
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         Collections.singletonMap(
                                 "query",
                                 "select `id`, `bool`, case when bool then 1 else 2 end as bool_1 from dual"));
@@ -329,8 +329,8 @@ public class SQLTransformTest {
                                 new SeaTunnelDataType[] {
                                     BasicType.INT_TYPE, BasicType.INT_TYPE, BasicType.STRING_TYPE
                                 }));
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         Collections.singletonMap(
                                 "query",
                                 "select `id`, `int`, (case when `int` = 1 then true else false end) as bool_1 , `string`, (case when `string` = 'true' then true else false end) as bool_2 from dual"));
@@ -364,8 +364,8 @@ public class SQLTransformTest {
                                 new SeaTunnelDataType[] {
                                     BasicType.INT_TYPE, BasicType.INT_TYPE, BasicType.STRING_TYPE
                                 }));
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         Collections.singletonMap(
                                 "query",
                                 "select `id`, `int`, cast(`int` as boolean) as bool_1 , `string`, cast(`string` as boolean) as bool_2 from dual"));
@@ -436,8 +436,8 @@ public class SQLTransformTest {
                                 new SeaTunnelDataType[] {
                                     BasicType.INT_TYPE, BasicType.INT_TYPE, BasicType.STRING_TYPE
                                 }));
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         Collections.singletonMap(
                                 "query", "select `id`, true as bool_1, false as bool_2 from dual"));
         SQLTransform sqlTransform = new SQLTransform(config, table);
@@ -466,7 +466,7 @@ public class SQLTransformTest {
                         + "CAST(`FIELD3` AS decimal(22,0)) AS FIELD3 "
                         + "from dual";
 
-        ReadonlyConfig config = ReadonlyConfig.fromMap(Collections.singletonMap("query", sqlQuery));
+        Config config = Config.of(Collections.singletonMap("query", sqlQuery));
         SQLTransform sqlTransform = new SQLTransform(config, table);
         Assertions.assertThrows(
                 TransformException.class,
@@ -482,7 +482,7 @@ public class SQLTransformTest {
                     }
                 });
         sqlQuery = "select * from dual where FIELD1/0 > 10";
-        config = ReadonlyConfig.fromMap(Collections.singletonMap("query", sqlQuery));
+        config = Config.of(Collections.singletonMap("query", sqlQuery));
         SQLTransform sqlTransform2 = new SQLTransform(config, table);
         Assertions.assertThrows(
                 TransformException.class,
@@ -516,8 +516,8 @@ public class SQLTransformTest {
                                 }));
 
         // The first parameter to test COALESCE is the string type, followed by the integer type
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         Collections.singletonMap(
                                 "query",
                                 "select id, COALESCE(stringField, intField) as result from dual"));
@@ -546,7 +546,7 @@ public class SQLTransformTest {
         // The first parameter to test COALESCE is the integer type, followed by the floating point
         // type
         config =
-                ReadonlyConfig.fromMap(
+                Config.of(
                         Collections.singletonMap(
                                 "query",
                                 "select id, COALESCE(intField, doubleField) as result from dual"));
@@ -577,7 +577,7 @@ public class SQLTransformTest {
 
         // Test COALESCE with null as first argument
         config =
-                ReadonlyConfig.fromMap(
+                Config.of(
                         Collections.singletonMap(
                                 "query",
                                 "select id, COALESCE(null, stringField, intField) as result from dual"));
@@ -624,8 +624,8 @@ public class SQLTransformTest {
                                 }));
 
         // Test IFNULL with string field as first parameter and integer as second
-        ReadonlyConfig config =
-                ReadonlyConfig.fromMap(
+        Config config =
+                Config.of(
                         Collections.singletonMap(
                                 "query",
                                 "select id, IFNULL(stringField, intField) as result from dual"));
@@ -653,7 +653,7 @@ public class SQLTransformTest {
 
         // Test IFNULL with integer field as first parameter and double as second
         config =
-                ReadonlyConfig.fromMap(
+                Config.of(
                         Collections.singletonMap(
                                 "query",
                                 "select id, IFNULL(intField, doubleField) as result from dual"));
@@ -684,7 +684,7 @@ public class SQLTransformTest {
 
         // Test IFNULL with null literal as first argument
         config =
-                ReadonlyConfig.fromMap(
+                Config.of(
                         Collections.singletonMap(
                                 "query",
                                 "select id, IFNULL(null, stringField) as result from dual"));
@@ -713,7 +713,7 @@ public class SQLTransformTest {
         String querySql = "select CAST(`id` AS TIMESTAMP) AS idStr, name AS name from dual";
         SQLTransform sqlTransform =
                 new SQLTransform(
-                        ReadonlyConfig.fromMap(
+                        Config.of(
                                 new HashMap<String, Object>() {
                                     {
                                         put("query", querySql);
@@ -740,7 +740,7 @@ public class SQLTransformTest {
                 "select id AS id, name AS name, CAST(create_time AS INT) AS timeInt from dual";
         SQLTransform sqlTransform =
                 new SQLTransform(
-                        ReadonlyConfig.fromMap(
+                        Config.of(
                                 new HashMap<String, Object>() {
                                     {
                                         put("query", querySql);

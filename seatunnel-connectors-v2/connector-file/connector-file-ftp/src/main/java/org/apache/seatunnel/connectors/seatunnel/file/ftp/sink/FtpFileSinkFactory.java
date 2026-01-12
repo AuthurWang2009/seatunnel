@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.ftp.sink;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.util.OptionRule;
 import org.apache.seatunnel.api.options.SinkConnectorCommonOptions;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
@@ -128,7 +128,7 @@ public class FtpFileSinkFactory extends BaseMultipleTableFileSinkFactory {
     @Override
     public TableSink<SeaTunnelRow, FileSinkState, FileCommitInfo, FileAggregatedCommitInfo>
             createSink(TableSinkFactoryContext context) {
-        ReadonlyConfig readonlyConfig = context.getOptions();
+        Config readonlyConfig = context.getOptions();
         CatalogTable catalogTable = context.getCatalogTable();
         return () -> new FtpFileSink(readonlyConfig, catalogTable);
     }

@@ -17,7 +17,6 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.oss.config;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.connectors.seatunnel.file.config.HadoopConf;
 
 import org.apache.hadoop.fs.aliyun.oss.Constants;
@@ -42,7 +41,7 @@ public class OssHadoopConf extends HadoopConf {
         super(hdfsNameKey);
     }
 
-    public static HadoopConf buildWithConfig(ReadonlyConfig config) {
+    public static HadoopConf buildWithConfig(org.apache.seatunnel.api.config.Config config) {
         HadoopConf hadoopConf = new OssHadoopConf(config.get(OssFileBaseOptions.BUCKET));
         HashMap<String, String> ossOptions = new HashMap<>();
         ossOptions.put(Constants.ACCESS_KEY_ID, config.get(OssFileBaseOptions.ACCESS_KEY));

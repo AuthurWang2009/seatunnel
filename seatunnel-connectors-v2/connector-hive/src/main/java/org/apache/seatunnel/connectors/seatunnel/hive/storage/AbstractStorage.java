@@ -20,7 +20,6 @@ package org.apache.seatunnel.connectors.seatunnel.hive.storage;
 import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.ConfigEntry;
 import org.apache.seatunnel.api.config.ConfigOption;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.common.utils.ExceptionUtils;
 import org.apache.seatunnel.connectors.seatunnel.file.hdfs.source.config.HdfsSourceConfigOptions;
 import org.apache.seatunnel.connectors.seatunnel.hive.config.HiveConfig;
@@ -48,7 +47,7 @@ public abstract class AbstractStorage implements Storage {
     private static final List<String> HADOOP_CONF_FILES =
             ImmutableList.of("core-site.xml", "hdfs-site.xml", "hive-site.xml");
 
-    protected Config fillBucket(ReadonlyConfig readonlyConfig, Configuration configuration) {
+    protected Config fillBucket(Config readonlyConfig, Configuration configuration) {
         Config config = readonlyConfig;
         String bucketValue = configuration.get(BUCKET_OPTION.key());
         if (StringUtils.isBlank(bucketValue)) {
@@ -64,7 +63,7 @@ public abstract class AbstractStorage implements Storage {
      *
      * @return
      */
-    protected Configuration loadHiveBaseHadoopConfig(ReadonlyConfig readonlyConfig) {
+    protected Configuration loadHiveBaseHadoopConfig(Config readonlyConfig) {
         try {
             Configuration configuration = new Configuration();
             // Try to load from hadoop_conf_path(The Bucket configuration is typically in

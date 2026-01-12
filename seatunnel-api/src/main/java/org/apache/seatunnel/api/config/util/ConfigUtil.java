@@ -17,13 +17,14 @@
 
 package org.apache.seatunnel.api.config.util;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.ConfigEntry;
+import org.apache.seatunnel.api.config.ConfigLoader;
+import org.apache.seatunnel.common.config.ConfigType;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.ParameterizedType;
@@ -88,7 +89,11 @@ public class ConfigUtil {
                             .map(value -> convertValue(convertToJsonString(value), clazz))
                             .collect(Collectors.toList());
         }
-        return Arrays.stream(rawValue.toString().split(","))
+        String str = rawValue.toString();
+        if (str.startsWith("[") && str.endsWith("]")) {
+            str = str.substring(1, str.length() - 1);
+        }
+        return Arrays.stream(str.split(","))
                 .map(String::trim)
                 .map(value -> convertValue(value, clazz))
                 .collect(Collectors.toList());
@@ -219,10 +224,10 @@ public class ConfigUtil {
     }
 
     public static String convertToJsonString(Config config) {
-        return convertToJsonString(config.root().unwrapped());
+        return convertToJsonString(config.toMap());
     }
 
     public static Config convertToConfig(String configJson) {
-        return ConfigFactory.parseString(configJson);
+        return ConfigLoader.load(configJson, ConfigType.JSON);
     }
 }

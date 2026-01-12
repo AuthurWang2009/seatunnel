@@ -17,7 +17,7 @@
 
 package org.apache.seatunnel.connectors.seatunnel.file.source.reader;
 
-import org.apache.seatunnel.api.config.ReadonlyConfig;
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.common.exception.CommonErrorCodeDeprecated;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileBaseSourceOptions;
 import org.apache.seatunnel.connectors.seatunnel.file.config.FileFormat;
@@ -31,7 +31,7 @@ public class ReadStrategyFactory {
 
     private ReadStrategyFactory() {}
 
-    public static ReadStrategy of(ReadonlyConfig readonlyConfig, HadoopConf hadoopConf) {
+    public static ReadStrategy of(Config readonlyConfig, HadoopConf hadoopConf) {
         ReadStrategy readStrategy =
                 of(readonlyConfig.get(FileBaseSourceOptions.FILE_FORMAT_TYPE).name());
         readStrategy.setPluginConfig(readonlyConfig);

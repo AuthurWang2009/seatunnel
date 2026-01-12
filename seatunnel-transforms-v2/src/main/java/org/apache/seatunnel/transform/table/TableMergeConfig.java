@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.table;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.ConfigEntry;
 import org.apache.seatunnel.api.config.ConfigOption;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 import org.apache.seatunnel.api.table.catalog.TablePath;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
@@ -65,7 +65,7 @@ public class TableMergeConfig implements Serializable {
         return TablePath.of(database, schema, table);
     }
 
-    public static TableMergeConfig of(ReadonlyConfig config) {
+    public static TableMergeConfig of(Config config) {
         TableMergeConfig mergeConfig = new TableMergeConfig();
         mergeConfig.setDatabase(config.get(DATABASE));
         mergeConfig.setSchema(config.get(SCHEMA));

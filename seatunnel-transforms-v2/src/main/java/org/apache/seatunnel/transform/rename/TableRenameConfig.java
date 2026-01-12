@@ -17,9 +17,9 @@
 
 package org.apache.seatunnel.transform.rename;
 
+import org.apache.seatunnel.api.config.Config;
 import org.apache.seatunnel.api.config.ConfigEntry;
 import org.apache.seatunnel.api.config.ConfigOption;
-import org.apache.seatunnel.api.config.ReadonlyConfig;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.AllArgsConstructor;
@@ -86,7 +86,7 @@ public class TableRenameConfig implements Serializable {
         private final Boolean isRegex = true;
     }
 
-    public static TableRenameConfig of(ReadonlyConfig config) {
+    public static TableRenameConfig of(Config config) {
         TableRenameConfig renameConfig = new TableRenameConfig();
         renameConfig.setConvertCase(config.get(CONVERT_CASE));
         renameConfig.setPrefix(config.get(PREFIX));
