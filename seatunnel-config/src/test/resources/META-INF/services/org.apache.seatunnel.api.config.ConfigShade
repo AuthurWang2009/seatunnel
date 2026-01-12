@@ -1,0 +1,2 @@
+org.apache.seatunnel.api.config.util.ConfigShadeUtilsTest$ConfigShadeWithProps
+org.apache.seatunnel.api.config.util.ConfigShadeUtilsTest$Base64ConfigShade

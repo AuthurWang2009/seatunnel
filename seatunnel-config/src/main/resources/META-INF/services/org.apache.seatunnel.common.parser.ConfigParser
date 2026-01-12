@@ -1,0 +1,4 @@
+org.apache.seatunnel.config.parser.HoconConfigParser
+org.apache.seatunnel.config.parser.JsonConfigParser
+org.apache.seatunnel.config.parser.PropertiesConfigParser
+org.apache.seatunnel.config.parser.YamlConfigParser

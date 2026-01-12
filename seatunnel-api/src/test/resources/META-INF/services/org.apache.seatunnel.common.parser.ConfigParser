@@ -1,0 +1,2 @@
+org.apache.seatunnel.api.config.TestHoconConfigParser
+org.apache.seatunnel.api.config.TestJsonConfigParser
